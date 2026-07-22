@@ -27,9 +27,18 @@ class ShakeDetectorImpl(private val context: Context) : ShakeDetector {
         }
       }
       shakeDetector = SeismicShakeDetector(listener)
-      // Well below the library's SENSITIVITY_LIGHT (11) - a light shake should be enough to
-      // reset the timer, since this is meant to be triggered half-asleep in bed.
-      shakeDetector.setSensitivity(6)
+      // Seismic compares raw accelerometer magnitude (x^2+y^2+z^2), which is dominated by
+      // gravity (~9.8 m/s^2) even at complete rest - it never subtracts a baseline. Any
+      // sensitivity below ~9.8 therefore reads as "shaking" permanently, at rest, regardless
+      // of real motion. That's what values of 6 and then 9 both did here (confirmed via
+      // decompiling ShakeDetector$SampleQueue.isAccelerating - it's a bare magnitude^2 vs
+      // threshold^2 comparison, no gravity compensation) - visible on a real device as a
+      // "shake detected" log line every ~300ms while sitting untouched on a desk, which starved
+      // the sleep timer countdown since it was being reset back to full duration constantly.
+      // 10 is the least-sensitive-looking value that's still actually above gravity, i.e. the
+      // most sensitive setting that isn't fundamentally broken - below the library's own
+      // SENSITIVITY_LIGHT (11) preset, so still a bit easier to trigger deliberately than that.
+      shakeDetector.setSensitivity(10)
       shakeDetector.start(sensorManager, SensorManager.SENSOR_DELAY_GAME)
       cont.invokeOnCancellation {
         shakeDetector.stop()
