@@ -23,6 +23,7 @@ data class BookPlayViewState(
     sealed interface Enabled : SleepTimerViewState {
       @JvmInline
       value class WithDuration(val leftDuration: Duration) : Enabled
+      data object UntilChapterEnd : Enabled
     }
   }
 

@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -39,9 +42,12 @@ import voice.features.bookOverview.deleteBook.DeleteBookDialog
 import voice.features.bookOverview.di.BookOverviewGraph
 import voice.features.bookOverview.editTitle.EditBookTitleDialog
 import voice.features.bookOverview.overview.BookOverviewItemViewState
+import voice.features.bookOverview.overview.BookOverviewLayoutMode
 import voice.features.bookOverview.overview.BookOverviewViewState
+import voice.features.bookOverview.views.GridBook
 import voice.features.bookOverview.views.ListBookRow
 import voice.features.bookOverview.views.NowPlayingBar
+import voice.features.bookOverview.views.gridColumnCount
 import voice.navigation.Destination
 import voice.navigation.NavEntryProvider
 import voice.core.strings.R as StringsR
@@ -188,26 +194,56 @@ internal fun AuthorBooksScreen(
     },
     contentWindowInsets = WindowInsets(0, 0, 0, 0),
   ) { contentPadding ->
-    LazyColumn(
-      modifier = Modifier.consumeWindowInsets(contentPadding),
-      verticalArrangement = Arrangement.spacedBy(8.dp),
-      contentPadding = PaddingValues(
-        top = contentPadding.calculateTopPadding() + 8.dp,
-        start = 8.dp,
-        end = 8.dp,
-        bottom = 16.dp,
-      ),
-    ) {
-      items(
-        items = viewState.books,
-        key = { it.id.value },
-        contentType = { "item" },
-      ) { book ->
-        ListBookRow(
-          book = book,
-          onBookClick = onBookClick,
-          onBookLongClick = onBookLongClick,
-        )
+    when (viewState.layoutMode) {
+      BookOverviewLayoutMode.List -> {
+        LazyColumn(
+          modifier = Modifier.consumeWindowInsets(contentPadding),
+          verticalArrangement = Arrangement.spacedBy(8.dp),
+          contentPadding = PaddingValues(
+            top = contentPadding.calculateTopPadding() + 8.dp,
+            start = 8.dp,
+            end = 8.dp,
+            bottom = 16.dp,
+          ),
+        ) {
+          items(
+            items = viewState.books,
+            key = { it.id.value },
+            contentType = { "item" },
+          ) { book ->
+            ListBookRow(
+              book = book,
+              onBookClick = onBookClick,
+              onBookLongClick = onBookLongClick,
+            )
+          }
+        }
+      }
+      BookOverviewLayoutMode.Grid -> {
+        LazyVerticalGrid(
+          columns = GridCells.Fixed(gridColumnCount()),
+          modifier = Modifier.consumeWindowInsets(contentPadding),
+          verticalArrangement = Arrangement.spacedBy(4.dp),
+          horizontalArrangement = Arrangement.spacedBy(8.dp),
+          contentPadding = PaddingValues(
+            top = contentPadding.calculateTopPadding() + 8.dp,
+            start = 8.dp,
+            end = 8.dp,
+            bottom = 16.dp,
+          ),
+        ) {
+          items(
+            items = viewState.books,
+            key = { it.id.value },
+            contentType = { "item" },
+          ) { book ->
+            GridBook(
+              book = book,
+              onBookClick = onBookClick,
+              onBookLongClick = onBookLongClick,
+            )
+          }
+        }
       }
     }
   }

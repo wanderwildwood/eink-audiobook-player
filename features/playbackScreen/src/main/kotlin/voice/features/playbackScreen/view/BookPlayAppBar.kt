@@ -126,6 +126,13 @@ private fun SleepTimerButton(
         style = MaterialTheme.typography.labelSmall,
         textAlign = TextAlign.Center,
       )
+    } else if (sleepTimerState is BookPlayViewState.SleepTimerViewState.Enabled.UntilChapterEnd) {
+      Text(
+        text = stringResource(id = R.string.sleep_timer_duration_end_of_chapter),
+        style = MaterialTheme.typography.labelSmall,
+        textAlign = TextAlign.Center,
+        maxLines = 2,
+      )
     }
   }
 }

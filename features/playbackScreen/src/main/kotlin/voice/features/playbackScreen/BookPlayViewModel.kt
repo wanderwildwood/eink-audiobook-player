@@ -325,4 +325,5 @@ class BookPlayViewModel(
 private fun SleepTimerState.toViewState(): BookPlayViewState.SleepTimerViewState = when (this) {
   SleepTimerState.Disabled -> BookPlayViewState.SleepTimerViewState.Disabled
   is SleepTimerState.Enabled.WithDuration -> BookPlayViewState.SleepTimerViewState.Enabled.WithDuration(this.leftDuration)
+  SleepTimerState.Enabled.UntilChapterEnd -> BookPlayViewState.SleepTimerViewState.Enabled.UntilChapterEnd
 }

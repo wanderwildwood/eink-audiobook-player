@@ -7,6 +7,7 @@ import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceTimeBy
@@ -15,9 +16,12 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.yield
 import org.junit.BeforeClass
 import voice.core.common.DispatcherProvider
+import voice.core.data.BookId
+import voice.core.data.ChapterId
 import voice.core.data.sleeptimer.SleepTimerPreference
 import voice.core.logging.api.LogWriter
 import voice.core.logging.api.Logger
+import voice.core.playback.LivePlaybackState
 import voice.core.playback.PlayerController
 import voice.core.playback.playstate.PlayStateManager
 import voice.core.sleeptimer.ShakeDetector
@@ -174,6 +178,33 @@ class SleepTimerImplTest {
 
     coVerify(exactly = 0) { playerController.pauseWithRewind(any()) }
     assertEquals(expected = SleepTimerState.Enabled.WithDuration(duration), actual = sleepTimer.state.value)
+  }
+
+  @Test
+  fun `end of chapter mode stops at the next chapter and rewinds to its start`() = testScope.runTest {
+    val bookId = BookId("book")
+    val chapterOne = ChapterId("chapter-1")
+    val chapterTwo = ChapterId("chapter-2")
+    val livePlaybackFlow = MutableStateFlow(
+      LivePlaybackState(bookId, chapterOne, positionMs = 0L, isPlaying = true, playbackSpeed = 1f),
+    )
+    every { playerController.livePlaybackStateFlow() } returns livePlaybackFlow
+    every { playerController.pause() } just Runs
+    every { playerController.setPosition(any(), any()) } just Runs
+
+    sleepTimerPreferenceStore.updateData { it.copy(endOfChapterEnabled = true) }
+    sleepTimer.enable(SleepTimerMode.TimedWithDefault)
+    runCurrent()
+
+    assertEquals(expected = SleepTimerState.Enabled.UntilChapterEnd, actual = sleepTimer.state.value)
+    coVerify(exactly = 0) { playerController.pause() }
+
+    livePlaybackFlow.value = LivePlaybackState(bookId, chapterTwo, positionMs = 0L, isPlaying = true, playbackSpeed = 1f)
+    runCurrent()
+
+    assertEquals(expected = SleepTimerState.Disabled, actual = sleepTimer.state.value)
+    coVerify(exactly = 1) { playerController.pause() }
+    verify(exactly = 1) { playerController.setPosition(0L, chapterTwo) }
   }
 
   companion object {

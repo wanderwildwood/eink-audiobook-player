@@ -58,10 +58,31 @@ class SleepTimerImpl internal constructor(
         is SleepTimerMode.TimedWithDuration -> startCountdown(mode.duration)
         SleepTimerMode.TimedWithDefault -> {
           val pref = sleepTimerPreferenceStore.data.first()
-          startCountdown(pref.duration)
+          if (pref.endOfChapterEnabled) {
+            waitForChapterEnd()
+          } else {
+            startCountdown(pref.duration)
+          }
         }
       }
     }
+  }
+
+  /**
+   * Waits for the current chapter to end (the playlist advancing to a different chapter id, or
+   * playback stopping) and pauses right there - no shake-to-extend here, since there's no
+   * countdown to reset, unlike [startCountdown].
+   */
+  private suspend fun waitForChapterEnd() {
+    val initialChapterId = playerController.livePlaybackStateFlow().first()?.chapterId ?: return
+    state.value = SleepTimerState.Enabled.UntilChapterEnd
+
+    val newState = playerController.livePlaybackStateFlow()
+      .first { it == null || it.chapterId != initialChapterId }
+
+    state.value = SleepTimerState.Disabled
+    playerController.pause()
+    newState?.chapterId?.let { playerController.setPosition(0L, it) }
   }
 
   override fun disable() {

@@ -200,7 +200,7 @@ internal fun BookOverview(
       when (viewState.layoutMode) {
         BookOverviewLayoutMode.List -> {
           ListBooks(
-            folders = viewState.folders,
+            sections = viewState.sections,
             onBookClick = onBookClick,
             onBookLongClick = onBookLongClick,
             onFolderClick = onFolderClick,
@@ -210,7 +210,7 @@ internal fun BookOverview(
         }
         BookOverviewLayoutMode.Grid -> {
           GridBooks(
-            folders = viewState.folders,
+            sections = viewState.sections,
             onBookClick = onBookClick,
             onBookLongClick = onBookLongClick,
             onFolderClick = onFolderClick,

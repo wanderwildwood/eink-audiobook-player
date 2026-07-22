@@ -15,6 +15,7 @@ sealed interface SleepTimerState {
   sealed interface Enabled : SleepTimerState {
     @JvmInline
     value class WithDuration(val leftDuration: Duration) : Enabled
+    data object UntilChapterEnd : Enabled
   }
 
   val enabled: Boolean

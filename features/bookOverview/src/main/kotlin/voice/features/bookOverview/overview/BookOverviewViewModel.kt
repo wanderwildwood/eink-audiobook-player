@@ -25,15 +25,18 @@ import voice.core.common.MainScope
 import voice.core.common.comparator.NaturalOrderComparator
 import voice.core.common.comparator.sortedNaturally
 import voice.core.data.Book
+import voice.core.data.BookComparator
 import voice.core.data.BookId
 import voice.core.data.GridMode
 import voice.core.data.KioskModeDemoData
+import voice.core.data.LibraryOrganization
 import voice.core.data.repo.BookContentRepo
 import voice.core.data.repo.BookRepository
 import voice.core.data.repo.internals.dao.RecentBookSearchDao
 import voice.core.data.store.CurrentBookStore
 import voice.core.data.store.FolderPickerMovedDialogShownStore
 import voice.core.data.store.GridModeStore
+import voice.core.data.store.LibraryOrganizationStore
 import voice.core.featureflag.ExperimentalPlaybackPersistenceQualifier
 import voice.core.featureflag.FeatureFlag
 import voice.core.featureflag.FolderPickerInSettingsFeatureFlagQualifier
@@ -65,6 +68,8 @@ class BookOverviewViewModel(
   private val folderPickerMovedDialogShownStore: DataStore<Boolean>,
   @GridModeStore
   private val gridModeStore: DataStore<GridMode>,
+  @LibraryOrganizationStore
+  private val libraryOrganizationStore: DataStore<LibraryOrganization>,
   private val gridCount: GridCount,
   private val navigator: Navigator,
   private val appInfoProvider: AppInfoProvider,
@@ -110,6 +115,8 @@ class BookOverviewViewModel(
     val gridMode = remember { gridModeStore.data }
       .collectAsState(initial = null).value
       ?: return BookOverviewViewState.Loading
+    val libraryOrganization = remember { libraryOrganizationStore.data }
+      .collectAsState(initial = LibraryOrganization.AUTHOR_FOLDERS).value
 
     val noBooks = !scannerActive && books.isEmpty()
 
@@ -138,9 +145,41 @@ class BookOverviewViewModel(
       livePlaybackState = { livePlaybackState.value },
     )
 
+    val folders = books
+      .groupBy { it.content.folderName }
+      .entries
+      .sortedWith(compareBy(nullsLast(NaturalOrderComparator.stringComparator)) { it.key })
+      .map { (folderName, folderBooks) ->
+        AuthorFolderViewState(
+          folderName = folderName,
+          bookCount = folderBooks.size,
+        )
+      }
+
+    val sections = when (libraryOrganization) {
+      LibraryOrganization.AUTHOR_FOLDERS -> listOf(LibrarySection.Folders(folders))
+      LibraryOrganization.FLAT_LIST -> listOf(
+        LibrarySection.Books(
+          headerRes = null,
+          books = books.sortedWith(BookComparator.ByName).map { it.toItemViewState() },
+        ),
+      )
+      LibraryOrganization.BY_STATUS -> BookOverviewCategory.entries.mapNotNull { category ->
+        val categoryBooks = books.filter { it.category == category }
+        categoryBooks.takeIf { it.isNotEmpty() }?.let {
+          LibrarySection.Books(
+            headerRes = category.nameRes,
+            books = it.sortedWith(category.comparator).map { book -> book.toItemViewState() },
+          )
+        }
+      }
+    }
+
     return BookOverviewViewState(
       layoutMode = layoutMode,
       nowPlaying = nowPlaying,
+      libraryOrganization = libraryOrganization,
+      sections = sections,
       books = books
         .filter { it.category == BookOverviewCategory.CURRENT }
         .groupBy {
@@ -157,16 +196,7 @@ class BookOverviewViewModel(
             }
         }
         .toSortedMap(),
-      folders = books
-        .groupBy { it.content.folderName }
-        .entries
-        .sortedWith(compareBy(nullsLast(NaturalOrderComparator.stringComparator)) { it.key })
-        .map { (folderName, folderBooks) ->
-          AuthorFolderViewState(
-            folderName = folderName,
-            bookCount = folderBooks.size,
-          )
-        },
+      folders = folders,
       playButtonState = if (playState == PlayStateManager.PlayState.Playing) {
         BookOverviewViewState.PlayButtonState.Playing
       } else {
@@ -233,20 +263,22 @@ class BookOverviewViewModel(
   }
 
   private fun kioskModeState(): BookOverviewViewState {
+    val demoItems = KioskModeDemoData.demoAudiobooks.map { book ->
+      BookOverviewItemViewState(
+        name = book.title,
+        author = book.author,
+        cover = book.coverUrl,
+        progress = book.progress / 100F,
+        id = book.id,
+        remainingTime = book.remaining,
+      )
+    }
     return BookOverviewViewState(
       layoutMode = BookOverviewLayoutMode.List,
+      sections = listOf(LibrarySection.Books(headerRes = null, books = demoItems)),
       books = mapOf(
-        BookOverviewCategory.CURRENT to KioskModeDemoData.demoAudiobooks.associate { book ->
-          book.id to mutableStateOf(
-            BookOverviewItemViewState(
-              name = book.title,
-              author = book.author,
-              cover = book.coverUrl,
-              progress = book.progress / 100F,
-              id = book.id,
-              remainingTime = book.remaining,
-            ),
-          )
+        BookOverviewCategory.CURRENT to demoItems.associate { item ->
+          item.id to mutableStateOf(item)
         },
       ),
       playButtonState = BookOverviewViewState.PlayButtonState.Paused,

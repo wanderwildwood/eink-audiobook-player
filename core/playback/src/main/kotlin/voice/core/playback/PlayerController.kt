@@ -118,6 +118,10 @@ class PlayerController(
     controller.play()
   }
 
+  fun pause() = executeAfterPrepare { controller ->
+    controller.pause()
+  }
+
   fun playPause() = executeAfterPrepare { controller ->
     if (controller.isPlaying) {
       controller.pause()

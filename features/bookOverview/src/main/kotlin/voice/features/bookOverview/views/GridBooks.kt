@@ -34,14 +34,14 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import voice.core.data.BookId
 import voice.core.ui.sharedCoverElementModifier
-import voice.features.bookOverview.overview.AuthorFolderViewState
 import voice.features.bookOverview.overview.BookOverviewItemViewState
+import voice.features.bookOverview.overview.LibrarySection
 import kotlin.math.roundToInt
 import voice.core.ui.R as UiR
 
 @Composable
 internal fun GridBooks(
-  folders: List<AuthorFolderViewState>,
+  sections: List<LibrarySection>,
   onBookClick: (BookId) -> Unit,
   onBookLongClick: (BookId) -> Unit,
   onFolderClick: (String?) -> Unit,
@@ -62,29 +62,59 @@ internal fun GridBooks(
         PermissionBugCard(onPermissionBugCardClick)
       }
     }
-    if (folders.isNotEmpty()) {
-      item(
-        span = { GridItemSpan(maxLineSpan) },
-        key = "folders-header",
-        contentType = "header",
-      ) {
-        BrowseHeader(
-          modifier = Modifier.padding(top = 8.dp, bottom = 4.dp, start = 8.dp, end = 8.dp),
-        )
+    sections.forEachIndexed { sectionIndex, section ->
+      when (section) {
+        is LibrarySection.Folders -> {
+          if (section.folders.isNotEmpty()) {
+            item(
+              span = { GridItemSpan(maxLineSpan) },
+              key = "folders-header-$sectionIndex",
+              contentType = "header",
+            ) {
+              BrowseHeader(
+                modifier = Modifier.padding(top = 8.dp, bottom = 4.dp, start = 8.dp, end = 8.dp),
+              )
+            }
+            items(
+              items = section.folders,
+              span = { GridItemSpan(maxLineSpan) },
+              key = { it.folderName ?: "" },
+              contentType = { "folder" },
+            ) { folder ->
+              FolderRow(folder = folder, onClick = onFolderClick)
+            }
+          }
+        }
+        is LibrarySection.Books -> {
+          if (section.books.isNotEmpty()) {
+            val headerRes = section.headerRes
+            if (headerRes != null) {
+              item(
+                span = { GridItemSpan(maxLineSpan) },
+                key = "books-header-$sectionIndex",
+                contentType = "header",
+              ) {
+                SectionHeader(
+                  headerRes = headerRes,
+                  modifier = Modifier.padding(top = 8.dp, bottom = 4.dp, start = 8.dp, end = 8.dp),
+                )
+              }
+            }
+            items(
+              items = section.books,
+              key = { it.id.value },
+              contentType = { "book" },
+            ) { book ->
+              GridBook(book = book, onBookClick = onBookClick, onBookLongClick = onBookLongClick)
+            }
+          }
+        }
       }
-      items(
-        items = folders,
-        span = { GridItemSpan(maxLineSpan) },
-        key = { it.folderName ?: "" },
-        contentType = { "folder" },
-      ) { folder ->
-        FolderRow(folder = folder, onClick = onFolderClick)
-      }
-      item(
-        span = { GridItemSpan(maxLineSpan) },
-      ) {
-        Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
-      }
+    }
+    item(
+      span = { GridItemSpan(maxLineSpan) },
+    ) {
+      Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
     }
   }
 }

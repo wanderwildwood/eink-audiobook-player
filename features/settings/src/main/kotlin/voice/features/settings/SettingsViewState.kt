@@ -1,5 +1,6 @@
 package voice.features.settings
 
+import voice.core.data.LibraryOrganization
 import java.time.LocalTime
 
 data class SettingsViewState(
@@ -8,7 +9,10 @@ data class SettingsViewState(
   val appVersion: String,
   val dialog: Dialog?,
   val useGrid: Boolean,
+  val libraryOrganization: LibraryOrganization,
   val autoSleepTimer: AutoSleepTimerViewState,
+  val sleepTimerDurationMinutes: Int,
+  val sleepTimerEndOfChapter: Boolean,
   val showAnalyticSetting: Boolean,
   val analyticsEnabled: Boolean,
   val showDeveloperMenu: Boolean,
@@ -18,6 +22,8 @@ data class SettingsViewState(
   enum class Dialog {
     AutoRewindAmount,
     SeekTime,
+    SleepTimerDuration,
+    LibraryOrganization,
   }
 
   companion object {
@@ -28,7 +34,10 @@ data class SettingsViewState(
         dialog = null,
         appVersion = "1.2.3",
         useGrid = true,
+        libraryOrganization = LibraryOrganization.AUTHOR_FOLDERS,
         autoSleepTimer = AutoSleepTimerViewState.preview(),
+        sleepTimerDurationMinutes = 10,
+        sleepTimerEndOfChapter = false,
         analyticsEnabled = false,
         showAnalyticSetting = true,
         showDeveloperMenu = true,

@@ -21,6 +21,9 @@ public annotation class SleepTimerPreferenceStore
 public annotation class GridModeStore
 
 @Qualifier
+public annotation class LibraryOrganizationStore
+
+@Qualifier
 public annotation class ThemeModeStore
 
 @Qualifier

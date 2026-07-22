@@ -15,11 +15,13 @@ import voice.core.common.AppInfoProvider
 import voice.core.common.DispatcherProvider
 import voice.core.common.MainScope
 import voice.core.data.GridMode
+import voice.core.data.LibraryOrganization
 import voice.core.data.sleeptimer.SleepTimerPreference
 import voice.core.data.store.AnalyticsConsentStore
 import voice.core.data.store.AutoRewindAmountStore
 import voice.core.data.store.DeveloperMenuUnlockedStore
 import voice.core.data.store.GridModeStore
+import voice.core.data.store.LibraryOrganizationStore
 import voice.core.data.store.SeekTimeStore
 import voice.core.data.store.SleepTimerPreferenceStore
 import voice.core.featureflag.FeatureFlag
@@ -28,6 +30,7 @@ import voice.core.ui.GridCount
 import voice.navigation.Destination
 import voice.navigation.Navigator
 import java.time.LocalTime
+import kotlin.time.Duration.Companion.minutes
 
 @Inject
 class SettingsViewModel(
@@ -39,6 +42,8 @@ class SettingsViewModel(
   private val appInfoProvider: AppInfoProvider,
   @GridModeStore
   private val gridModeStore: DataStore<GridMode>,
+  @LibraryOrganizationStore
+  private val libraryOrganizationStore: DataStore<LibraryOrganization>,
   @SleepTimerPreferenceStore
   private val sleepTimerPreferenceStore: DataStore<SleepTimerPreference>,
   @AnalyticsConsentStore
@@ -62,6 +67,9 @@ class SettingsViewModel(
     val autoRewindAmount by remember { autoRewindAmountStore.data }.collectAsState(initial = 0)
     val seekTime by remember { seekTimeStore.data }.collectAsState(initial = 0)
     val gridMode by remember { gridModeStore.data }.collectAsState(initial = GridMode.GRID)
+    val libraryOrganization by remember { libraryOrganizationStore.data }.collectAsState(
+      initial = LibraryOrganization.AUTHOR_FOLDERS,
+    )
     val autoSleepTimer by remember { sleepTimerPreferenceStore.data }.collectAsState(
       initial = SleepTimerPreference.Default,
     )
@@ -80,11 +88,14 @@ class SettingsViewModel(
         GridMode.GRID -> true
         GridMode.FOLLOW_DEVICE -> gridCount.useGridAsDefault()
       },
+      libraryOrganization = libraryOrganization,
       autoSleepTimer = SettingsViewState.AutoSleepTimerViewState(
         enabled = autoSleepTimer.autoSleepTimerEnabled,
         startTime = autoSleepTimer.autoSleepStartTime,
         endTime = autoSleepTimer.autoSleepEndTime,
       ),
+      sleepTimerDurationMinutes = autoSleepTimer.duration.inWholeMinutes.toInt(),
+      sleepTimerEndOfChapter = autoSleepTimer.endOfChapterEnabled,
       analyticsEnabled = analyticsEnabled,
       showAnalyticSetting = appInfoProvider.analyticsIncluded,
       showDeveloperMenu = showDeveloperMenu,
@@ -110,6 +121,17 @@ class SettingsViewModel(
         }
       }
     }
+  }
+
+  override fun onLibraryOrganizationRowClick() {
+    dialog.value = SettingsViewState.Dialog.LibraryOrganization
+  }
+
+  override fun setLibraryOrganization(organization: LibraryOrganization) {
+    mainScope.launch {
+      libraryOrganizationStore.updateData { organization }
+    }
+    dialog.value = null
   }
 
   override fun seekAmountChanged(seconds: Int) {
@@ -140,6 +162,10 @@ class SettingsViewModel(
     navigator.goTo(Destination.Website("https://voice.woitaschek.de/faq/"))
   }
 
+  override fun openSourceCode() {
+    navigator.goTo(Destination.Website("https://github.com/wanderwildwood/eink-audiobook-player"))
+  }
+
   override fun openFolderPicker() {
     navigator.goTo(Destination.FolderPicker)
   }
@@ -166,6 +192,28 @@ class SettingsViewModel(
         currentPrefs.copy(autoSleepEndTime = time)
       }
     }
+  }
+
+  override fun onSleepTimerDurationRowClick() {
+    dialog.value = SettingsViewState.Dialog.SleepTimerDuration
+  }
+
+  override fun setSleepTimerDurationMinutes(minutes: Int) {
+    mainScope.launch {
+      sleepTimerPreferenceStore.updateData { currentPrefs ->
+        currentPrefs.copy(duration = minutes.minutes, endOfChapterEnabled = false)
+      }
+    }
+    dialog.value = null
+  }
+
+  override fun setSleepTimerEndOfChapter() {
+    mainScope.launch {
+      sleepTimerPreferenceStore.updateData { currentPrefs ->
+        currentPrefs.copy(endOfChapterEnabled = true)
+      }
+    }
+    dialog.value = null
   }
 
   override fun toggleAnalytics() {

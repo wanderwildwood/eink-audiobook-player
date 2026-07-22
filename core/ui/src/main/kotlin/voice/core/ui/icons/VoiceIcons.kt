@@ -793,6 +793,50 @@ object VoiceIcons {
       .build()
 
   /*
+   * Source: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/code.kt?var=opsz,wght,FILL,GRAD,ROND@24,400,0,0,50
+   * Generated: 2026-07-22T00:00:00Z
+   */
+  val Code: ImageVector =
+    ImageVector.Builder(
+      name = "Code",
+      defaultWidth = 24.dp,
+      defaultHeight = 24.dp,
+      viewportWidth = 24f,
+      viewportHeight = 24f,
+    )
+      .apply {
+        path(
+          fill = SolidColor(Color.Black),
+          fillAlpha = 1f,
+          stroke = null,
+          strokeAlpha = 1f,
+          strokeLineWidth = 1f,
+          strokeLineCap = StrokeCap.Butt,
+          strokeLineJoin = StrokeJoin.Bevel,
+          strokeLineMiter = 1f,
+          pathFillType = PathFillType.NonZero,
+        ) {
+          moveTo(8f, 18f)
+          lineTo(2f, 12f)
+          lineTo(8f, 6f)
+          lineTo(9.43f, 7.43f)
+          lineToRelative(-4.6f, 4.6f)
+          lineTo(9.4f, 16.6f)
+          lineTo(8f, 18f)
+          close()
+          moveToRelative(8f, 0f)
+          lineTo(14.58f, 16.58f)
+          lineToRelative(4.6f, -4.6f)
+          lineTo(14.6f, 7.4f)
+          lineTo(16f, 6f)
+          lineToRelative(6f, 6f)
+          lineToRelative(-6f, 6f)
+          close()
+        }
+      }
+      .build()
+
+  /*
    * Source: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/coffee.kt?var=opsz,wght,FILL,GRAD,ROND@24,400,0,0,50
    * Generated: 2026-06-20T11:13:08Z
    */

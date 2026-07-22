@@ -66,6 +66,11 @@
     <string name="cover.search.recent.content_description">Recent query</string>
     <!-- Generic title for artwork shown for a book or cover editor. -->
     <string name="cover.title">Cover</string>
+    <!-- Pluralized duration text for the sleep timer duration setting. -->
+    <plurals name="duration.minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
     <!-- Pluralized duration text for settings that use seconds. -->
     <plurals name="duration.seconds">
         <item quantity="one">%d second</item>
@@ -126,6 +131,12 @@
     <string name="library.storage_permission_bug.message">For certain devices, a system app is missing the necessary permission to access the external storage. This access is essential for eInk Audiobook Player to read your audiobooks.</string>
     <!-- Title for the card explaining a required storage permission workaround. -->
     <string name="library.storage_permission_bug.title">Permission required</string>
+    <!-- Library view option: books grouped by author folder (the default view). -->
+    <string name="library.organization.author_folders">Author folders</string>
+    <!-- Library view option: all books in one alphabetical list. -->
+    <string name="library.organization.flat_list">Flat list</string>
+    <!-- Library view option: books grouped by Current/Not started/Completed status. -->
+    <string name="library.organization.by_status">By status</string>
     <!-- Media browser title for recently played audiobooks. -->
     <string name="media_session.library.recent">Recent</string>
     <!-- Media browser root title for all audiobooks. -->
@@ -216,14 +227,20 @@
     <string name="settings.auto_sleep_timer.title">Automatic Sleep Timer</string>
     <!-- Summary text for the audiobook folders settings row. -->
     <string name="settings.library.folders.summary">Manage folders scanned for audiobooks</string>
+    <!-- Settings row title for choosing how the library is organized (author folders, flat list, by status). -->
+    <string name="settings.library.organization.title">Library view</string>
     <!-- Settings row for toggling grid layout in the library. -->
     <string name="settings.library.use_grid.title">Use grid layout</string>
     <!-- Title for the setting that rewinds automatically when playback resumes. -->
     <string name="settings.playback.auto_rewind.title">Auto rewind</string>
     <!-- Title for the setting that controls skip-forward and rewind duration. -->
     <string name="settings.playback.seek_time.title">Skip amount</string>
+    <!-- Settings row title for choosing what the sleep timer button does. -->
+    <string name="settings.sleep_timer.duration.title">Sleep timer duration</string>
     <!-- Settings support row for opening the FAQ. -->
     <string name="settings.support.faq.title">FAQ</string>
+    <!-- Settings support row linking to the source code repository. -->
+    <string name="settings.support.source_code.title">Source code</string>
     <!-- Support screen action for donating through Ko-fi. -->
     <string name="support.action.donate_kofi">Donate on Ko-fi</string>
     <!-- Support screen text explaining why support is useful. -->
@@ -244,4 +261,6 @@
     <string name="shortcut.play_current.short_label">Play current</string>
     <!-- Content description for opening the sleep timer. -->
     <string name="sleep_timer.action.open">Sleep-Timer</string>
+    <!-- Sleep timer option: stop playback at the end of the current chapter instead of after a fixed duration. Also shown as the state label on the player screen while the timer is running in this mode. -->
+    <string name="sleep_timer.duration.end_of_chapter">End of chapter</string>
 </resources>

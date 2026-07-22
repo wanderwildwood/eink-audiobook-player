@@ -31,13 +31,13 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import voice.core.data.BookId
 import voice.core.ui.sharedCoverElementModifier
-import voice.features.bookOverview.overview.AuthorFolderViewState
 import voice.features.bookOverview.overview.BookOverviewItemViewState
+import voice.features.bookOverview.overview.LibrarySection
 import voice.core.ui.R as UiR
 
 @Composable
 internal fun ListBooks(
-  folders: List<AuthorFolderViewState>,
+  sections: List<LibrarySection>,
   onBookClick: (BookId) -> Unit,
   onBookLongClick: (BookId) -> Unit,
   onFolderClick: (String?) -> Unit,
@@ -53,28 +53,60 @@ internal fun ListBooks(
         PermissionBugCard(onPermissionBugCardClick)
       }
     }
-    if (folders.isNotEmpty()) {
-      stickyHeader(
-        key = "folders-header",
-        contentType = "header",
-      ) {
-        BrowseHeader(
-          modifier = Modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surface)
-            .padding(vertical = 8.dp, horizontal = 8.dp),
-        )
+    sections.forEachIndexed { sectionIndex, section ->
+      when (section) {
+        is LibrarySection.Folders -> {
+          if (section.folders.isNotEmpty()) {
+            stickyHeader(
+              key = "folders-header-$sectionIndex",
+              contentType = "header",
+            ) {
+              BrowseHeader(
+                modifier = Modifier
+                  .fillMaxWidth()
+                  .background(MaterialTheme.colorScheme.surface)
+                  .padding(vertical = 8.dp, horizontal = 8.dp),
+              )
+            }
+            items(
+              items = section.folders,
+              key = { it.folderName ?: "" },
+              contentType = { "folder" },
+            ) { folder ->
+              FolderRow(folder = folder, onClick = onFolderClick)
+            }
+          }
+        }
+        is LibrarySection.Books -> {
+          if (section.books.isNotEmpty()) {
+            val headerRes = section.headerRes
+            if (headerRes != null) {
+              stickyHeader(
+                key = "books-header-$sectionIndex",
+                contentType = "header",
+              ) {
+                SectionHeader(
+                  headerRes = headerRes,
+                  modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.surface)
+                    .padding(vertical = 8.dp, horizontal = 8.dp),
+                )
+              }
+            }
+            items(
+              items = section.books,
+              key = { it.id.value },
+              contentType = { "book" },
+            ) { book ->
+              ListBookRow(book = book, onBookClick = onBookClick, onBookLongClick = onBookLongClick)
+            }
+          }
+        }
       }
-      items(
-        items = folders,
-        key = { it.folderName ?: "" },
-        contentType = { "folder" },
-      ) { folder ->
-        FolderRow(folder = folder, onClick = onFolderClick)
-      }
-      item {
-        Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
-      }
+    }
+    item {
+      Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
     }
   }
 }

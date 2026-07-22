@@ -21,6 +21,7 @@ import voice.core.common.DispatcherProvider
 import voice.core.data.BookId
 import voice.core.data.GridMode
 import voice.core.data.KioskModeDemoData
+import voice.core.data.LibraryOrganization
 import voice.core.data.repo.BookContentRepo
 import voice.core.data.repo.BookRepository
 import voice.core.data.repo.internals.dao.RecentBookSearchDao
@@ -65,6 +66,7 @@ class BookOverviewViewModelTest {
       currentBookStoreDataStore = MemoryDataStore(currentBook.id),
       folderPickerMovedDialogShownStore = MemoryDataStore(false),
       gridModeStore = MemoryDataStore(GridMode.LIST),
+      libraryOrganizationStore = MemoryDataStore(LibraryOrganization.AUTHOR_FOLDERS),
       gridCount = mockk<GridCount> {
         every { useGridAsDefault() } returns false
       },
@@ -130,6 +132,7 @@ class BookOverviewViewModelTest {
       currentBookStoreDataStore = MemoryDataStore(null),
       folderPickerMovedDialogShownStore = MemoryDataStore(false),
       gridModeStore = MemoryDataStore(GridMode.LIST),
+      libraryOrganizationStore = MemoryDataStore(LibraryOrganization.AUTHOR_FOLDERS),
       gridCount = mockk<GridCount> {
         every { useGridAsDefault() } returns false
       },
@@ -302,6 +305,7 @@ class BookOverviewViewModelTest {
       currentBookStoreDataStore = MemoryDataStore(null),
       folderPickerMovedDialogShownStore = folderPickerMovedDialogShownStore,
       gridModeStore = MemoryDataStore(GridMode.LIST),
+      libraryOrganizationStore = MemoryDataStore(LibraryOrganization.AUTHOR_FOLDERS),
       gridCount = mockk<GridCount> {
         every { useGridAsDefault() } returns false
       },

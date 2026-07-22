@@ -15,6 +15,7 @@ import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
 import voice.core.data.BookId
 import voice.core.data.GridMode
+import voice.core.data.LibraryOrganization
 import voice.core.data.ThemeColorScheme
 import voice.core.data.ThemeMode
 import voice.core.data.sleeptimer.SleepTimerPreference
@@ -138,6 +139,17 @@ public interface StoreModule {
           },
         ),
       ),
+    )
+  }
+
+  @Provides
+  @SingleIn(AppScope::class)
+  @LibraryOrganizationStore
+  private fun libraryOrganization(factory: VoiceDataStoreFactory): DataStore<LibraryOrganization> {
+    return factory.create(
+      LibraryOrganization.serializer(),
+      LibraryOrganization.AUTHOR_FOLDERS,
+      "libraryOrganization",
     )
   }
 

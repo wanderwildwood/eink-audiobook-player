@@ -9,7 +9,7 @@ import kotlin.time.Duration.Companion.minutes
 @Serializable
 public data class SleepTimerPreference(
   /**
-   * The custom sleep time duration
+   * The custom sleep time duration. Ignored when [endOfChapterEnabled] is true.
    */
   val duration: Duration,
   /**
@@ -20,6 +20,11 @@ public data class SleepTimerPreference(
   val autoSleepStartTime: LocalTime,
   @Serializable(with = LocalTimeSerializer::class)
   val autoSleepEndTime: LocalTime,
+  /**
+   * If true, the sleep timer (both the manual quick-tap button and the automatic nightly timer)
+   * stops playback at the end of the current chapter instead of after [duration].
+   */
+  val endOfChapterEnabled: Boolean = false,
 ) {
 
   public companion object {
@@ -28,6 +33,7 @@ public data class SleepTimerPreference(
       autoSleepStartTime = LocalTime.of(22, 0),
       autoSleepEndTime = LocalTime.of(6, 0),
       duration = 10.minutes,
+      endOfChapterEnabled = false,
     )
   }
 }

@@ -17,6 +17,7 @@ import kotlinx.coroutines.test.runTest
 import voice.core.common.AppInfoProvider
 import voice.core.common.DispatcherProvider
 import voice.core.data.GridMode
+import voice.core.data.LibraryOrganization
 import voice.core.data.sleeptimer.SleepTimerPreference
 import voice.core.featureflag.MemoryFeatureFlag
 import voice.core.ui.GridCount
@@ -33,6 +34,7 @@ class SettingsViewModelTest {
   private val autoRewindAmountStore = MemoryDataStore(10)
   private val seekTimeStore = MemoryDataStore(30)
   private val gridModeStore = MemoryDataStore(GridMode.GRID)
+  private val libraryOrganizationStore = MemoryDataStore(LibraryOrganization.AUTHOR_FOLDERS)
   private val sleepTimerPreferenceStore = MemoryDataStore(SleepTimerPreference.Default)
   private val analyticsConsentStore = MemoryDataStore(false)
   private val developerMenuUnlockedStore = MemoryDataStore(false)
@@ -55,6 +57,7 @@ class SettingsViewModelTest {
     navigator = navigator,
     appInfoProvider = appInfoProvider,
     gridModeStore = gridModeStore,
+    libraryOrganizationStore = libraryOrganizationStore,
     sleepTimerPreferenceStore = sleepTimerPreferenceStore,
     analyticsConsentStore = analyticsConsentStore,
     gridCount = gridCount,

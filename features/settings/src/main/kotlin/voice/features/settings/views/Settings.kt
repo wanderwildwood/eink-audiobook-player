@@ -139,6 +139,13 @@ private fun Settings(
       }
 
       item {
+        LibraryOrganizationRow(
+          organization = viewState.libraryOrganization,
+          onClick = listener::onLibraryOrganizationRowClick,
+        )
+      }
+
+      item {
         SeekTimeRow(viewState.seekTimeInSeconds) {
           listener.onSeekAmountRowClick()
         }
@@ -155,6 +162,14 @@ private fun Settings(
       }
 
       item {
+        SleepTimerDurationRow(
+          durationMinutes = viewState.sleepTimerDurationMinutes,
+          endOfChapter = viewState.sleepTimerEndOfChapter,
+          onClick = listener::onSleepTimerDurationRowClick,
+        )
+      }
+
+      item {
         ListItem(
           modifier = Modifier.clickable { listener.openFaq() },
           leadingContent = {
@@ -165,6 +180,20 @@ private fun Settings(
           },
           headlineContent = {
             Text(stringResource(StringsR.string.settings_support_faq_title))
+          },
+        )
+      }
+      item {
+        ListItem(
+          modifier = Modifier.clickable { listener.openSourceCode() },
+          leadingContent = {
+            Icon(
+              imageVector = VoiceIcons.Code,
+              contentDescription = stringResource(StringsR.string.settings_support_source_code_title),
+            )
+          },
+          headlineContent = {
+            Text(stringResource(StringsR.string.settings_support_source_code_title))
           },
         )
       }
@@ -274,6 +303,22 @@ private fun Dialog(
       SeekAmountDialog(
         currentSeconds = viewState.seekTimeInSeconds,
         onSecondsConfirm = listener::seekAmountChanged,
+        onDismiss = listener::dismissDialog,
+      )
+    }
+    SettingsViewState.Dialog.SleepTimerDuration -> {
+      SleepTimerDurationDialog(
+        currentDurationMinutes = viewState.sleepTimerDurationMinutes,
+        currentEndOfChapter = viewState.sleepTimerEndOfChapter,
+        onDurationSelect = listener::setSleepTimerDurationMinutes,
+        onEndOfChapterSelect = listener::setSleepTimerEndOfChapter,
+        onDismiss = listener::dismissDialog,
+      )
+    }
+    SettingsViewState.Dialog.LibraryOrganization -> {
+      LibraryOrganizationDialog(
+        current = viewState.libraryOrganization,
+        onSelect = listener::setLibraryOrganization,
         onDismiss = listener::dismissDialog,
       )
     }
