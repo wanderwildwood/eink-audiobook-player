@@ -1,0 +1,37 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/build_setup
+
+      - name: Build APK
+        run: |
+          version_name="${GITHUB_REF_NAME#v}"
+          ./gradlew :app:assembleFreeDebug \
+            -Pvoice.versionName="$version_name" \
+            -Pvoice.versionCode="$GITHUB_RUN_NUMBER"
+
+      - name: Rename APK
+        run: cp app/build/outputs/apk/free/debug/app-free-debug.apk "eink-audiobook-player-${GITHUB_REF_NAME}.apk"
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: eink-audiobook-player-*.apk
+          generate_release_notes: true

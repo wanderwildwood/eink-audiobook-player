@@ -54,6 +54,17 @@ android {
     null
   }
 
+  // A fixed debug keystore checked into the repo, so debug builds are signed identically on
+  // every machine and CI run - lets a downloaded debug APK be upgraded in place by a later one,
+  // instead of each environment's own auto-generated ~/.android/debug.keystore producing a
+  // different signature every time.
+  signingConfigs.getByName("debug") {
+    storeFile = layout.projectDirectory.file("debug.keystore").asFile
+    storePassword = "android"
+    keyAlias = "androiddebugkey"
+    keyPassword = "android"
+  }
+
   buildTypes {
     getByName("release") {
       isMinifyEnabled = true
