@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -35,6 +34,7 @@ import kotlinx.coroutines.launch
 import voice.core.common.rootGraphAs
 import voice.core.data.BookId
 import voice.core.scanner.CoverSaver
+import voice.core.ui.NoAnimationAlertDialog
 import voice.navigation.Destination
 import voice.navigation.NavEntryProvider
 import voice.navigation.Navigator
@@ -62,6 +62,7 @@ fun EditCoverDialog(
   coverUri: Uri,
   bookId: BookId,
   onDismiss: () -> Unit,
+  modifier: Modifier = Modifier,
 ) {
   val context = LocalContext.current
   val scope = rememberCoroutineScope()
@@ -70,8 +71,9 @@ fun EditCoverDialog(
   var imageWidth by remember { mutableIntStateOf(0) }
   var imageHeight by remember { mutableIntStateOf(0) }
 
-  AlertDialog(
+  NoAnimationAlertDialog(
     onDismissRequest = { onDismiss() },
+    modifier = modifier,
     title = { Text(text = stringResource(StringsR.string.cover_title)) },
     text = {
       Box {

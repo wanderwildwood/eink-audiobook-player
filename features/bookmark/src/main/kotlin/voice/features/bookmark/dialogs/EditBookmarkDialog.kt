@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -27,6 +26,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import voice.core.data.Bookmark
+import voice.core.ui.NoAnimationAlertDialog
 import voice.core.strings.R as StringsR
 
 @Composable
@@ -46,7 +46,7 @@ internal fun EditBookmarkDialog(
   }
   val focusRequester = remember { FocusRequester() }
 
-  AlertDialog(
+  NoAnimationAlertDialog(
     onDismissRequest = onDismissRequest,
     title = { Text(text = stringResource(StringsR.string.bookmark_edit_title)) },
     text = {

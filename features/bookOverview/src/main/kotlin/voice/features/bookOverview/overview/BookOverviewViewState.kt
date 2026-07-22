@@ -18,6 +18,8 @@ data class BookOverviewViewState(
   val showStoragePermissionBugCard: Boolean,
   val showFolderPickerIcon: Boolean,
   val dialog: Dialog?,
+  val folders: List<AuthorFolderViewState> = emptyList(),
+  val nowPlaying: State<BookOverviewItemViewState>? = null,
 ) {
 
   companion object {

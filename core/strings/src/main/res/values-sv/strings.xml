@@ -33,10 +33,6 @@
     <string name="cover.search.query.without_author">%s ljudboksomslag</string>
     <string name="cover.search.recent.content_description">Senaste sökning</string>
     <string name="cover.title">Omslag</string>
-    <plurals name="duration.minutes">
-        <item quantity="one">%d minut</item>
-        <item quantity="other">%d minuter</item>
-    </plurals>
     <plurals name="duration.seconds">
         <item quantity="one">%d sekund</item>
         <item quantity="other">%d sekunder</item>
@@ -107,14 +103,6 @@
     <string name="settings.action.open">Inställningar</string>
     <string name="settings.analytics_consent.description">Tillåt anonym insamling av användningsstatistik för att förbättra appen</string>
     <string name="settings.analytics_consent.title">Analys</string>
-    <string name="settings.appearance.color_scheme.title">Färgschema</string>
-    <string name="settings.appearance.color_scheme.dynamic">Dynamisk färg</string>
-    <string name="settings.appearance.color_scheme.dynamic.summary">Använder färger från bakgrundsbilden och systemtemat.</string>
-    <string name="settings.appearance.color_scheme.voice_blue">Voice-blå</string>
-    <string name="settings.appearance.theme.dark">Mörkt</string>
-    <string name="settings.appearance.theme.follow_system">Följ systemet</string>
-    <string name="settings.appearance.theme.light">Ljust</string>
-    <string name="settings.appearance.theme.title">Tema</string>
     <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Ange sluttid</string>
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Ange starttid</string>
     <string name="settings.auto_sleep_timer.summary">Starta en insomningstimer automatiskt när uppspelningen börjar mellan %1$s och %2$s</string>
@@ -124,12 +112,6 @@
     <string name="settings.playback.auto_rewind.title">Automatisk bakåtspolning</string>
     <string name="settings.playback.seek_time.title">Hopplängd</string>
     <string name="settings.support.faq.title">Vanliga frågor</string>
-    <string name="settings.support.get_support.title">Få hjälp</string>
-    <string name="settings.support.help_translating.title">Hjälp med att översätta Voice</string>
-    <string name="settings.support.report_issue.title">Rapportera ett problem</string>
-    <string name="settings.support.suggest_idea.title">Föreslå en idé</string>
-    <string name="settings.support.support_voice.summary">Donationer bidrar till att Voice kan underhållas</string>
-    <string name="settings.support.support_voice.title">Stöd utvecklingen</string>
     <string name="support.action.donate_kofi">Donera på Ko-fi</string>
     <string name="support.description.maintenance">Voice är gratis, öppen källkod och underhålls av en utvecklare.</string>
     <string name="support.description.maintenance_subtitle">Donationer hjälper till att finansiera löpande underhåll och utveckling.</string>
@@ -140,8 +122,4 @@
     <string name="support.title">Stöd utvecklingen</string>
     <string name="shortcut.play_current.short_label">Fortsätt spela</string>
     <string name="sleep_timer.action.open">Insomningstimer</string>
-    <string name="sleep_timer.dialog.action.decrement">Kortare</string>
-    <string name="sleep_timer.dialog.action.increment">Längre</string>
-    <string name="sleep_timer.dialog.title">Sov gott! 🌙</string>
-    <string name="sleep_timer.end_of_chapter">Slutet av kapitlet</string>
 </resources>

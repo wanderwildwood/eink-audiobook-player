@@ -26,8 +26,6 @@ import voice.core.playback.session.MediaItemProvider
 import voice.core.playback.session.playbackItemForPosition
 import voice.core.playback.session.positionInMediaItem
 import voice.core.playback.session.toMediaIdOrNull
-import voice.core.sleeptimer.SleepTimer
-import voice.core.sleeptimer.SleepTimerState
 import java.time.Instant
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.ZERO
@@ -47,38 +45,8 @@ class VoicePlayer(
   private val mediaItemProvider: MediaItemProvider,
   private val scope: CoroutineScope,
   private val volumeGain: VolumeGain,
-  private val sleepTimer: SleepTimer,
   private val analytics: Analytics,
 ) : ForwardingPlayer(player) {
-
-  private val endOfChapterSleepTimerListener = object : Player.Listener {
-    override fun onPositionDiscontinuity(
-      oldPosition: Player.PositionInfo,
-      newPosition: Player.PositionInfo,
-      reason: Int,
-    ) {
-      if (reason == DISCONTINUITY_REASON_AUTO_TRANSITION) {
-        pauseAndDisableSleepTimerIfEndOfChapter()
-      }
-    }
-
-    override fun onPlaybackStateChanged(playbackState: Int) {
-      if (playbackState == STATE_ENDED) {
-        pauseAndDisableSleepTimerIfEndOfChapter()
-      }
-    }
-
-    private fun pauseAndDisableSleepTimerIfEndOfChapter() {
-      if (sleepTimer.state.value !is SleepTimerState.Enabled.WithEndOfChapter) return
-      Logger.v("Pausing due to EndOfChapter")
-      sleepTimer.disable()
-      player.pause()
-    }
-  }
-
-  init {
-    player.addListener(endOfChapterSleepTimerListener)
-  }
 
   fun forceSeekToNext() {
     scope.launch {

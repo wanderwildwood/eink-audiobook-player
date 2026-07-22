@@ -8,22 +8,16 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SheetValue.Expanded
-import androidx.compose.material3.SheetValue.Hidden
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.retain.retain
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -32,19 +26,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavEntry
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.IntoSet
 import dev.zacsweers.metro.Provides
-import kotlinx.coroutines.launch
 import voice.core.common.rootGraphAs
 import voice.core.data.BookId
-import voice.core.ui.PlayButton
+import voice.core.ui.NoAnimationAlertDialog
+import voice.core.ui.StaticBottomSheet
 import voice.core.ui.VoiceTheme
 import voice.core.ui.icons.VoiceIcons
-import voice.core.ui.playButtonSharedBoundsModifier
 import voice.features.bookOverview.bottomSheet.BottomSheetContent
 import voice.features.bookOverview.bottomSheet.BottomSheetItem
 import voice.features.bookOverview.deleteBook.DeleteBookDialog
@@ -90,8 +82,6 @@ fun BookOverviewScreen(modifier: Modifier = Modifier) {
   }
   val viewState = bookOverviewViewModel.state()
 
-  val scope = rememberCoroutineScope()
-
   val getContentLauncher = rememberLauncherForActivityResult(
     contract = ActivityResultContracts.GetContent(),
     onResult = { uri ->
@@ -111,6 +101,7 @@ fun BookOverviewScreen(modifier: Modifier = Modifier) {
       showBottomSheet = true
     },
     onBookFolderClick = bookOverviewViewModel::onBookFolderClick,
+    onFolderClick = bookOverviewViewModel::onFolderClick,
     onFolderPickerMovedDialogDismiss = bookOverviewViewModel::onFolderPickerMovedDialogDismiss,
     onPlayButtonClick = bookOverviewViewModel::playPause,
     onSearchActiveChange = bookOverviewViewModel::onSearchActiveChange,
@@ -138,32 +129,23 @@ fun BookOverviewScreen(modifier: Modifier = Modifier) {
   }
 
   if (showBottomSheet) {
-    val sheetState = rememberBottomSheetState(
-      initialValue = Hidden,
-      enabledValues = setOf(Hidden, Expanded),
-    )
-    ModalBottomSheet(
+    StaticBottomSheet(
       modifier = modifier,
-      sheetState = sheetState,
-      content = {
-        BottomSheetContent(
-          state = bottomSheetViewModel.state.value,
-          onItemClick = { item ->
-            if (item == BottomSheetItem.FileCover) {
-              getContentLauncher.launch("image/*")
-            }
-            scope.launch {
-              sheetState.hide()
-              bottomSheetViewModel.onItemClick(item)
-              showBottomSheet = false
-            }
-          },
-        )
-      },
       onDismissRequest = {
         showBottomSheet = false
       },
-    )
+    ) {
+      BottomSheetContent(
+        state = bottomSheetViewModel.state.value,
+        onItemClick = { item ->
+          if (item == BottomSheetItem.FileCover) {
+            getContentLauncher.launch("image/*")
+          }
+          bottomSheetViewModel.onItemClick(item)
+          showBottomSheet = false
+        },
+      )
+    }
   }
 }
 
@@ -174,6 +156,7 @@ internal fun BookOverview(
   onBookClick: (BookId) -> Unit,
   onBookLongClick: (BookId) -> Unit,
   onBookFolderClick: () -> Unit,
+  onFolderClick: (String?) -> Unit,
   onFolderPickerMovedDialogDismiss: () -> Unit,
   onPlayButtonClick: () -> Unit,
   onSearchActiveChange: (Boolean) -> Unit,
@@ -195,15 +178,15 @@ internal fun BookOverview(
         onSearchBookClick = onSearchBookClick,
       )
     },
-    floatingActionButton = {
-      if (viewState.playButtonState != null) {
-        PlayButton(
+    bottomBar = {
+      val nowPlaying = viewState.nowPlaying?.value
+      if (nowPlaying != null) {
+        NowPlayingBar(
           modifier = Modifier.navigationBarsPadding(),
+          book = nowPlaying,
           playing = viewState.playButtonState == BookOverviewViewState.PlayButtonState.Playing,
-          fabSize = 56.dp,
-          iconSize = 24.dp,
-          onPlayClick = onPlayButtonClick,
-          sharedElementModifier = Modifier.playButtonSharedBoundsModifier(),
+          onClick = onBookClick,
+          onPlayPauseClick = onPlayButtonClick,
         )
       }
     },
@@ -217,18 +200,20 @@ internal fun BookOverview(
       when (viewState.layoutMode) {
         BookOverviewLayoutMode.List -> {
           ListBooks(
-            books = viewState.books,
+            folders = viewState.folders,
             onBookClick = onBookClick,
             onBookLongClick = onBookLongClick,
+            onFolderClick = onFolderClick,
             showPermissionBugCard = viewState.showStoragePermissionBugCard,
             onPermissionBugCardClick = onPermissionBugCardClick,
           )
         }
         BookOverviewLayoutMode.Grid -> {
           GridBooks(
-            books = viewState.books,
+            folders = viewState.folders,
             onBookClick = onBookClick,
             onBookLongClick = onBookLongClick,
+            onFolderClick = onFolderClick,
             showPermissionBugCard = viewState.showStoragePermissionBugCard,
             onPermissionBugCardClick = onPermissionBugCardClick,
           )
@@ -249,7 +234,7 @@ private fun Dialog(
 ) {
   when (dialog) {
     BookOverviewViewState.Dialog.FolderPickerMovedToSettings -> {
-      AlertDialog(
+      NoAnimationAlertDialog(
         onDismissRequest = onFolderPickerMovedDialogDismiss,
         icon = {
           Row {
@@ -289,6 +274,7 @@ fun BookOverviewPreview(
       onBookClick = {},
       onBookLongClick = {},
       onBookFolderClick = {},
+      onFolderClick = {},
       onFolderPickerMovedDialogDismiss = {},
       onPlayButtonClick = {},
       onSearchActiveChange = {},

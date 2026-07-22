@@ -24,12 +24,13 @@ internal class BookParser(
     chapters: List<Chapter>,
     file: CachedDocumentFile,
     firstChapterMetadata: Metadata?,
+    folderName: String?,
   ): BookContent {
     val id = BookId(file.uri)
     return contentRepo.getOrPut(id) {
       val analyzed = firstChapterMetadata
         ?: mediaAnalyzer.analyze(fileFactory.create(chapters.first().id.toUri()))
-      parse(chapters, id, analyzed, file)
+      parse(chapters, id, analyzed, file, folderName)
     }
   }
 
@@ -38,6 +39,7 @@ internal class BookParser(
     id: BookId,
     analyzed: Metadata?,
     file: CachedDocumentFile,
+    folderName: String?,
   ): BookContent {
     return BookContent(
       id = id,
@@ -59,6 +61,7 @@ internal class BookParser(
       narrator = analyzed?.narrator,
       series = analyzed?.series,
       part = analyzed?.part,
+      folderName = folderName,
     ).also {
       validateIntegrity(it, chapters)
     }

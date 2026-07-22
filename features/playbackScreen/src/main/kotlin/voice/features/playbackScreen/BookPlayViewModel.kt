@@ -24,9 +24,7 @@ import voice.core.data.durationMs
 import voice.core.data.markForPosition
 import voice.core.data.repo.BookRepository
 import voice.core.data.repo.BookmarkRepo
-import voice.core.data.sleeptimer.SleepTimerPreference
 import voice.core.data.store.CurrentBookStore
-import voice.core.data.store.SleepTimerPreferenceStore
 import voice.core.featureflag.ExperimentalPlaybackPersistenceQualifier
 import voice.core.featureflag.FeatureFlag
 import voice.core.featureflag.KioskModeFeatureFlagQualifier
@@ -39,11 +37,9 @@ import voice.core.playback.overlay
 import voice.core.playback.playstate.PlayStateManager
 import voice.core.sleeptimer.SleepTimer
 import voice.core.sleeptimer.SleepTimerMode
-import voice.core.sleeptimer.SleepTimerMode.TimedWithDuration
 import voice.core.sleeptimer.SleepTimerState
 import voice.core.ui.formatTime
 import voice.features.playbackScreen.batteryOptimization.BatteryOptimization
-import voice.features.sleepTimer.SleepTimerViewState
 import voice.navigation.Destination
 import voice.navigation.Navigator
 import kotlin.time.Duration
@@ -65,8 +61,6 @@ class BookPlayViewModel(
   private val volumeGainFormatter: VolumeGainFormatter,
   private val batteryOptimization: BatteryOptimization,
   dispatcherProvider: DispatcherProvider,
-  @SleepTimerPreferenceStore
-  private val sleepTimerPreferenceStore: DataStore<SleepTimerPreference>,
   @ExperimentalPlaybackPersistenceQualifier
   private val experimentalPlaybackPersistenceFeatureFlag: FeatureFlag<Boolean>,
   @KioskModeFeatureFlagQualifier
@@ -159,60 +153,6 @@ class BookPlayViewModel(
   fun dismissDialog() {
     Logger.d("dismissDialog")
     dialogState.value = null
-  }
-
-  fun incrementSleepTime() {
-    updateSleepTimeViewState {
-      val customTime = it.customSleepTime
-      val newTime = customTime + 1
-      sleepTimerPreferenceStore.updateData { preference -> preference.copy(duration = newTime.minutes) }
-      SleepTimerViewState(newTime)
-    }
-  }
-
-  fun decrementSleepTime() {
-    updateSleepTimeViewState {
-      val customTime = it.customSleepTime
-      val newTime = (customTime - 1).coerceAtLeast(1)
-      sleepTimerPreferenceStore.updateData { preference ->
-        preference.copy(duration = newTime.minutes)
-      }
-      SleepTimerViewState(newTime)
-    }
-  }
-
-  fun onAcceptSleepTime(time: Int) {
-    updateSleepTimeViewState {
-      val book = currentBook() ?: return@updateSleepTimeViewState null
-      scope.launch {
-        bookmarkRepository.addBookmarkAtBookPosition(
-          book = book,
-          setBySleepTimer = true,
-          title = null,
-        )
-      }
-      sleepTimer.enable(TimedWithDuration(time.minutes))
-      null
-    }
-  }
-
-  fun onAcceptSleepAtEndOfChapter() {
-    updateSleepTimeViewState {
-      sleepTimer.enable(SleepTimerMode.EndOfChapter)
-      null
-    }
-  }
-
-  private fun updateSleepTimeViewState(update: suspend (SleepTimerViewState) -> SleepTimerViewState?) {
-    scope.launch {
-      val current = dialogState.value
-      val updated: SleepTimerViewState? = if (current is BookPlayDialogViewState.SleepTimer) {
-        update(current.viewState)
-      } else {
-        update(SleepTimerViewState(sleepTimerPreferenceStore.data.first().duration.inWholeMinutes.toInt()))
-      }
-      dialogState.value = updated?.let(BookPlayDialogViewState::SleepTimer)
-    }
   }
 
   fun onPlaybackSpeedChanged(speed: Float) {
@@ -345,13 +285,18 @@ class BookPlayViewModel(
       Logger.d("toggleSleepTimer while active=${sleepTimer.state.value}")
       if (sleepTimer.state.value.enabled) {
         sleepTimer.disable()
-        dialogState.value = null
       } else {
-        dialogState.value = BookPlayDialogViewState.SleepTimer(
-          viewState = SleepTimerViewState(
-            customSleepTime = sleepTimerPreferenceStore.data.first().duration.inWholeMinutes.toInt(),
-          ),
-        )
+        val book = currentBook()
+        if (book != null) {
+          scope.launch {
+            bookmarkRepository.addBookmarkAtBookPosition(
+              book = book,
+              setBySleepTimer = true,
+              title = null,
+            )
+          }
+          sleepTimer.enable(SleepTimerMode.TimedWithDefault)
+        }
       }
     }
   }
@@ -380,5 +325,4 @@ class BookPlayViewModel(
 private fun SleepTimerState.toViewState(): BookPlayViewState.SleepTimerViewState = when (this) {
   SleepTimerState.Disabled -> BookPlayViewState.SleepTimerViewState.Disabled
   is SleepTimerState.Enabled.WithDuration -> BookPlayViewState.SleepTimerViewState.Enabled.WithDuration(this.leftDuration)
-  SleepTimerState.Enabled.WithEndOfChapter -> BookPlayViewState.SleepTimerViewState.Enabled.WithEndOfChapter
 }

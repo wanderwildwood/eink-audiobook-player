@@ -1,58 +1,22 @@
-# Voice
+# eInk Audiobook Player
 
-[![CI](https://github.com/PaulWoitaschek/Voice/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/PaulWoitaschek/Voice/actions/workflows/ci.yml)
-[![Translation status](https://hosted.weblate.org/widgets/voice/-/svg-badge.svg)](https://hosted.weblate.org/engage/voice/)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://voice.woitaschek.de/license/)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE.md)
 
-**A minimalistic, user-focused audiobook player for Android, built for reliability and simplicity.**
+**A minimalistic audiobook player built for e-ink Android devices.**
 
-Voice turns your own audiobook files into a calm, focused listening library. It remembers where you stopped, keeps playback controls close, and includes the audiobook-specific details that generic music players miss: chapter navigation, sleep timer, bookmarks, playback speed, silence skipping, and auto-rewind after pauses.
+This is a personal fork of [Voice](https://github.com/PaulWoitaschek/Voice) by Paul Woitaschek, reskinned with Mudita's [MMD](https://github.com/mudita/MMD) design system for the Mudita Kompakt (4.3", 800x480, grayscale e-ink). It keeps Voice's audio engine and feature set — chapter navigation, sleep timer, bookmarks, playback speed, silence skipping, auto-rewind — and adapts the UI and a few behaviors for e-ink hardware:
 
-<p align="center">
-  <img alt="Voice library view" width="30%" src="fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" />
-  <img alt="Voice player view" width="30%" src="fastlane/metadata/android/en-US/images/phoneScreenshots/2_en-US.png" />
-  <img alt="Voice sleep timer" width="30%" src="fastlane/metadata/android/en-US/images/phoneScreenshots/3_en-US.png" />
-</p>
-
-## Why Voice?
-
-- **Made for your files:** Add a folder once and Voice organizes your local M4B, MP3, M4A, OGG, OGA, and OPUS audiobooks.
-- **Built for listening:** Resume positions, bookmarks, sleep timer fade-out, volume boost, speed control, and Android Auto support are part of the core experience.
-- **Private and uncluttered:** No account, no ads, no forced cloud sync. Your library stays on your device.
+- **Zero-animation UI**: every screen transition, dialog, and button state change is an instant cut. E-ink ghosts on any animation, so none of the usual Compose motion is used.
+- **Monochrome MMD theme**: pure black-on-white color scheme, no ripple effects.
+- **Author-folder library browsing**: books are grouped by author folder with counts, instead of one flat alphabetical list.
+- **Now Playing bar**: shows the currently loaded book instantly (not gated on a persisted playback position), pinned to the bottom of the library screens.
+- **Simplified sleep timer**: a single default duration plus shake-to-extend, using the phone's real accelerometer.
+- **No telemetry**: no analytics, no crash reporting, no remote config, no background network calls of any kind. The only network activity is an explicit, user-initiated cover art search ("cover from internet" on long-press).
 
 ## Download
 
-<a href="https://play.google.com/store/apps/details?id=de.ph1b.audiobook">
-  <img alt="Get it on Google Play"
-       height="70"
-       src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" />
-</a>
-<a href="https://f-droid.org/packages/de.ph1b.audiobook/">
-  <img alt="Get it on F-Droid"
-       height="70"
-       src="https://f-droid.org/badge/get-it-on.png" />
-</a>
-
-## Learn more
-
-The [documentation website](https://voice.woitaschek.de) covers features, the philosophy behind the app, how to organize your library, and the FAQ.
-
-## Contributing
-
-Contributions are very welcome: code, translations, bug reports, or ideas. Start with [Development](https://voice.woitaschek.de/development/) and [Architecture](https://voice.woitaschek.de/architecture/), or help translate Voice on [Weblate](https://hosted.weblate.org/engage/voice/).
-
-## Support Voice
-
-Voice is free and built in spare time. If it has been useful to you, consider chipping in. One-time or monthly, no sign-up required:
-
-<a href="https://ko-fi.com/paul_voice">
-  <img alt="Support on Ko-fi"
-       height="50"
-       src="https://storage.ko-fi.com/cdn/brandasset/v2/support_me_on_kofi_dark.png" />
-</a>
-
-You can also [sponsor on GitHub](https://github.com/sponsors/PaulWoitaschek) if you prefer.
+Not distributed anywhere — build it yourself with the bundled Gradle wrapper (`./gradlew assembleFreeDebug`) and sideload via `adb install`.
 
 ## License
 
-Voice is licensed under [GNU GPLv3](https://voice.woitaschek.de/license/). By contributing, you agree to license your code under the same terms.
+Licensed under [GNU GPLv3](LICENSE.md), the same as upstream Voice. See [Voice](https://github.com/PaulWoitaschek/Voice) and [MMD](https://github.com/mudita/MMD) for the original projects this is built on.

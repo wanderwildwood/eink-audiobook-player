@@ -21,7 +21,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,23 +34,24 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import voice.core.data.BookId
 import voice.core.ui.sharedCoverElementModifier
-import voice.features.bookOverview.overview.BookOverviewCategory
+import voice.features.bookOverview.overview.AuthorFolderViewState
 import voice.features.bookOverview.overview.BookOverviewItemViewState
 import kotlin.math.roundToInt
 import voice.core.ui.R as UiR
 
 @Composable
 internal fun GridBooks(
-  books: Map<BookOverviewCategory, Map<BookId, State<BookOverviewItemViewState>>>,
+  folders: List<AuthorFolderViewState>,
   onBookClick: (BookId) -> Unit,
   onBookLongClick: (BookId) -> Unit,
+  onFolderClick: (String?) -> Unit,
   showPermissionBugCard: Boolean,
   onPermissionBugCardClick: () -> Unit,
 ) {
   val cellCount = gridColumnCount()
   LazyVerticalGrid(
     columns = GridCells.Fixed(cellCount),
-    verticalArrangement = Arrangement.spacedBy(8.dp),
+    verticalArrangement = Arrangement.spacedBy(4.dp),
     horizontalArrangement = Arrangement.spacedBy(8.dp),
     contentPadding = PaddingValues(start = 8.dp, end = 8.dp, top = 24.dp, bottom = 4.dp),
   ) {
@@ -62,28 +62,23 @@ internal fun GridBooks(
         PermissionBugCard(onPermissionBugCardClick)
       }
     }
-    books.forEach { (category, books) ->
-      if (books.isEmpty()) return@forEach
+    if (folders.isNotEmpty()) {
       item(
         span = { GridItemSpan(maxLineSpan) },
-        key = category,
+        key = "folders-header",
         contentType = "header",
       ) {
-        Header(
+        BrowseHeader(
           modifier = Modifier.padding(top = 8.dp, bottom = 4.dp, start = 8.dp, end = 8.dp),
-          category = category,
         )
       }
       items(
-        items = books.toList(),
-        key = { (bookId, _) -> bookId.value },
-        contentType = { "item" },
-      ) { (_, bookState) ->
-        GridBook(
-          book = bookState.value,
-          onBookClick = onBookClick,
-          onBookLongClick = onBookLongClick,
-        )
+        items = folders,
+        span = { GridItemSpan(maxLineSpan) },
+        key = { it.folderName ?: "" },
+        contentType = { "folder" },
+      ) { folder ->
+        FolderRow(folder = folder, onClick = onFolderClick)
       }
       item(
         span = { GridItemSpan(maxLineSpan) },

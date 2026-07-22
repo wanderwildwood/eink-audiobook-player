@@ -33,10 +33,6 @@
     <string name="cover.search.query.without_author">%s Hörbuch-Cover</string>
     <string name="cover.search.recent.content_description">Zuletzt gesucht</string>
     <string name="cover.title">Cover</string>
-    <plurals name="duration.minutes">
-        <item quantity="one">%d Minute</item>
-        <item quantity="other">%d Minuten</item>
-    </plurals>
     <plurals name="duration.seconds">
         <item quantity="one">%d Sekunde</item>
         <item quantity="other">%d Sekunden</item>
@@ -107,14 +103,6 @@
     <string name="settings.action.open">Einstellungen</string>
     <string name="settings.analytics_consent.description">Erlaube die Freigabe anonymer Nutzungsdaten zur Verbesserung der App</string>
     <string name="settings.analytics_consent.title">Nutzungsdaten</string>
-    <string name="settings.appearance.color_scheme.title">Farbschema</string>
-    <string name="settings.appearance.color_scheme.dynamic">Dynamische Farben</string>
-    <string name="settings.appearance.color_scheme.dynamic.summary">Verwendet Farben aus Deinem Hintergrundbild und Systemdesign.</string>
-    <string name="settings.appearance.color_scheme.voice_blue">Voice-Blau</string>
-    <string name="settings.appearance.theme.dark">Dunkel</string>
-    <string name="settings.appearance.theme.follow_system">Systemeinstellung</string>
-    <string name="settings.appearance.theme.light">Hell</string>
-    <string name="settings.appearance.theme.title">Design</string>
     <string name="settings.auto_sleep_timer.end.label">Endzeit</string>
     <string name="settings.auto_sleep_timer.start.label">Startzeit</string>
     <string name="settings.auto_sleep_timer.summary">Den Einschlaf-Timer automatisch starten, wenn die Wiedergabe zwischen %1$s und %2$s Uhr beginnt</string>
@@ -124,12 +112,6 @@
     <string name="settings.playback.auto_rewind.title">Automatisch zurückspulen</string>
     <string name="settings.playback.seek_time.title">Vor- und zurückspulen</string>
     <string name="settings.support.faq.title">Häufige Fragen</string>
-    <string name="settings.support.get_support.title">Hilfe erhalten</string>
-    <string name="settings.support.help_translating.title">Bei der Übersetzung von Voice helfen</string>
-    <string name="settings.support.report_issue.title">Ein Problem melden</string>
-    <string name="settings.support.suggest_idea.title">Eine Idee vorschlagen</string>
-    <string name="settings.support.support_voice.summary">Spenden helfen, Voice zu pflegen</string>
-    <string name="settings.support.support_voice.title">Entwicklung unterstützen</string>
     <string name="support.action.donate_kofi">Auf Ko-fi spenden</string>
     <string name="support.description.maintenance">Voice ist kostenlos, quelloffen und wird von einem Entwickler betreut.</string>
     <string name="support.description.maintenance_subtitle">Spenden helfen, laufende Wartung und Entwicklung zu finanzieren.</string>
@@ -140,8 +122,4 @@
     <string name="support.title">Entwicklung unterstützen</string>
     <string name="shortcut.play_current.short_label">Jetzt abspielen</string>
     <string name="sleep_timer.action.open">Einschlaf-Timer</string>
-    <string name="sleep_timer.dialog.action.decrement">Kürzer</string>
-    <string name="sleep_timer.dialog.action.increment">Länger</string>
-    <string name="sleep_timer.dialog.title">Schlaf gut! 🌙</string>
-    <string name="sleep_timer.end_of_chapter">Kapitelende</string>
 </resources>

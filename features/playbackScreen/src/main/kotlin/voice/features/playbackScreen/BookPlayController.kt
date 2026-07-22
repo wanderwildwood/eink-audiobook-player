@@ -18,7 +18,6 @@ import dev.zacsweers.metro.Provides
 import voice.core.common.rootGraphAs
 import voice.core.data.BookId
 import voice.features.playbackScreen.view.BookPlayView
-import voice.features.sleepTimer.SleepTimerDialog
 import voice.navigation.Destination
 import voice.navigation.NavEntryProvider
 import voice.core.strings.R as StringsR
@@ -86,16 +85,6 @@ fun BookPlayScreen(bookId: BookId) {
       }
       is BookPlayDialogViewState.SelectChapterDialog -> {
         SelectChapterDialog(dialogState, viewModel)
-      }
-      is BookPlayDialogViewState.SleepTimer -> {
-        SleepTimerDialog(
-          viewState = dialogState.viewState,
-          onDismiss = viewModel::dismissDialog,
-          onIncrementSleepTime = viewModel::incrementSleepTime,
-          onDecrementSleepTime = viewModel::decrementSleepTime,
-          onAcceptSleepTime = viewModel::onAcceptSleepTime,
-          onAcceptSleepAtEndOfChapter = viewModel::onAcceptSleepAtEndOfChapter,
-        )
       }
     }
   }

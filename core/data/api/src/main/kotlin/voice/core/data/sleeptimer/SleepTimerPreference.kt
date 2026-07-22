@@ -27,7 +27,7 @@ public data class SleepTimerPreference(
       autoSleepTimerEnabled = false,
       autoSleepStartTime = LocalTime.of(22, 0),
       autoSleepEndTime = LocalTime.of(6, 0),
-      duration = 20.minutes,
+      duration = 10.minutes,
     )
   }
 }

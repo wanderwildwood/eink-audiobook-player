@@ -40,6 +40,7 @@ class BookParserTest {
       id = BookId(bookFolder.toUri()),
       analyzed = metadata(album = null, title = "First Chapter Title"),
       file = FileBasedDocumentFile(bookFolder),
+      folderName = null,
     )
 
     assertEquals(expected = "My Audiobook", actual = content.name)
@@ -55,6 +56,7 @@ class BookParserTest {
       id = BookId(bookFolder.toUri()),
       analyzed = metadata(album = null, title = "Track Title"),
       file = FileBasedDocumentFile(bookFolder),
+      folderName = null,
     )
 
     assertEquals(expected = "Harry Potter 3", actual = content.name)
@@ -70,6 +72,7 @@ class BookParserTest {
       id = BookId(bookFile.toUri()),
       analyzed = metadata(album = null, title = "The Title"),
       file = FileBasedDocumentFile(bookFile),
+      folderName = null,
     )
 
     assertEquals(expected = "The Title", actual = content.name)
@@ -88,6 +91,7 @@ class BookParserTest {
       id = BookId(bookFolder.toUri()),
       analyzed = metadata(album = "Album Name", title = "First Chapter Title"),
       file = FileBasedDocumentFile(bookFolder),
+      folderName = null,
     )
 
     assertEquals(expected = "Album Name", actual = content.name)
@@ -106,6 +110,7 @@ class BookParserTest {
       id = BookId(bookFolder.toUri()),
       analyzed = null,
       file = FileBasedDocumentFile(bookFolder),
+      folderName = null,
     )
 
     assertEquals(expected = "Fallback Folder", actual = content.name)

@@ -33,13 +33,6 @@
     <string name="cover.search.query.without_author">%s clúdach fuaime</string>
     <string name="cover.search.recent.content_description">Ceist le déanaí</string>
     <string name="cover.title">Clúdach</string>
-    <plurals name="duration.minutes">
-        <item quantity="one">%d nóiméad</item>
-        <item quantity="two">%d nóiméad</item>
-        <item quantity="few">%d nóiméad</item>
-        <item quantity="many">%d nóiméad</item>
-        <item quantity="other">%d nóiméad</item>
-    </plurals>
     <plurals name="duration.seconds">
         <item quantity="one">%d soicind</item>
         <item quantity="two">%d soicindí</item>
@@ -116,14 +109,6 @@
     <string name="settings.action.open">Socruithe</string>
     <string name="settings.analytics_consent.description">Ceadaigh bailiú sonraí úsáide gan ainm chun cabhrú le feabhas a chur ar an aip</string>
     <string name="settings.analytics_consent.title">Anailísíocht</string>
-    <string name="settings.appearance.color_scheme.title">Scéim dathanna</string>
-    <string name="settings.appearance.color_scheme.dynamic">Dath dinimiciúil</string>
-    <string name="settings.appearance.color_scheme.dynamic.summary">Úsáideann sé dathanna ó do pháipéar balla agus ó théama an chórais.</string>
-    <string name="settings.appearance.color_scheme.voice_blue">Gorm Voice</string>
-    <string name="settings.appearance.theme.dark">Dorcha</string>
-    <string name="settings.appearance.theme.follow_system">Lean an córas</string>
-    <string name="settings.appearance.theme.light">Geal</string>
-    <string name="settings.appearance.theme.title">Téama</string>
     <string name="settings.auto_sleep_timer.end.label">Socraigh am deiridh</string>
     <string name="settings.auto_sleep_timer.start.label">Socraigh am tosaithe</string>
     <string name="settings.auto_sleep_timer.summary">Tosaigh lasc ama codlata go huathoibríoch nuair a thosaíonn an athsheinm idir %1$s agus %2$s</string>
@@ -133,12 +118,6 @@
     <string name="settings.playback.auto_rewind.title">Athchasadh uathoibríoch</string>
     <string name="settings.playback.seek_time.title">Scipeáil méid</string>
     <string name="settings.support.faq.title">Ceisteanna Coitianta</string>
-    <string name="settings.support.get_support.title">Faigh cabhair</string>
-    <string name="settings.support.help_translating.title">Cabhrú le Guth a aistriú</string>
-    <string name="settings.support.report_issue.title">Tuairiscigh fadhb</string>
-    <string name="settings.support.suggest_idea.title">Mol smaoineamh</string>
-    <string name="settings.support.support_voice.summary">Cuidíonn síntiúis le Voice a chothabháil</string>
-    <string name="settings.support.support_voice.title">Tacaigh leis an bhforbairt</string>
     <string name="support.action.donate_kofi">Tabhair síntiús ar Ko-fi</string>
     <string name="support.description.maintenance">Tá Voice saor in aisce, foinse oscailte, agus á chothabháil ag forbróir amháin.</string>
     <string name="support.description.maintenance_subtitle">Cuidíonn síntiúis le cothabháil agus forbairt leanúnach a mhaoiniú.</string>
@@ -149,8 +128,4 @@
     <string name="support.title">Tacaigh leis an bhforbairt</string>
     <string name="shortcut.play_current.short_label">Seinn reatha</string>
     <string name="sleep_timer.action.open">Orláiste codalta</string>
-    <string name="sleep_timer.dialog.action.decrement">Níos giorra</string>
-    <string name="sleep_timer.dialog.action.increment">Níos faide</string>
-    <string name="sleep_timer.dialog.title">Codladh sámh! 🌙</string>
-    <string name="sleep_timer.end_of_chapter">Deireadh na Caibidle</string>
 </resources>

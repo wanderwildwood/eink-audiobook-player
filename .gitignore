@@ -1,5 +1,6 @@
 /.specify
 /site
+/mudita-mmd
 *.iml
 *.apk
 *.log

@@ -36,7 +36,6 @@ import voice.core.sleeptimer.SleepTimer
 import voice.core.sleeptimer.SleepTimerMode
 import voice.core.sleeptimer.SleepTimerMode.TimedWithDuration
 import voice.core.sleeptimer.SleepTimerState
-import voice.features.sleepTimer.SleepTimerViewState
 import java.time.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -61,7 +60,6 @@ class BookPlayViewModelTest {
       stateFlow.value = when (val mode = firstArg<SleepTimerMode>()) {
         is TimedWithDuration -> SleepTimerState.Enabled.WithDuration(mode.duration)
         SleepTimerMode.TimedWithDefault -> SleepTimerState.Enabled.WithDuration(runBlocking { sleepTimerDataStore.data.first() }.duration)
-        SleepTimerMode.EndOfChapter -> SleepTimerState.Enabled.WithEndOfChapter
       }
     }
     every {
@@ -105,7 +103,6 @@ class BookPlayViewModelTest {
     },
     volumeGainFormatter = mockk(),
     batteryOptimization = mockk(),
-    sleepTimerPreferenceStore = sleepTimerDataStore,
     bookId = book.id,
     dispatcherProvider = DispatcherProvider(scope.coroutineContext, scope.coroutineContext, scope.coroutineContext),
     experimentalPlaybackPersistenceFeatureFlag = MemoryFeatureFlag(false),
@@ -113,57 +110,23 @@ class BookPlayViewModelTest {
   )
 
   @Test
-  fun sleepTimerValueChanging() = scope.runTest {
-    fun assertDialogSleepTime(expected: Int) {
-      assertEquals(expected = BookPlayDialogViewState.SleepTimer(SleepTimerViewState(expected)), actual = viewModel.dialogState.value)
-    }
-
-    viewModel.toggleSleepTimer()
-    yield()
-    assertDialogSleepTime(5)
-
-    suspend fun incrementAndAssert(time: Int) {
-      viewModel.incrementSleepTime()
-      yield()
-      assertDialogSleepTime(time)
-    }
-
-    suspend fun decrementAndAssert(time: Int) {
-      viewModel.decrementSleepTime()
-      yield()
-      assertDialogSleepTime(time)
-    }
-
-    decrementAndAssert(4)
-    decrementAndAssert(3)
-    decrementAndAssert(2)
-    decrementAndAssert(1)
-
-    decrementAndAssert(1)
-
-    incrementAndAssert(2)
-    incrementAndAssert(3)
-  }
-
-  @Test
   fun sleepTimerSettingFixedValue() = scope.runTest {
     viewModel.toggleSleepTimer()
-    viewModel.onAcceptSleepTime(10)
-    assertEquals(expected = 5.minutes, actual = sleepTimerDataStore.data.first().duration)
     yield()
     verify(exactly = 1) {
-      sleepTimer.enable(TimedWithDuration(10.minutes))
+      sleepTimer.enable(SleepTimerMode.TimedWithDefault)
     }
+    val state = assertIs<SleepTimerState.Enabled.WithDuration>(sleepTimer.state.value)
+    assertEquals(expected = 5.minutes, actual = state.leftDuration)
   }
 
   @Test
   fun deactivateSleepTimer() = scope.runTest {
     viewModel.toggleSleepTimer()
-    viewModel.onAcceptSleepTime(10)
     viewModel.toggleSleepTimer()
     yield()
     verifyOrder {
-      sleepTimer.enable(TimedWithDuration(10.minutes))
+      sleepTimer.enable(SleepTimerMode.TimedWithDefault)
       sleepTimer.disable()
     }
     assertIs<SleepTimerState.Disabled>(sleepTimer.state.value)
@@ -347,7 +310,6 @@ class BookPlayViewModelTest {
       bookmarkRepository = mockk(),
       volumeGainFormatter = mockk(),
       batteryOptimization = mockk(),
-      sleepTimerPreferenceStore = sleepTimerDataStore,
       bookId = book.id,
       dispatcherProvider = DispatcherProvider(scope.coroutineContext, scope.coroutineContext, scope.coroutineContext),
       experimentalPlaybackPersistenceFeatureFlag = MemoryFeatureFlag(experimentalPlaybackPersistence),

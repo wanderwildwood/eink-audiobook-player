@@ -39,7 +39,6 @@ class ComposePlugin : Plugin<Project> {
     target.tasks.withType<KotlinCompile> {
       compilerOptions {
         optIn.addAll(
-          "androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
           "androidx.compose.material3.ExperimentalMaterial3Api",
           "androidx.compose.foundation.ExperimentalFoundationApi",
           "androidx.compose.ui.ExperimentalComposeUiApi",

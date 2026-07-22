@@ -32,11 +32,6 @@
     <string name="cover.search.query.without_author">Coperta cărții %s</string>
     <string name="cover.search.recent.content_description">Interogarea recentă</string>
     <string name="cover.title">Copertă</string>
-    <plurals name="duration.minutes">
-        <item quantity="one">%d minut</item>
-        <item quantity="few">%d minute</item>
-        <item quantity="other">%d minute</item>
-    </plurals>
     <plurals name="duration.seconds">
         <item quantity="one">%d secundă</item>
         <item quantity="few">%d secunde</item>
@@ -102,13 +97,6 @@
     <string name="settings.library.use_grid.title">Folosiți aspect grilă</string>
     <string name="settings.playback.auto_rewind.title">Reluare automată</string>
     <string name="settings.playback.seek_time.title">Pas derulare</string>
-    <string name="settings.support.get_support.title">Obțineți asistență</string>
-    <string name="settings.support.help_translating.title">Ajutați la traducerea Voice</string>
-    <string name="settings.support.report_issue.title">Raportați o problemă</string>
-    <string name="settings.support.suggest_idea.title">Propuneți o idee</string>
     <string name="shortcut.play_current.short_label">Redare curentă</string>
     <string name="sleep_timer.action.open">Oprire temporizată</string>
-    <string name="sleep_timer.dialog.action.decrement">Mai scurtă</string>
-    <string name="sleep_timer.dialog.action.increment">Mai lungă</string>
-    <string name="sleep_timer.dialog.title">Vise plăcute! 🌙</string>
 </resources>

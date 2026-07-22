@@ -36,7 +36,6 @@ internal fun BookPlayContent(
         bookId = bookId,
         cover = viewState.cover,
         onPlayClick = onPlayClick,
-        sleepTimerState = viewState.sleepTimerState,
         modifier = Modifier
           .fillMaxHeight()
           .weight(1F)
@@ -78,7 +77,6 @@ internal fun BookPlayContent(
         bookId = bookId,
         onPlayClick = onPlayClick,
         cover = viewState.cover,
-        sleepTimerState = viewState.sleepTimerState,
         modifier = Modifier
           .fillMaxWidth()
           .weight(1F)

@@ -1,7 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
 import com.android.build.api.dsl.ManagedVirtualDevice
-import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
 import java.util.Properties
 
 plugins {
@@ -9,14 +8,6 @@ plugins {
   id("voice.compose")
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.metro)
-  alias(libs.plugins.crashlytics) apply false
-  alias(libs.plugins.googleServices) apply false
-}
-
-val playGoogleServicesJson = layout.projectDirectory.file("src/play/google-services.json")
-if (playGoogleServicesJson.asFile.canRead()) {
-  pluginManager.apply(libs.plugins.googleServices.get().pluginId)
-  pluginManager.apply(libs.plugins.crashlytics.get().pluginId)
 }
 
 android {
@@ -44,16 +35,6 @@ android {
       dimension = distributionFlavor
       buildConfigField(type = "Boolean", name = "INCLUDE_ANALYTICS", value = "false")
       buildConfigField(type = "Boolean", name = "SUPPORT_DEVELOPMENT_INCLUDED", value = "true")
-      pluginManager.withPlugin(libs.plugins.crashlytics.get().pluginId) {
-        extensions.configure<CrashlyticsExtension>("firebaseCrashlytics") {
-          mappingFileUploadEnabled = false
-        }
-      }
-    }
-    register("play") {
-      dimension = distributionFlavor
-      buildConfigField(type = "Boolean", name = "INCLUDE_ANALYTICS", value = "true")
-      buildConfigField(type = "Boolean", name = "SUPPORT_DEVELOPMENT_INCLUDED", value = "false")
     }
   }
 
@@ -128,31 +109,6 @@ android {
   }
 }
 
-val validatePlayGoogleServices = tasks.register("validatePlayGoogleServices") {
-  val playGoogleServicesJsonPath = playGoogleServicesJson.asFile.absolutePath
-
-  doLast {
-    check(File(playGoogleServicesJsonPath).canRead()) {
-      "app/src/play/google-services.json is required for Play builds. " +
-        "Use the free variant for F-Droid/GitHub builds."
-    }
-  }
-}
-
-tasks.matching { it.name in setOf("prePlayDebugBuild", "prePlayReleaseBuild") }.configureEach {
-  dependsOn(validatePlayGoogleServices)
-}
-
-tasks.matching {
-  val isPlayTask = it.name.contains("Play")
-  !isPlayTask && (
-    it.name.startsWith("process") && it.name.endsWith("GoogleServices") ||
-      it.name.startsWith("injectCrashlytics")
-    )
-}.configureEach {
-  enabled = false
-}
-
 dependencies {
   implementation(projects.core.strings)
   implementation(projects.core.ui)
@@ -167,7 +123,6 @@ dependencies {
   implementation(projects.navigation)
   implementation(projects.core.sleeptimer.api)
   implementation(projects.core.sleeptimer.impl)
-  implementation(projects.features.sleepTimer)
   implementation(projects.features.settings)
   implementation(projects.features.folderPicker)
   implementation(projects.features.bookOverview)
@@ -188,20 +143,13 @@ dependencies {
 
   implementation(libs.coil)
 
-  add("playImplementation", libs.firebase.crashlytics)
-  add("playImplementation", libs.firebase.analytics)
-  add("playImplementation", projects.core.logging.crashlytics)
-  add("playImplementation", projects.features.review.play)
-  add("playImplementation", projects.features.support.play)
   add("freeImplementation", projects.features.review.noop)
   add("freeImplementation", projects.features.support.free)
 
   implementation(projects.core.remoteconfig.api)
-  add("playImplementation", projects.core.remoteconfig.firebase)
   add("freeImplementation", projects.core.remoteconfig.noop)
 
   implementation(projects.core.analytics.api)
-  add("playImplementation", projects.core.analytics.firebase)
   add("freeImplementation", projects.core.analytics.noop)
 
   debugImplementation(projects.core.logging.debug)

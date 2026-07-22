@@ -8,6 +8,8 @@ import android.provider.Settings
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.togetherWith
@@ -15,7 +17,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalDensity
 import androidx.core.net.toUri
 import androidx.datastore.core.DataStore
 import androidx.navigation3.runtime.rememberNavBackStack
@@ -91,7 +92,6 @@ class MainActivity : AppCompatActivity() {
       ) {
         val bottomSheetStrategy = remember { BottomSheetSceneStrategy<Destination.Compose>() }
         val dialogStrategy = remember { DialogSceneStrategy<Destination.Compose>() }
-        val density = LocalDensity.current
 
         SharedTransitionLayout {
           CompositionLocalProvider(LocalSharedTransitionScope provides this) {
@@ -100,17 +100,13 @@ class MainActivity : AppCompatActivity() {
               sceneStrategies = listOf(bottomSheetStrategy, dialogStrategy),
               sharedTransitionScope = this,
               transitionSpec = {
-                if (isBookOverviewPlaybackTransition(initialState.destination(), targetState.destination())) {
-                  SharedZAxisEnterTransition togetherWith SharedZAxisExitTransition
-                } else {
-                  SharedXAxisEnterTransition(density) togetherWith SharedXAxisExitTransition(density)
-                }
+                EnterTransition.None togetherWith ExitTransition.None
               },
               popTransitionSpec = {
-                SharedZAxisEnterTransition togetherWith SharedZAxisExitTransition
+                EnterTransition.None togetherWith ExitTransition.None
               },
               predictivePopTransitionSpec = {
-                SharedZAxisEnterTransition togetherWith SharedZAxisExitTransition
+                EnterTransition.None togetherWith ExitTransition.None
               },
               onBack = {
                 if (backStack.size > 1) {

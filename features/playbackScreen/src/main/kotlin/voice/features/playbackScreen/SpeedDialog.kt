@@ -1,12 +1,12 @@
 package voice.features.playbackScreen
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
+import voice.core.ui.NoAnimationAlertDialog
 import java.text.DecimalFormat
 import voice.core.strings.R as StringsR
 
@@ -17,7 +17,7 @@ internal fun SpeedDialog(
 ) {
   val speedFormatter = remember { DecimalFormat("0.00 x") }
 
-  AlertDialog(
+  NoAnimationAlertDialog(
     onDismissRequest = { viewModel.dismissDialog() },
     confirmButton = {},
     title = {

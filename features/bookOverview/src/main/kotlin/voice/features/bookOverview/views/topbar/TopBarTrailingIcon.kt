@@ -1,8 +1,5 @@
 package voice.features.bookOverview.views.topbar
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
@@ -17,11 +14,7 @@ internal fun ColumnScope.TopBarTrailingIcon(
   onBookFolderClick: () -> Unit,
   onSettingsClick: () -> Unit,
 ) {
-  AnimatedVisibility(
-    visible = !searchActive,
-    enter = fadeIn(),
-    exit = fadeOut(),
-  ) {
+  if (!searchActive) {
     Row {
       if (showFolderPickerIcon) {
         BookFolderIcon(withHint = showAddBookHint, onClick = onBookFolderClick)

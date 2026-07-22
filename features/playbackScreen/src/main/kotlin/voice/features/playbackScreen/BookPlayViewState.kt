@@ -2,7 +2,6 @@ package voice.features.playbackScreen
 
 import androidx.compose.runtime.Immutable
 import voice.core.playback.misc.Decibel
-import voice.features.sleepTimer.SleepTimerViewState
 import kotlin.time.Duration
 
 @Immutable
@@ -22,8 +21,6 @@ data class BookPlayViewState(
     data object Disabled : SleepTimerViewState
 
     sealed interface Enabled : SleepTimerViewState {
-      data object WithEndOfChapter : Enabled
-
       @JvmInline
       value class WithDuration(val leftDuration: Duration) : Enabled
     }
@@ -57,7 +54,4 @@ internal sealed interface BookPlayDialogViewState {
       val time: String,
     )
   }
-
-  @JvmInline
-  value class SleepTimer(val viewState: SleepTimerViewState) : BookPlayDialogViewState
 }

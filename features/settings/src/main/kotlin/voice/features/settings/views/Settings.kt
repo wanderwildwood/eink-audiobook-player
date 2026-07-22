@@ -5,7 +5,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -108,14 +107,6 @@ private fun Settings(
           },
         )
       }
-      item {
-        ThemeModeRow(viewState.themeMode, listener::onThemeModeRowClick)
-      }
-      if (viewState.showThemeColorSchemePref) {
-        item {
-          ThemeColorSchemeRow(viewState.themeColorScheme, listener::onThemeColorSchemeRowClick)
-        }
-      }
       if (viewState.showAnalyticSetting && !viewState.kioskMode) {
         item {
           AnalyticsRow(analyticsEnabled = viewState.analyticsEnabled, toggle = listener::toggleAnalytics)
@@ -163,85 +154,6 @@ private fun Settings(
         AutoSleepTimerCard(viewState.autoSleepTimer, listener)
       }
 
-      if (viewState.showSupportDevelopment) {
-        item {
-          ListItem(
-            modifier = Modifier.clickable { listener.openSupportVoice() },
-            leadingContent = {
-              Icon(
-                imageVector = VoiceIcons.Favorite,
-                contentDescription = stringResource(StringsR.string.settings_support_support_voice_title),
-                tint = MaterialTheme.colorScheme.primary,
-              )
-            },
-            headlineContent = {
-              Text(stringResource(StringsR.string.settings_support_support_voice_title))
-            },
-            supportingContent = {
-              Text(stringResource(StringsR.string.settings_support_support_voice_summary))
-            },
-          )
-        }
-      }
-
-      item {
-        ListItem(
-          modifier = Modifier.clickable { listener.suggestIdea() },
-          leadingContent = {
-            Icon(
-              imageVector = VoiceIcons.Lightbulb,
-              contentDescription = stringResource(StringsR.string.settings_support_suggest_idea_title),
-            )
-          },
-          headlineContent = {
-            Text(stringResource(StringsR.string.settings_support_suggest_idea_title))
-          },
-        )
-      }
-
-      item {
-        ListItem(
-          modifier = Modifier.clickable { listener.getSupport() },
-          leadingContent = {
-            Icon(
-              imageVector = VoiceIcons.Help,
-              contentDescription = stringResource(StringsR.string.settings_support_get_support_title),
-            )
-          },
-          headlineContent = {
-            Text(stringResource(StringsR.string.settings_support_get_support_title))
-          },
-        )
-      }
-
-      item {
-        ListItem(
-          modifier = Modifier.clickable { listener.openBugReport() },
-          leadingContent = {
-            Icon(
-              imageVector = VoiceIcons.BugReport,
-              contentDescription = stringResource(StringsR.string.settings_support_report_issue_title),
-            )
-          },
-          headlineContent = {
-            Text(stringResource(StringsR.string.settings_support_report_issue_title))
-          },
-        )
-      }
-      item {
-        ListItem(
-          modifier = Modifier.clickable { listener.openTranslations() },
-          leadingContent = {
-            Icon(
-              imageVector = VoiceIcons.Language,
-              contentDescription = stringResource(StringsR.string.settings_support_help_translating_title),
-            )
-          },
-          headlineContent = {
-            Text(stringResource(StringsR.string.settings_support_help_translating_title))
-          },
-        )
-      }
       item {
         ListItem(
           modifier = Modifier.clickable { listener.openFaq() },
@@ -362,20 +274,6 @@ private fun Dialog(
       SeekAmountDialog(
         currentSeconds = viewState.seekTimeInSeconds,
         onSecondsConfirm = listener::seekAmountChanged,
-        onDismiss = listener::dismissDialog,
-      )
-    }
-    SettingsViewState.Dialog.Theme -> {
-      ThemeModeDialog(
-        selectedThemeMode = viewState.themeMode,
-        onThemeModeSelect = listener::setThemeMode,
-        onDismiss = listener::dismissDialog,
-      )
-    }
-    SettingsViewState.Dialog.ColorScheme -> {
-      ThemeColorSchemeDialog(
-        selectedThemeColorScheme = viewState.themeColorScheme,
-        onThemeColorSchemeSelect = listener::setThemeColorScheme,
         onDismiss = listener::dismissDialog,
       )
     }

@@ -1,12 +1,12 @@
 package voice.features.playbackScreen
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import voice.core.playback.misc.Decibel
+import voice.core.ui.NoAnimationAlertDialog
 import voice.core.strings.R as StringsR
 
 @Composable
@@ -14,7 +14,7 @@ internal fun VolumeGainDialog(
   dialogState: BookPlayDialogViewState.VolumeGainDialog,
   viewModel: BookPlayViewModel,
 ) {
-  AlertDialog(
+  NoAnimationAlertDialog(
     onDismissRequest = { viewModel.dismissDialog() },
     confirmButton = {},
     text = {

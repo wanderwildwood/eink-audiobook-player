@@ -33,12 +33,6 @@
     <string name="cover.search.query.without_author">Обкладинка аудіокниги %s</string>
     <string name="cover.search.recent.content_description">Недавній запит</string>
     <string name="cover.title">Обкладинка</string>
-    <plurals name="duration.minutes">
-        <item quantity="one">%d хвилина</item>
-        <item quantity="few">%d хвилини</item>
-        <item quantity="many">%d хвилин</item>
-        <item quantity="other">%d хвилин</item>
-    </plurals>
     <plurals name="duration.seconds">
         <item quantity="one">%d секунда</item>
         <item quantity="few">%d секунди</item>
@@ -113,14 +107,6 @@
     <string name="settings.action.open">Налаштування</string>
     <string name="settings.analytics_consent.description">Дозволити анонімне збирання данних для покращення додатку</string>
     <string name="settings.analytics_consent.title">Аналітика</string>
-    <string name="settings.appearance.color_scheme.title">Колірна схема</string>
-    <string name="settings.appearance.color_scheme.dynamic">Динамічний колір</string>
-    <string name="settings.appearance.color_scheme.dynamic.summary">Використовує кольори з ваших шпалер і системної теми.</string>
-    <string name="settings.appearance.color_scheme.voice_blue">Синій Voice</string>
-    <string name="settings.appearance.theme.dark">Темна</string>
-    <string name="settings.appearance.theme.follow_system">Як у системі</string>
-    <string name="settings.appearance.theme.light">Світла</string>
-    <string name="settings.appearance.theme.title">Тема</string>
     <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Час кінця</string>
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Час початку</string>
     <string name="settings.auto_sleep_timer.summary">Автоматично запустити таймер сну, коли програш починається між %1$s та %2$s</string>
@@ -130,12 +116,6 @@
     <string name="settings.playback.auto_rewind.title">Інтервал автовідмотування</string>
     <string name="settings.playback.seek_time.title">Інтервал перемотування</string>
     <string name="settings.support.faq.title">ЧаПи</string>
-    <string name="settings.support.get_support.title">Підтримка</string>
-    <string name="settings.support.help_translating.title">Допомога в перекладі Voice</string>
-    <string name="settings.support.report_issue.title">Повідомити про проблему</string>
-    <string name="settings.support.suggest_idea.title">Пропозиції</string>
-    <string name="settings.support.support_voice.summary">Донати допомагають підтримувати Voice</string>
-    <string name="settings.support.support_voice.title">Підтримати розробку</string>
     <string name="support.action.donate_kofi">Задонатити на Ko-fi</string>
     <string name="support.description.maintenance">Voice безкоштовний, з відкритим кодом і підтримується одним розробником.</string>
     <string name="support.description.maintenance_subtitle">Донати допомагають фінансувати постійну підтримку та розробку.</string>
@@ -146,8 +126,4 @@
     <string name="support.title">Підтримати розробку</string>
     <string name="shortcut.play_current.short_label">Відтворити поточну</string>
     <string name="sleep_timer.action.open">Таймер сну</string>
-    <string name="sleep_timer.dialog.action.decrement">Коротше</string>
-    <string name="sleep_timer.dialog.action.increment">Довше</string>
-    <string name="sleep_timer.dialog.title">На добраніч! 🌙</string>
-    <string name="sleep_timer.end_of_chapter">Кінець розділу</string>
 </resources>

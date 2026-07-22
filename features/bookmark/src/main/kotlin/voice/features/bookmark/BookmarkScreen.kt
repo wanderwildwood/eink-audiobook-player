@@ -138,7 +138,7 @@ internal fun BookmarkScreen(
     LaunchedEffect(viewState.shouldScrollTo, onScrollConfirm) {
       val index = viewState.bookmarks.indexOfFirst { it.id == viewState.shouldScrollTo }
       if (index != -1) {
-        lazyListState.animateScrollToItem(index)
+        lazyListState.scrollToItem(index)
         onScrollConfirm()
       }
     }
@@ -151,7 +151,6 @@ internal fun BookmarkScreen(
         key = { it.id.value.toString() },
       ) { bookmark ->
         BookmarkItem(
-          modifier = Modifier.animateItem(),
           bookmark = bookmark,
           onDelete = onDelete,
           onEdit = onEdit,

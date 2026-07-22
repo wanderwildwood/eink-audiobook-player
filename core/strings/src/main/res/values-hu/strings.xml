@@ -32,10 +32,6 @@
     <string name="cover.search.query.without_author">%s borítója</string>
     <string name="cover.search.recent.content_description">Elöző keresés</string>
     <string name="cover.title">Borító</string>
-    <plurals name="duration.minutes">
-        <item quantity="one">%d perc</item>
-        <item quantity="other">%d perc</item>
-    </plurals>
     <plurals name="duration.seconds">
         <item quantity="one">%d másodperc</item>
         <item quantity="other">%d másodperc</item>
@@ -99,13 +95,6 @@
     <string name="settings.library.use_grid.title">Rácsos elrendezés</string>
     <string name="settings.playback.auto_rewind.title">Automatikus visszatekerés</string>
     <string name="settings.playback.seek_time.title">Kihagyás mértéke</string>
-    <string name="settings.support.get_support.title">Segítségkérés</string>
-    <string name="settings.support.help_translating.title">Segíts lefordítani a Voice applikációt</string>
-    <string name="settings.support.report_issue.title">Hibajelentés</string>
-    <string name="settings.support.suggest_idea.title">Javasolj egy ötletet</string>
     <string name="shortcut.play_current.short_label">Jelenlegi lejátszása</string>
     <string name="sleep_timer.action.open">Alvásidőzítő</string>
-    <string name="sleep_timer.dialog.action.decrement">Rövidebb</string>
-    <string name="sleep_timer.dialog.action.increment">Hosszabb</string>
-    <string name="sleep_timer.dialog.title">Szép álmokat! 🌙</string>
 </resources>

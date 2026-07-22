@@ -1,6 +1,7 @@
-# <a name="contrib">Contribution</a>
+# Contributing
 
-## <a name="trans">Translations</a>
-The project page is on [weblate](https://hosted.weblate.org/engage/voice/). There all the localizations are maintained. If you want to contribute, check if there are untranslated or wrong translated words.
+This is a personal fork built for one specific device (Mudita Kompakt) and one person's workflow, not an actively maintained community project. There's no translation project or issue triage process set up for it.
 
-Or you can start translating a new language if you speak it 🤗
+That said, if something here is useful to you, feel free to open an issue or a pull request — no promises on response time, but they're welcome.
+
+For upstream Voice's own translation and contribution process, see [PaulWoitaschek/Voice](https://github.com/PaulWoitaschek/Voice).

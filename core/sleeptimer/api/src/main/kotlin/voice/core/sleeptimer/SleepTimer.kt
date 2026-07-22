@@ -13,8 +13,6 @@ sealed interface SleepTimerState {
 
   data object Disabled : SleepTimerState
   sealed interface Enabled : SleepTimerState {
-    data object WithEndOfChapter : Enabled
-
     @JvmInline
     value class WithDuration(val leftDuration: Duration) : Enabled
   }
@@ -29,5 +27,4 @@ sealed interface SleepTimerState {
 sealed interface SleepTimerMode {
   data class TimedWithDuration(val duration: Duration) : SleepTimerMode
   data object TimedWithDefault : SleepTimerMode
-  object EndOfChapter : SleepTimerMode
 }

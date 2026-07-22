@@ -66,11 +66,6 @@
     <string name="cover.search.recent.content_description">Recent query</string>
     <!-- Generic title for artwork shown for a book or cover editor. -->
     <string name="cover.title">Cover</string>
-    <!-- Pluralized duration text for sleep timer minutes. -->
-    <plurals name="duration.minutes">
-        <item quantity="one">%d minute</item>
-        <item quantity="other">%d minutes</item>
-    </plurals>
     <!-- Pluralized duration text for settings that use seconds. -->
     <plurals name="duration.seconds">
         <item quantity="one">%d second</item>
@@ -93,7 +88,7 @@
     <!-- Title for folder mode where the selected folder is one book. -->
     <string name="folder.mode.single.title">Single Book Mode: One folder equals one book.</string>
     <!-- Empty-state message when no books are detected from selected files. -->
-    <string name="folder.type.book_example.empty">Voice could not detect any books. Are there any audio files?</string>
+    <string name="folder.type.book_example.empty">eInk Audiobook Player could not detect any books. Are there any audio files?</string>
     <!-- Header above the preview of books detected from a folder structure. -->
     <string name="folder.type.book_example.header">This would lead to the following books being detected</string>
     <!-- Pluralized file count shown in folder structure previews. -->
@@ -103,6 +98,10 @@
     </plurals>
     <!-- Title for choosing how audiobook files are structured. -->
     <string name="folder.type.title">How are your files structured?</string>
+    <!-- Header above the list of author folders on the library screen. -->
+    <string name="library.browse.title">Library</string>
+    <!-- Author-folder label for books that weren't scanned from an author-folder structure. -->
+    <string name="library.browse.unsorted">Other</string>
     <!-- Library category header for completed books. -->
     <string name="library.category.completed.title">Completed</string>
     <!-- Library category header for books currently being listened to. -->
@@ -117,12 +116,14 @@
     <string name="library.folders.moved.dialog.title">Audiobook folders moved</string>
     <!-- Body for the one-time dialog shown from the old audiobook folders shortcut. -->
     <string name="library.folders.moved.dialog.message">You can now manage audiobook folders in Preferences.</string>
+    <!-- Static label shown while the library folder scan is running (no animated progress bar on this device). -->
+    <string name="library.scanning.label">Scanning library…</string>
     <!-- Hint text for searching books in the library. -->
     <string name="library.search.hint">What are you looking for?</string>
     <!-- Button label for granting the storage permission workaround. -->
     <string name="library.storage_permission_bug.action">Grant permission</string>
     <!-- Message explaining why a storage permission workaround is needed. -->
-    <string name="library.storage_permission_bug.message">For certain devices, a system app is missing the necessary permission to access the external storage. This access is essential for Voice to read your audiobooks.</string>
+    <string name="library.storage_permission_bug.message">For certain devices, a system app is missing the necessary permission to access the external storage. This access is essential for eInk Audiobook Player to read your audiobooks.</string>
     <!-- Title for the card explaining a required storage permission workaround. -->
     <string name="library.storage_permission_bug.title">Permission required</string>
     <!-- Media browser title for recently played audiobooks. -->
@@ -140,21 +141,21 @@
     <!-- Description for analytics consent during onboarding. -->
     <string name="onboarding.analytics_consent.description">Allow us to collect anonymous usage data to help improve the app. You can change this later in settings.</string>
     <!-- Title for analytics consent during onboarding. -->
-    <string name="onboarding.analytics_consent.title">Help improve Voice</string>
+    <string name="onboarding.analytics_consent.title">Help improve eInk Audiobook Player</string>
     <!-- Button label for leaving onboarding and starting playback. -->
     <string name="onboarding.completion.action.start_listening">Start Listening</string>
     <!-- Subtitle on the onboarding completion screen. -->
-    <string name="onboarding.completion.subtitle">Your first audiobook is ready to play. Enjoy your journey with Voice!</string>
+    <string name="onboarding.completion.subtitle">Your first audiobook is ready to play. Enjoy your journey with eInk Audiobook Player!</string>
     <!-- Title on the onboarding completion screen. -->
     <string name="onboarding.completion.title">You\'re All Set!</string>
     <!-- Subtitle explaining file and folder choices in onboarding. -->
-    <string name="onboarding.explanation.subtitle">With Voice, you can add books as individual files or organize them in folders. You choose!</string>
+    <string name="onboarding.explanation.subtitle">With eInk Audiobook Player, you can add books as individual files or organize them in folders. You choose!</string>
     <!-- Title on the onboarding explanation screen. -->
     <string name="onboarding.explanation.title">Your Library, Your Way</string>
     <!-- Subtitle on the onboarding welcome screen. -->
     <string name="onboarding.welcome.subtitle">Your personal pocket audiobook player. Let\'s get you set up.</string>
     <!-- Title on the onboarding welcome screen. -->
-    <string name="onboarding.welcome.title">Welcome to Voice!</string>
+    <string name="onboarding.welcome.title">Welcome to eInk Audiobook Player!</string>
     <!-- Label for the playback action that skips forward. -->
     <string name="playback.action.fast_forward">Fast forward</string>
     <!-- Content description for a playback button that pauses audio. -->
@@ -205,23 +206,6 @@
     <string name="settings.analytics_consent.description">Allow anonymous usage data collection to help improve the app</string>
     <!-- Settings row title for analytics consent. -->
     <string name="settings.analytics_consent.title">Analytics</string>
-    <!-- Title for the dark theme setting. -->
-    <!-- Settings row title for selecting the app color scheme. -->
-    <string name="settings.appearance.color_scheme.title">Color scheme</string>
-    <!-- Label for selecting Android dynamic color as app color scheme. -->
-    <string name="settings.appearance.color_scheme.dynamic">Dynamic color</string>
-    <!-- Description for Android dynamic color. -->
-    <string name="settings.appearance.color_scheme.dynamic.summary">Uses colors from your wallpaper and system theme.</string>
-    <!-- Label for selecting Voice blue as app color scheme. -->
-    <string name="settings.appearance.color_scheme.voice_blue">Voice blue</string>
-    <!-- Label for forcing dark mode. -->
-    <string name="settings.appearance.theme.dark">Dark</string>
-    <!-- Label for following the system light or dark setting. -->
-    <string name="settings.appearance.theme.follow_system">Follow system</string>
-    <!-- Label for forcing light mode. -->
-    <string name="settings.appearance.theme.light">Light</string>
-    <!-- Settings row title for selecting light or dark mode behavior. -->
-    <string name="settings.appearance.theme.title">Theme</string>
     <!-- Label for selecting the automatic sleep timer end time. -->
     <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Set end time</string>
     <!-- Label for selecting the automatic sleep timer start time. -->
@@ -240,18 +224,6 @@
     <string name="settings.playback.seek_time.title">Skip amount</string>
     <!-- Settings support row for opening the FAQ. -->
     <string name="settings.support.faq.title">FAQ</string>
-    <!-- Settings support row for getting help. -->
-    <string name="settings.support.get_support.title">Get help</string>
-    <!-- Settings support row for helping translate the app. -->
-    <string name="settings.support.help_translating.title">Help translating Voice</string>
-    <!-- Settings support row for reporting a problem. -->
-    <string name="settings.support.report_issue.title">Report a problem</string>
-    <!-- Settings row description for opening the donation/support screen. -->
-    <string name="settings.support.support_voice.summary">Donations help keep Voice maintained</string>
-    <!-- Settings row for opening the donation/support screen. -->
-    <string name="settings.support.support_voice.title">Support development</string>
-    <!-- Settings support row for suggesting a product idea. -->
-    <string name="settings.support.suggest_idea.title">Suggest an idea</string>
     <!-- Support screen action for donating through Ko-fi. -->
     <string name="support.action.donate_kofi">Donate on Ko-fi</string>
     <!-- Support screen text explaining why support is useful. -->
@@ -272,12 +244,4 @@
     <string name="shortcut.play_current.short_label">Play current</string>
     <!-- Content description for opening the sleep timer. -->
     <string name="sleep_timer.action.open">Sleep-Timer</string>
-    <!-- Content description for decreasing the sleep timer duration. -->
-    <string name="sleep_timer.dialog.action.decrement">Shorter</string>
-    <!-- Content description for increasing the sleep timer duration. -->
-    <string name="sleep_timer.dialog.action.increment">Longer</string>
-    <!-- Title of the sleep timer dialog. -->
-    <string name="sleep_timer.dialog.title">Sweet dreams! 🌙</string>
-    <!-- Sleep timer option and playback status for stopping at the end of a chapter. -->
-    <string name="sleep_timer.end_of_chapter">End of Chapter</string>
 </resources>

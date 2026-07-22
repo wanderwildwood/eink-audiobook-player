@@ -1,13 +1,14 @@
 package voice.features.settings.views
 
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TimePicker
 import androidx.compose.material3.TimePickerState
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import voice.core.ui.NoAnimationAlertDialog
 import voice.core.strings.R as StringsR
 
 @Composable
@@ -16,14 +17,16 @@ fun TimePickerDialog(
   initialMinute: Int,
   onConfirm: (TimePickerState) -> Unit,
   onDismiss: () -> Unit,
+  modifier: Modifier = Modifier,
 ) {
   val timePickerState = rememberTimePickerState(
     initialHour = initialHour,
     initialMinute = initialMinute,
   )
 
-  AlertDialog(
+  NoAnimationAlertDialog(
     onDismissRequest = onDismiss,
+    modifier = modifier,
     dismissButton = {
       TextButton(onClick = { onDismiss() }) {
         Text(stringResource(id = StringsR.string.common_dialog_cancel))

@@ -1,8 +1,5 @@
 package voice.features.bookOverview.views.topbar
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.size
@@ -21,23 +18,14 @@ internal fun ColumnScope.TopBarLeadingIcon(
   searchActive: Boolean,
   onActiveChange: (Boolean) -> Unit,
 ) {
-  AnimatedVisibility(
-    visible = searchActive,
-    enter = fadeIn(),
-    exit = fadeOut(),
-  ) {
+  if (searchActive) {
     IconButton(onClick = { onActiveChange(false) }) {
       Icon(
         imageVector = VoiceIcons.ArrowBack,
         contentDescription = stringResource(id = R.string.common_action_close),
       )
     }
-  }
-  AnimatedVisibility(
-    visible = !searchActive,
-    enter = fadeIn(),
-    exit = fadeOut(),
-  ) {
+  } else {
     Box(Modifier.size(48.dp), contentAlignment = Alignment.Center) {
       Icon(
         imageVector = VoiceIcons.Search,

@@ -33,12 +33,6 @@
     <string name="cover.search.query.without_author">%s audiobook cover</string>
     <string name="cover.search.recent.content_description">Posledné hľadanie</string>
     <string name="cover.title">Obálka</string>
-    <plurals name="duration.minutes">
-        <item quantity="one">%d minúta</item>
-        <item quantity="few">%d minúty</item>
-        <item quantity="many">%d minút</item>
-        <item quantity="other">%d minút</item>
-    </plurals>
     <plurals name="duration.seconds">
         <item quantity="one">%d sekunda</item>
         <item quantity="few">%d sekundy</item>
@@ -113,14 +107,6 @@
     <string name="settings.action.open">Predvoľby</string>
     <string name="settings.analytics_consent.description">Povoliť zber anonymných údajov o používaní s cieľom ďalej vylepšovať aplikáciu</string>
     <string name="settings.analytics_consent.title">Analytické údaje</string>
-    <string name="settings.appearance.color_scheme.title">Farebná schéma</string>
-    <string name="settings.appearance.color_scheme.dynamic">Dynamická farba</string>
-    <string name="settings.appearance.color_scheme.dynamic.summary">Používa farby z tapety a systémovej témy.</string>
-    <string name="settings.appearance.color_scheme.voice_blue">Modrá Voice</string>
-    <string name="settings.appearance.theme.dark">Tmavé</string>
-    <string name="settings.appearance.theme.follow_system">Podľa systému</string>
-    <string name="settings.appearance.theme.light">Svetlé</string>
-    <string name="settings.appearance.theme.title">Téma</string>
     <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Nastaviť konečný čas</string>
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Nastaviť počiatočný čas</string>
     <string name="settings.auto_sleep_timer.summary">Automaticky aktivovať časovač zastavenia, ak sa prehrávanie spustí medzi %1$s a %2$s</string>
@@ -130,12 +116,6 @@
     <string name="settings.playback.auto_rewind.title">Automaticky pretočiť dozadu</string>
     <string name="settings.playback.seek_time.title">Preskočiť o</string>
     <string name="settings.support.faq.title">Často kladené otázky</string>
-    <string name="settings.support.get_support.title">Podpora</string>
-    <string name="settings.support.help_translating.title">Pomôcť s prekladom</string>
-    <string name="settings.support.report_issue.title">Nahlásiť problém</string>
-    <string name="settings.support.suggest_idea.title">Navrhnúť vylepšenia</string>
-    <string name="settings.support.support_voice.summary">Dary pomáhajú udržiavať Voice</string>
-    <string name="settings.support.support_voice.title">Podporiť vývoj</string>
     <string name="support.action.donate_kofi">Prispieť na Ko-fi</string>
     <string name="support.description.maintenance">Voice je zadarmo, open source a udržiava ho jeden vývojár.</string>
     <string name="support.description.maintenance_subtitle">Dary pomáhajú financovať priebežnú údržbu a vývoj.</string>
@@ -146,8 +126,4 @@
     <string name="support.title">Podporiť vývoj</string>
     <string name="shortcut.play_current.short_label">Prehrať aktuálnu</string>
     <string name="sleep_timer.action.open">Časovač zastavenia</string>
-    <string name="sleep_timer.dialog.action.decrement">Kradšie</string>
-    <string name="sleep_timer.dialog.action.increment">Dlhšie</string>
-    <string name="sleep_timer.dialog.title">Sladké sny! 🌙</string>
-    <string name="sleep_timer.end_of_chapter">Koniec kapitoly</string>
 </resources>

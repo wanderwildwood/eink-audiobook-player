@@ -5,16 +5,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import voice.features.bookOverview.overview.BookOverviewCategory
+import voice.core.strings.R as StringsR
 
 @Composable
-internal fun Header(
-  category: BookOverviewCategory,
-  modifier: Modifier = Modifier,
-) {
+internal fun BrowseHeader(modifier: Modifier = Modifier) {
   Text(
     modifier = modifier,
-    text = stringResource(id = category.nameRes),
+    text = stringResource(id = StringsR.string.library_browse_title),
     style = MaterialTheme.typography.headlineSmall,
   )
 }

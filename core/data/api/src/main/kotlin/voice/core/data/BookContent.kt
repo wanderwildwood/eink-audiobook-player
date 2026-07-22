@@ -28,6 +28,7 @@ public data class BookContent(
   val narrator: String?,
   val series: String?,
   val part: String?,
+  val folderName: String? = null,
 ) {
 
   @Ignore

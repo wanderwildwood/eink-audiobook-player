@@ -32,11 +32,6 @@
     <string name="cover.search.query.without_author">Portada de l\'audiollibre %s</string>
     <string name="cover.search.recent.content_description">Consulta recent</string>
     <string name="cover.title">Portada</string>
-    <plurals name="duration.minutes">
-        <item quantity="one">%d minut</item>
-        <item quantity="many">%d minuts</item>
-        <item quantity="other">%d minuts</item>
-    </plurals>
     <plurals name="duration.seconds">
         <item quantity="one">%d segon</item>
         <item quantity="many">%d segons</item>
@@ -102,13 +97,6 @@
     <string name="settings.library.use_grid.title">Utilitza la disposició en quadrícula</string>
     <string name="settings.playback.auto_rewind.title">Rebobina automàticament</string>
     <string name="settings.playback.seek_time.title">Omet la quantitat</string>
-    <string name="settings.support.get_support.title">Obtingueu ajuda</string>
-    <string name="settings.support.help_translating.title">Ajudeu a traduir el Voice</string>
-    <string name="settings.support.report_issue.title">Informeu d\'un problema</string>
-    <string name="settings.support.suggest_idea.title">Suggeriu una idea</string>
     <string name="shortcut.play_current.short_label">Reprodueix l\'actual</string>
     <string name="sleep_timer.action.open">Temporitzador de repòs</string>
-    <string name="sleep_timer.dialog.action.decrement">Més curt</string>
-    <string name="sleep_timer.dialog.action.increment">Més llarg</string>
-    <string name="sleep_timer.dialog.title">Bona nit! 🌙</string>
 </resources>

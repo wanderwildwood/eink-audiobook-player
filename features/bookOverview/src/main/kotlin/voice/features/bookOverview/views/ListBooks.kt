@@ -19,7 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,20 +31,21 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import voice.core.data.BookId
 import voice.core.ui.sharedCoverElementModifier
-import voice.features.bookOverview.overview.BookOverviewCategory
+import voice.features.bookOverview.overview.AuthorFolderViewState
 import voice.features.bookOverview.overview.BookOverviewItemViewState
 import voice.core.ui.R as UiR
 
 @Composable
 internal fun ListBooks(
-  books: Map<BookOverviewCategory, Map<BookId, State<BookOverviewItemViewState>>>,
+  folders: List<AuthorFolderViewState>,
   onBookClick: (BookId) -> Unit,
   onBookLongClick: (BookId) -> Unit,
+  onFolderClick: (String?) -> Unit,
   showPermissionBugCard: Boolean,
   onPermissionBugCardClick: () -> Unit,
 ) {
   LazyColumn(
-    verticalArrangement = Arrangement.spacedBy(8.dp),
+    verticalArrangement = Arrangement.spacedBy(4.dp),
     contentPadding = PaddingValues(top = 24.dp, start = 8.dp, end = 8.dp, bottom = 16.dp),
   ) {
     if (showPermissionBugCard) {
@@ -53,30 +53,24 @@ internal fun ListBooks(
         PermissionBugCard(onPermissionBugCardClick)
       }
     }
-    books.forEach { (category, books) ->
-      if (books.isEmpty()) return@forEach
+    if (folders.isNotEmpty()) {
       stickyHeader(
-        key = category,
+        key = "folders-header",
         contentType = "header",
       ) {
-        Header(
+        BrowseHeader(
           modifier = Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surface)
             .padding(vertical = 8.dp, horizontal = 8.dp),
-          category = category,
         )
       }
       items(
-        items = books.toList(),
-        key = { (bookId, _) -> bookId.value },
-        contentType = { "item" },
-      ) { (_, bookState) ->
-        ListBookRow(
-          book = bookState.value,
-          onBookClick = onBookClick,
-          onBookLongClick = onBookLongClick,
-        )
+        items = folders,
+        key = { it.folderName ?: "" },
+        contentType = { "folder" },
+      ) { folder ->
+        FolderRow(folder = folder, onClick = onFolderClick)
       }
       item {
         Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))

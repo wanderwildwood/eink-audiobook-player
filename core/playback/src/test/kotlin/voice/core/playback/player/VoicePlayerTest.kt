@@ -13,8 +13,6 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -34,9 +32,6 @@ import voice.core.playback.session.MediaItemProvider
 import voice.core.playback.session.realChapterId
 import voice.core.playback.session.search.book
 import voice.core.playback.session.toMediaIdOrNull
-import voice.core.sleeptimer.SleepTimer
-import voice.core.sleeptimer.SleepTimerMode
-import voice.core.sleeptimer.SleepTimerState
 import java.time.Instant
 import java.util.concurrent.TimeUnit
 import kotlin.test.Test
@@ -93,7 +88,6 @@ class VoicePlayerTest {
   private val mediaItemProvider = MediaItemProvider(mockk(), mockk(), mockk(), mockk(), mockk(), mockk())
   private val bookId = BookId(Uuid.random().toString())
   private lateinit var currentBook: Book
-  private val sleepTimer = FakeSleepTimer()
   private val player = VoicePlayer(
     player = internalPlayer,
     repo = mockk {
@@ -108,7 +102,6 @@ class VoicePlayerTest {
     scope = scope,
     mediaItemProvider = mediaItemProvider,
     volumeGain = mockk(relaxed = true),
-    sleepTimer = sleepTimer,
     analytics = mockk(relaxed = true),
   )
 
@@ -303,48 +296,6 @@ class VoicePlayerTest {
   }
 
   @Test
-  fun `end of chapter sleep timer pauses at start of next chapter mark`() = scope.runTest {
-    setMediaItems(
-      listOf(
-        chapter(
-          ChapterMark(startMs = 0, endMs = 1_000, name = null),
-          ChapterMark(startMs = 1_000, endMs = 2_000, name = null),
-        ),
-      ),
-    )
-
-    player.prepare()
-    awaitReady()
-    sleepTimer.enable(SleepTimerMode.EndOfChapter)
-
-    TestPlayerRunHelper.play(internalPlayer).untilPlayWhenReadyIs(false)
-
-    player.shouldHavePosition(1, 0)
-    assertFalse(player.playWhenReady)
-    assertEquals(expected = SleepTimerState.Disabled, actual = sleepTimer.state.value)
-  }
-
-  @Test
-  fun `end of chapter sleep timer pauses at start of normal file chapter`() = scope.runTest {
-    setMediaItems(
-      listOf(
-        chapter(ChapterMark(startMs = 0, endMs = 1_000, name = null)),
-        chapter(ChapterMark(startMs = 0, endMs = 1_000, name = null)),
-      ),
-    )
-
-    player.prepare()
-    awaitReady()
-    sleepTimer.enable(SleepTimerMode.EndOfChapter)
-
-    TestPlayerRunHelper.play(internalPlayer).untilPlayWhenReadyIs(false)
-
-    player.shouldHavePosition(1, 0)
-    assertFalse(player.playWhenReady)
-    assertEquals(expected = SleepTimerState.Disabled, actual = sleepTimer.state.value)
-  }
-
-  @Test
   fun `auto rewind clamps to current chapter start`() = scope.runTest {
     setMediaItems(
       listOf(
@@ -436,24 +387,5 @@ class VoicePlayerTest {
     assertEquals(expected = currentMediaItemIndex, actual = this.currentMediaItemIndex)
     assertEquals(expected = currentPosition, actual = this.currentPosition)
     return this
-  }
-
-  private class FakeSleepTimer : SleepTimer {
-    override val state: StateFlow<SleepTimerState>
-      get() = stateFlow
-
-    private val stateFlow = MutableStateFlow<SleepTimerState>(SleepTimerState.Disabled)
-
-    override fun enable(mode: SleepTimerMode) {
-      stateFlow.value = when (mode) {
-        is SleepTimerMode.TimedWithDuration -> SleepTimerState.Enabled.WithDuration(mode.duration)
-        SleepTimerMode.TimedWithDefault -> error("TimedWithDefault is not used in these tests")
-        SleepTimerMode.EndOfChapter -> SleepTimerState.Enabled.WithEndOfChapter
-      }
-    }
-
-    override fun disable() {
-      stateFlow.value = SleepTimerState.Disabled
-    }
   }
 }

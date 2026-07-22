@@ -38,7 +38,6 @@ class AutoEnableSleepTimerMinimalTest {
       stateFlow.value = when (val mode = firstArg<SleepTimerMode>()) {
         is TimedWithDuration -> SleepTimerState.Enabled.WithDuration(mode.duration)
         SleepTimerMode.TimedWithDefault -> SleepTimerState.Enabled.WithDuration(5.seconds)
-        SleepTimerMode.EndOfChapter -> SleepTimerState.Enabled.WithEndOfChapter
       }
     }
   }

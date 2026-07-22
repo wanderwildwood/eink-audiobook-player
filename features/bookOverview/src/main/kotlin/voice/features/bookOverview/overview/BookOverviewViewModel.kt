@@ -22,6 +22,7 @@ import kotlinx.coroutines.launch
 import voice.core.common.AppInfoProvider
 import voice.core.common.DispatcherProvider
 import voice.core.common.MainScope
+import voice.core.common.comparator.NaturalOrderComparator
 import voice.core.common.comparator.sortedNaturally
 import voice.core.data.Book
 import voice.core.data.BookId
@@ -132,9 +133,16 @@ class BookOverviewViewModel(
       remember { mutableStateOf(null) }
     }
 
+    val nowPlaying = books.find { it.id == currentBookId }?.itemViewState(
+      currentBookId = currentBookId,
+      livePlaybackState = { livePlaybackState.value },
+    )
+
     return BookOverviewViewState(
       layoutMode = layoutMode,
+      nowPlaying = nowPlaying,
       books = books
+        .filter { it.category == BookOverviewCategory.CURRENT }
         .groupBy {
           it.category
         }
@@ -149,6 +157,16 @@ class BookOverviewViewModel(
             }
         }
         .toSortedMap(),
+      folders = books
+        .groupBy { it.content.folderName }
+        .entries
+        .sortedWith(compareBy(nullsLast(NaturalOrderComparator.stringComparator)) { it.key })
+        .map { (folderName, folderBooks) ->
+          AuthorFolderViewState(
+            folderName = folderName,
+            bookCount = folderBooks.size,
+          )
+        },
       playButtonState = if (playState == PlayStateManager.PlayState.Playing) {
         BookOverviewViewState.PlayButtonState.Playing
       } else {
@@ -253,6 +271,10 @@ class BookOverviewViewModel(
 
   fun onBookClick(id: BookId) {
     navigator.goTo(Destination.Playback(id))
+  }
+
+  fun onFolderClick(folderName: String?) {
+    navigator.goTo(Destination.AuthorBooks(folderName))
   }
 
   fun onBookFolderClick() {

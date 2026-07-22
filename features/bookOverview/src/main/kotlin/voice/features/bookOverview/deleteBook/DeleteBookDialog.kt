@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
@@ -19,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import voice.core.ui.NoAnimationAlertDialog
 import voice.core.strings.R as StringsR
 
 @Composable
@@ -28,7 +28,7 @@ internal fun DeleteBookDialog(
   onConfirmDeletion: () -> Unit,
   onDeleteCheckBoxCheck: (Boolean) -> Unit,
 ) {
-  AlertDialog(
+  NoAnimationAlertDialog(
     onDismissRequest = onDismiss,
     title = {
       Text(stringResource(StringsR.string.book_delete_dialog_title))

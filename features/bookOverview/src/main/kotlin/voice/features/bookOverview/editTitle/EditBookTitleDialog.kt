@@ -1,12 +1,12 @@
 package voice.features.bookOverview.editTitle
 
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import voice.core.ui.NoAnimationAlertDialog
 import voice.core.strings.R as StringsR
 
 @Composable
@@ -16,7 +16,7 @@ internal fun EditBookTitleDialog(
   viewState: EditBookTitleState,
   onUpdateEditTitle: (String) -> Unit,
 ) {
-  AlertDialog(
+  NoAnimationAlertDialog(
     onDismissRequest = onDismissEditTitleClick,
     title = {
       Text(text = stringResource(StringsR.string.book_edit_title))

@@ -185,10 +185,27 @@ class MediaScannerTest {
 
     scan(FolderType.Author, audioBooks)
     assertBookContents(
-      BookContentView(book1, chapters = listOf(book1)),
-      BookContentView(book2, chapters = listOf(book2)),
-      BookContentView(book3, chapters = listOf(book3Chapter1, book3Chapter2)),
-      BookContentView(book4, chapters = listOf(book4Chapter1)),
+      BookContentView(book1, chapters = listOf(book1), folderName = null),
+      BookContentView(book2, chapters = listOf(book2), folderName = "author1"),
+      BookContentView(book3, chapters = listOf(book3Chapter1, book3Chapter2), folderName = "author1"),
+      BookContentView(book4, chapters = listOf(book4Chapter1), folderName = "author1"),
+    )
+  }
+
+  @Test
+  fun scanAuthorWithMultipleAuthorFolders() = test {
+    val audioBooks = folder("audiobooks")
+
+    val book1 = File(audioBooks, "Brandon Sanderson/Mistborn")
+    val book1Chapter = audioFile(parent = book1, "c1.mp3")
+
+    val book2 = File(audioBooks, "Ursula K. Le Guin/A Wizard of Earthsea")
+    val book2Chapter = audioFile(parent = book2, "c1.mp3")
+
+    scan(FolderType.Author, audioBooks)
+    assertBookContents(
+      BookContentView(book1, chapters = listOf(book1Chapter), folderName = "Brandon Sanderson"),
+      BookContentView(book2, chapters = listOf(book2Chapter), folderName = "Ursula K. Le Guin"),
     )
   }
 
@@ -275,6 +292,7 @@ class MediaScannerTest {
             chapters = it.content.chapters.map { chapter ->
               chapter.toUri().toFile()
             },
+            folderName = it.content.folderName,
           )
         }
         .let { actual ->
@@ -293,5 +311,6 @@ class MediaScannerTest {
   data class BookContentView(
     val id: File,
     val chapters: List<File>,
+    val folderName: String? = null,
   )
 }

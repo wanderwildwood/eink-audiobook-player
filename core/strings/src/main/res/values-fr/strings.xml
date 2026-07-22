@@ -33,11 +33,6 @@
     <string name="cover.search.query.without_author">%s couverture livre audio</string>
     <string name="cover.search.recent.content_description">Recherche récente</string>
     <string name="cover.title">Couverture</string>
-    <plurals name="duration.minutes">
-        <item quantity="one">%d minute</item>
-        <item quantity="many">%d minutes</item>
-        <item quantity="other">%d minutes</item>
-    </plurals>
     <plurals name="duration.seconds">
         <item quantity="one">%d seconde</item>
         <item quantity="many">%d secondes</item>
@@ -110,14 +105,6 @@
     <string name="settings.action.open">Préférences</string>
     <string name="settings.analytics_consent.description">Autoriser la collecte de données d\'utilisation anonymes afin d\'améliorer l\'application</string>
     <string name="settings.analytics_consent.title">Analyses</string>
-    <string name="settings.appearance.color_scheme.title">Jeu de couleurs</string>
-    <string name="settings.appearance.color_scheme.dynamic">Couleur dynamique</string>
-    <string name="settings.appearance.color_scheme.dynamic.summary">Utilise les couleurs de votre fond d’écran et du thème système.</string>
-    <string name="settings.appearance.color_scheme.voice_blue">Bleu Voice</string>
-    <string name="settings.appearance.theme.dark">Sombre</string>
-    <string name="settings.appearance.theme.follow_system">Suivre le système</string>
-    <string name="settings.appearance.theme.light">Clair</string>
-    <string name="settings.appearance.theme.title">Thème</string>
     <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Heure de fin</string>
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Heure de début</string>
     <string name="settings.auto_sleep_timer.summary">Démarrer automatiquement le minuteur de veille lorsque la lecture commence entre %1$s et %2$s</string>
@@ -127,12 +114,6 @@
     <string name="settings.playback.auto_rewind.title">Rembobinage automatique</string>
     <string name="settings.playback.seek_time.title">Sauter de</string>
     <string name="settings.support.faq.title">FAQ</string>
-    <string name="settings.support.get_support.title">Obtenir de l\'aide</string>
-    <string name="settings.support.help_translating.title">Aidez à traduire Voice</string>
-    <string name="settings.support.report_issue.title">Signaler un problème</string>
-    <string name="settings.support.suggest_idea.title">Suggérer une idée</string>
-    <string name="settings.support.support_voice.summary">Les dons aident à maintenir Voice</string>
-    <string name="settings.support.support_voice.title">Soutenir le développement</string>
     <string name="support.action.donate_kofi">Faire un don sur Ko-fi</string>
     <string name="support.description.maintenance">Voice est gratuit, open source et maintenu par un seul développeur.</string>
     <string name="support.description.maintenance_subtitle">Les dons aident à financer la maintenance et le développement continus.</string>
@@ -143,8 +124,4 @@
     <string name="support.title">Soutenir le développement</string>
     <string name="shortcut.play_current.short_label">Lire l\'actuel</string>
     <string name="sleep_timer.action.open">Minuterie de mise en veille</string>
-    <string name="sleep_timer.dialog.action.decrement">Moins long</string>
-    <string name="sleep_timer.dialog.action.increment">Plus long</string>
-    <string name="sleep_timer.dialog.title">Bonne nuit ! 🌙</string>
-    <string name="sleep_timer.end_of_chapter">Fin du chapitre</string>
 </resources>

@@ -6,10 +6,13 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.SingleIn
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 import voice.core.common.DispatcherProvider
@@ -57,9 +60,6 @@ class SleepTimerImpl internal constructor(
           val pref = sleepTimerPreferenceStore.data.first()
           startCountdown(pref.duration)
         }
-        SleepTimerMode.EndOfChapter -> {
-          state.value = SleepTimerState.Enabled.WithEndOfChapter
-        }
       }
     }
   }
@@ -72,45 +72,85 @@ class SleepTimerImpl internal constructor(
     playerController.setVolume(1F)
   }
 
+  /**
+   * Runs the countdown, listening for a shake the whole time (not just after expiry) - a shake
+   * at any point resets the countdown back to [duration] and keeps it running. Only if it
+   * expires with no shake does playback actually pause, with one more grace window to catch a
+   * late shake before giving up.
+   */
   private tailrec suspend fun startCountdown(duration: Duration) {
     Logger.d("startCountdown(duration=$duration)")
-    var left = duration
-    state.value = SleepTimerState.Enabled.WithDuration(left)
-    playerController.setVolume(1F)
-
-    val fadeOutDuration = fadeOutStore.data.first()
-    var interval = 500.milliseconds
-
-    while (left > Duration.ZERO) {
-      suspendUntilPlaying()
-      if (left < fadeOutDuration) {
-        interval = 200.milliseconds
-        updateVolume(left, fadeOutDuration)
+    val shookDuringCountdown = coroutineScope {
+      val shakeSignal = Channel<Unit>(Channel.CONFLATED)
+      val shakeJob = launch {
+        while (isActive) {
+          shakeDetector.detect()
+          shakeSignal.trySend(Unit)
+        }
       }
-      delay(interval)
-      left = max((left - interval).inWholeMilliseconds, 0).milliseconds
-      state.value = SleepTimerState.Enabled.WithDuration(left)
+      try {
+        tickDownOrUntilShake(duration, shakeSignal)
+      } finally {
+        shakeJob.cancel()
+      }
     }
+
+    if (shookDuringCountdown) {
+      Logger.i("Shake detected, resetting timer")
+      startCountdown(duration)
+      return
+    }
+
     playerController.setVolume(1f)
     state.value = SleepTimerState.Disabled
 
+    val fadeOutDuration = fadeOutStore.data.first()
     playerController.pauseWithRewind(fadeOutDuration)
 
-    val shakeDetected = detectShakeWithTimeout()
+    val shookDuringGrace = withTimeoutOrNull(SHAKE_TO_RESET_TIME) {
+      shakeDetector.detect()
+      true
+    } ?: false
     playerController.setVolume(1F)
-    if (shakeDetected) {
+    if (shookDuringGrace) {
       Logger.i("Shake detected, resetting timer")
       playerController.play()
       startCountdown(duration)
     }
   }
 
-  private suspend fun detectShakeWithTimeout(): Boolean {
-    Logger.d("Waiting $SHAKE_TO_RESET_TIME for shake...")
-    return withTimeoutOrNull(SHAKE_TO_RESET_TIME) {
-      shakeDetector.detect()
-      true
-    } ?: false
+  /**
+   * Ticks [duration] down to zero, fading the volume out over the last [FadeOutStore] duration.
+   * Returns true the moment a shake is received (caller should restart the countdown), false if
+   * it ran out naturally.
+   */
+  private suspend fun tickDownOrUntilShake(
+    duration: Duration,
+    shakeSignal: ReceiveChannel<Unit>,
+  ): Boolean {
+    var left = duration
+    state.value = SleepTimerState.Enabled.WithDuration(left)
+    playerController.setVolume(1F)
+    val fadeOutDuration = fadeOutStore.data.first()
+
+    while (left > Duration.ZERO) {
+      suspendUntilPlaying()
+      val interval = if (left < fadeOutDuration) 200.milliseconds else 500.milliseconds
+      if (left < fadeOutDuration) {
+        updateVolume(left, fadeOutDuration)
+      }
+      val shook = withTimeoutOrNull(interval) {
+        shakeSignal.receive()
+        true
+      } ?: false
+      if (shook) {
+        playerController.setVolume(1F)
+        return true
+      }
+      left = max((left - interval).inWholeMilliseconds, 0).milliseconds
+      state.value = SleepTimerState.Enabled.WithDuration(left)
+    }
+    return false
   }
 
   private fun updateVolume(

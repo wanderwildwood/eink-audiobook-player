@@ -33,11 +33,6 @@
     <string name="cover.search.query.without_author">%s עטיפת הקולספר</string>
     <string name="cover.search.recent.content_description">תור לאחרונה</string>
     <string name="cover.title">עטיפה</string>
-    <plurals name="duration.minutes">
-        <item quantity="one">%d דקה</item>
-        <item quantity="two">%d דקות</item>
-        <item quantity="other">%d דקות</item>
-    </plurals>
     <plurals name="duration.seconds">
         <item quantity="one">שנייה</item>
         <item quantity="two">%d שניות</item>
@@ -110,14 +105,6 @@
     <string name="settings.action.open">העדפות</string>
     <string name="settings.analytics_consent.description">אפשר איסוף נתוני שימוש אנונימיים כדי לעזור לשפר את האפליקציה</string>
     <string name="settings.analytics_consent.title">ניתוח נתונים</string>
-    <string name="settings.appearance.color_scheme.title">ערכת צבעים</string>
-    <string name="settings.appearance.color_scheme.dynamic">צבע דינמי</string>
-    <string name="settings.appearance.color_scheme.dynamic.summary">משתמש בצבעים מהרקע ומערכת הנושא של המערכת.</string>
-    <string name="settings.appearance.color_scheme.voice_blue">כחול Voice</string>
-    <string name="settings.appearance.theme.dark">כהה</string>
-    <string name="settings.appearance.theme.follow_system">לפי המערכת</string>
-    <string name="settings.appearance.theme.light">בהיר</string>
-    <string name="settings.appearance.theme.title">ערכת נושא</string>
     <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">בחר זמן סיום</string>
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">בחר זמן התחלה</string>
     <string name="settings.auto_sleep_timer.summary">תפעיל את שעון השינה ­האוטומטי כשההפעלה מגיעה ל- %1$s ו- %2$s</string>
@@ -127,12 +114,6 @@
     <string name="settings.playback.auto_rewind.title">הרצה אוטומטית</string>
     <string name="settings.playback.seek_time.title">דלג כמות</string>
     <string name="settings.support.faq.title">שאלות נפוצות</string>
-    <string name="settings.support.get_support.title">תמיכה</string>
-    <string name="settings.support.help_translating.title">עזור לתרגם את Voice</string>
-    <string name="settings.support.report_issue.title">דווח על תקלה</string>
-    <string name="settings.support.suggest_idea.title">הצע רעיון</string>
-    <string name="settings.support.support_voice.summary">תרומות עוזרות לשמור על Voice מתוחזקת</string>
-    <string name="settings.support.support_voice.title">תמיכה בפיתוח</string>
     <string name="support.action.donate_kofi">לתרום ב-Ko-fi</string>
     <string name="support.description.maintenance">Voice חינמית, בקוד פתוח, ומתוחזקת בידי מפתח אחד.</string>
     <string name="support.description.maintenance_subtitle">תרומות עוזרות לממן תחזוקה ופיתוח שוטפים.</string>
@@ -143,8 +124,4 @@
     <string name="support.title">תמיכה בפיתוח</string>
     <string name="shortcut.play_current.short_label">השמע את הנוכחי</string>
     <string name="sleep_timer.action.open">טיימר-שינה</string>
-    <string name="sleep_timer.dialog.action.decrement">קצר יותר</string>
-    <string name="sleep_timer.dialog.action.increment">ארוך יותר</string>
-    <string name="sleep_timer.dialog.title">חלומות פז! 🌙</string>
-    <string name="sleep_timer.end_of_chapter">סוף פרק</string>
 </resources>

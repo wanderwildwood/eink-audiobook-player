@@ -1,68 +1,37 @@
 package voice.core.ui
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.ColorScheme
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.MaterialExpressiveTheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.movableContentOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import com.materialkolor.DynamicMaterialExpressiveTheme
-import com.materialkolor.PaletteStyle
-import com.materialkolor.dynamiccolor.ColorSpec
+import com.mudita.mmd.ThemeMMD
+import com.mudita.mmd.eInkColorScheme
 import voice.core.data.ThemeColorScheme
 import voice.core.data.ThemeMode
 
 val VoiceBlue = Color(0xFF003b7f)
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+// eInkColorScheme leaves several newer Material3 roles (surfaceContainer*, surfaceBright/Dim) as
+// Color.Unspecified. Multiple stock Material3 components (TopAppBar's scrolled state, among
+// others) read those roles directly and crash (ColorSpace.get: "Invalid ID") rather than treating
+// Unspecified as "don't draw" - so every role needs a real value, fixed once here for the whole app.
+private val fullySpecifiedEInkColorScheme = eInkColorScheme.copy(
+  surfaceBright = eInkColorScheme.background,
+  surfaceDim = eInkColorScheme.background,
+  surfaceContainer = eInkColorScheme.background,
+  surfaceContainerHigh = eInkColorScheme.background,
+  surfaceContainerHighest = eInkColorScheme.background,
+  surfaceContainerLowest = eInkColorScheme.background,
+)
+
+// themeMode/themeColorScheme are kept for call-site compatibility with the settings screen,
+// but ThemeMMD's e-ink color scheme is intentionally fixed (monochrome) regardless of either.
+@Suppress("UNUSED_PARAMETER")
 @Composable
 fun VoiceTheme(
   themeMode: ThemeMode = ThemeMode.FollowSystem,
   themeColorScheme: ThemeColorScheme = ThemeColorScheme.VoiceBlue,
   content: @Composable () -> Unit,
 ) {
-  val darkTheme = when (themeMode) {
-    ThemeMode.FollowSystem -> isSystemInDarkTheme()
-    ThemeMode.Light -> false
-    ThemeMode.Dark -> true
-  }
-  val themedContent = remember(content) {
-    movableContentOf {
-      content()
-    }
-  }
-  if (themeColorScheme == ThemeColorScheme.Dynamic && Build.VERSION.SDK_INT >= 31) {
-    MaterialExpressiveTheme(
-      colorScheme = systemDynamicColorScheme(darkTheme),
-    ) {
-      themedContent()
-    }
-  } else {
-    DynamicMaterialExpressiveTheme(
-      primary = VoiceBlue,
-      secondary = Color(0xFF5E6F95),
-      isDark = darkTheme,
-      style = PaletteStyle.Expressive,
-      specVersion = ColorSpec.SpecVersion.SPEC_2025,
-    ) {
-      themedContent()
-    }
-  }
-}
-
-@RequiresApi(31)
-@Composable
-private fun systemDynamicColorScheme(darkTheme: Boolean): ColorScheme {
-  return if (darkTheme) {
-    dynamicDarkColorScheme(LocalContext.current)
-  } else {
-    dynamicLightColorScheme(LocalContext.current)
+  ThemeMMD(colorScheme = fullySpecifiedEInkColorScheme) {
+    content()
   }
 }

@@ -28,6 +28,7 @@ import voice.core.sleeptimer.SleepTimerState
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
 private class TestShakeDetector : ShakeDetector {
@@ -95,14 +96,6 @@ class SleepTimerImplTest {
   }
 
   @Test
-  fun `enable with EndOfChapter sets state`() = testScope.runTest {
-    sleepTimer.enable(SleepTimerMode.EndOfChapter)
-
-    advanceTimeBy(1)
-    assertEquals(expected = SleepTimerState.Enabled.WithEndOfChapter, actual = sleepTimer.state.value)
-  }
-
-  @Test
   fun `disable cancels timer and resets state`() = testScope.runTest {
     sleepTimer.enable(SleepTimerMode.TimedWithDuration(5.seconds))
     advanceTimeBy(1.seconds)
@@ -161,6 +154,26 @@ class SleepTimerImplTest {
     // The second countdown should complete normally
     coVerify(exactly = 2) { playerController.pauseWithRewind(any()) }
     assertEquals(expected = SleepTimerState.Disabled, actual = sleepTimer.state.value)
+  }
+
+  @Test
+  fun shake_mid_countdown_resets_timer_without_pausing() = testScope.runTest {
+    val duration = 5.minutes
+
+    sleepTimer.enable(SleepTimerMode.TimedWithDuration(duration))
+
+    // Let it tick down partway, well short of expiry.
+    advanceTimeBy(2.minutes)
+    runCurrent()
+    assertTrue(sleepTimer.state.value is SleepTimerState.Enabled.WithDuration)
+    assertTrue((sleepTimer.state.value as SleepTimerState.Enabled.WithDuration).leftDuration < duration)
+
+    // A shake mid-countdown should reset it back to the full duration - no pause, no grace window.
+    shakeDetector.shake()
+    runCurrent()
+
+    coVerify(exactly = 0) { playerController.pauseWithRewind(any()) }
+    assertEquals(expected = SleepTimerState.Enabled.WithDuration(duration), actual = sleepTimer.state.value)
   }
 
   companion object {

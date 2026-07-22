@@ -22,21 +22,21 @@ internal class MediaScanner(
     val files = folders.flatMap { (folderType, files) ->
       when (folderType) {
         FolderType.SingleFile, FolderType.SingleFolder -> {
-          files
+          files.map { ScannedFile(it, folderName = null) }
         }
         FolderType.Root -> {
           files.flatMap { file ->
-            file.children
+            file.children.map { ScannedFile(it, folderName = null) }
           }
         }
         FolderType.Author -> {
           files.flatMap { folder ->
             folder.children.flatMap { author ->
               if (author.isFile) {
-                listOf(author)
+                listOf(ScannedFile(author, folderName = null))
               } else {
-                author.children.flatMap {
-                  author.children
+                author.children.map { book ->
+                  ScannedFile(book, folderName = author.name)
                 }
               }
             }
@@ -45,7 +45,7 @@ internal class MediaScanner(
       }
     }
 
-    contentRepo.setAllInactiveExcept(files.map { BookId(it.uri) })
+    contentRepo.setAllInactiveExcept(files.map { BookId(it.file.uri) })
 
     val probeFile = folders.values.flatten().findProbeFile()
     if (probeFile != null) {
@@ -56,11 +56,16 @@ internal class MediaScanner(
     }
 
     files
-      .sortedBy { it.audioFileCount() }
-      .forEach { file ->
-        scan(file)
+      .sortedBy { it.file.audioFileCount() }
+      .forEach { scannedFile ->
+        scan(scannedFile.file, scannedFile.folderName)
       }
   }
+
+  private data class ScannedFile(
+    val file: CachedDocumentFile,
+    val folderName: String?,
+  )
 
   private fun List<CachedDocumentFile>.findProbeFile(): CachedDocumentFile? {
     return asSequence().flatMap { it.walk() }
@@ -69,12 +74,15 @@ internal class MediaScanner(
       }
   }
 
-  private suspend fun scan(file: CachedDocumentFile) {
+  private suspend fun scan(
+    file: CachedDocumentFile,
+    folderName: String?,
+  ) {
     val parseResult = chapterParser.parse(file)
     val chapters = parseResult.chapters
     if (chapters.isEmpty()) return
 
-    val content = bookParser.parseAndStore(chapters, file, parseResult.firstChapterMetadata)
+    val content = bookParser.parseAndStore(chapters, file, parseResult.firstChapterMetadata, folderName)
 
     val chapterIds = chapters.map { it.id }
     val currentChapterGone = content.currentChapter !in chapterIds
@@ -85,6 +93,7 @@ internal class MediaScanner(
       currentChapter = currentChapter,
       positionInChapter = positionInChapter,
       isActive = true,
+      folderName = folderName ?: content.folderName,
     )
     if (content != updated) {
       validateIntegrity(updated, chapters)

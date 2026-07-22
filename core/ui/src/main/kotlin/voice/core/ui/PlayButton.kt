@@ -1,17 +1,12 @@
 package voice.core.ui
 
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.graphics.res.animatedVectorResource
-import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
-import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -26,10 +21,7 @@ fun PlayButton(
   modifier: Modifier = Modifier,
   sharedElementModifier: Modifier = Modifier,
 ) {
-  val cornerSize by animateDpAsState(
-    targetValue = if (playing) 16.dp else fabSize / 2,
-    label = "cornerSize",
-  )
+  val cornerSize = if (playing) 16.dp else fabSize / 2
   FloatingActionButton(
     modifier = modifier
       .size(fabSize)
@@ -39,7 +31,7 @@ fun PlayButton(
   ) {
     Icon(
       modifier = Modifier.size(iconSize),
-      painter = rememberPlayIconPainter(playing = playing),
+      painter = painterResource(id = if (playing) R.drawable.ic_pause_static else R.drawable.ic_play_static),
       contentDescription = stringResource(
         id = if (playing) {
           StringsR.string.playback_action_pause
@@ -49,14 +41,4 @@ fun PlayButton(
       ),
     )
   }
-}
-
-@Composable
-private fun rememberPlayIconPainter(playing: Boolean): Painter {
-  return rememberAnimatedVectorPainter(
-    animatedImageVector = AnimatedImageVector.animatedVectorResource(
-      id = R.drawable.avd_pause_to_play,
-    ),
-    atEnd = !playing,
-  )
 }

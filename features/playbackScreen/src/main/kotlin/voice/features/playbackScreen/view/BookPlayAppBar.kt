@@ -1,13 +1,18 @@
 package voice.features.playbackScreen.view
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
@@ -15,10 +20,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import voice.core.strings.R
+import voice.core.ui.formatTime
 import voice.core.ui.icons.VoiceIcons
 import voice.features.playbackScreen.BookPlayViewState
+import kotlin.time.Duration.Companion.minutes
 
 @Composable
 internal fun BookPlayAppBar(
@@ -33,17 +41,7 @@ internal fun BookPlayAppBar(
   useLandscapeLayout: Boolean,
 ) {
   val appBarActions: @Composable RowScope.() -> Unit = {
-    IconButton(onClick = onSleepTimerClick) {
-      val sleepTimerIcon = if (viewState.sleepTimerState is BookPlayViewState.SleepTimerViewState.Disabled) {
-        VoiceIcons.Bedtime
-      } else {
-        VoiceIcons.BedtimeOff
-      }
-      Icon(
-        imageVector = sleepTimerIcon,
-        contentDescription = stringResource(id = R.string.sleep_timer_action_open),
-      )
-    }
+    SleepTimerButton(viewState.sleepTimerState, onSleepTimerClick)
     Box(
       modifier = Modifier
         .size(40.dp)
@@ -92,5 +90,42 @@ internal fun BookPlayAppBar(
         AppBarTitle(viewState.title)
       },
     )
+  }
+}
+
+// The sleep timer defaults to 10 minutes everywhere it's started - passing it as the reference
+// duration keeps the countdown's minute digit count stable (e.g. "09:45", not "9:45") as it ticks.
+private val SleepTimerReferenceDuration = 10.minutes
+
+@Composable
+private fun SleepTimerButton(
+  sleepTimerState: BookPlayViewState.SleepTimerViewState,
+  onClick: () -> Unit,
+) {
+  val sleepTimerIcon = if (sleepTimerState is BookPlayViewState.SleepTimerViewState.Disabled) {
+    VoiceIcons.BedtimeOff
+  } else {
+    VoiceIcons.Bedtime
+  }
+  Column(
+    modifier = Modifier
+      .width(56.dp)
+      .clickable(onClick = onClick),
+    horizontalAlignment = Alignment.CenterHorizontally,
+  ) {
+    Icon(
+      imageVector = sleepTimerIcon,
+      contentDescription = stringResource(id = R.string.sleep_timer_action_open),
+    )
+    if (sleepTimerState is BookPlayViewState.SleepTimerViewState.Enabled.WithDuration) {
+      Text(
+        text = formatTime(
+          timeMs = sleepTimerState.leftDuration.inWholeMilliseconds,
+          durationMs = SleepTimerReferenceDuration.inWholeMilliseconds,
+        ),
+        style = MaterialTheme.typography.labelSmall,
+        textAlign = TextAlign.Center,
+      )
+    }
   }
 }

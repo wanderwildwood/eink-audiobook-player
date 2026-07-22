@@ -33,10 +33,6 @@
     <string name="cover.search.query.without_author">%s luisterboekomslag</string>
     <string name="cover.search.recent.content_description">Onlangse navraag</string>
     <string name="cover.title">Voorblad</string>
-    <plurals name="duration.minutes">
-        <item quantity="one">%d minuut</item>
-        <item quantity="other">%d minute</item>
-    </plurals>
     <plurals name="duration.seconds">
         <item quantity="one">%d sekonde</item>
         <item quantity="other">%d sekondes</item>
@@ -107,14 +103,6 @@
     <string name="settings.action.open">Voorkeure</string>
     <string name="settings.analytics_consent.description">Laat anonieme gebruiksdata insamel om die toep te verbeter</string>
     <string name="settings.analytics_consent.title">Analise</string>
-    <string name="settings.appearance.color_scheme.title">Kleurskema</string>
-    <string name="settings.appearance.color_scheme.dynamic">Dinamiese kleur</string>
-    <string name="settings.appearance.color_scheme.dynamic.summary">Gebruik kleure van jou muurpapier en stelseltema.</string>
-    <string name="settings.appearance.color_scheme.voice_blue">Voice-blou</string>
-    <string name="settings.appearance.theme.dark">Donker</string>
-    <string name="settings.appearance.theme.follow_system">Volg stelsel</string>
-    <string name="settings.appearance.theme.light">Lig</string>
-    <string name="settings.appearance.theme.title">Tema</string>
     <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Stel eindtyd</string>
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Stel begintyd</string>
     <string name="settings.auto_sleep_timer.summary">Begin outomaties ’n slaaptimer wanneer afspeel tussen %1$s en %2$s begin</string>
@@ -124,12 +112,6 @@
     <string name="settings.playback.auto_rewind.title">Outomatiese terugdraai</string>
     <string name="settings.playback.seek_time.title">Skip hoeveelheid</string>
     <string name="settings.support.faq.title">Gereelde vrae</string>
-    <string name="settings.support.get_support.title">Kry ondersteuning</string>
-    <string name="settings.support.help_translating.title">Help met vertaling</string>
-    <string name="settings.support.report_issue.title">Rapporteer \'n probleem</string>
-    <string name="settings.support.suggest_idea.title">Deel \'n idee</string>
-    <string name="settings.support.support_voice.summary">Donasies help om Voice onderhou te hou</string>
-    <string name="settings.support.support_voice.title">Ondersteun ontwikkeling</string>
     <string name="support.action.donate_kofi">Skenk op Ko-fi</string>
     <string name="support.description.maintenance">Voice is gratis, oopbron, en word deur een ontwikkelaar onderhou.</string>
     <string name="support.description.maintenance_subtitle">Donasies help om voortdurende instandhouding en ontwikkeling te finansier.</string>
@@ -140,8 +122,4 @@
     <string name="support.title">Ondersteun ontwikkeling</string>
     <string name="shortcut.play_current.short_label">Speel huidig</string>
     <string name="sleep_timer.action.open">Slaap-Timer</string>
-    <string name="sleep_timer.dialog.action.decrement">Korter</string>
-    <string name="sleep_timer.dialog.action.increment">Langer</string>
-    <string name="sleep_timer.dialog.title">Lekker slaap! 🌙</string>
-    <string name="sleep_timer.end_of_chapter">Einde van Hoofstuk</string>
 </resources>
