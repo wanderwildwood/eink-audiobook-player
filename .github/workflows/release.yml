@@ -27,11 +27,16 @@ jobs:
             -Pvoice.versionName="$version_name" \
             -Pvoice.versionCode="$GITHUB_RUN_NUMBER"
 
-      - name: Rename APK
-        run: cp app/build/outputs/apk/free/release/app-free-release.apk "eink-audiobook-player-${GITHUB_REF_NAME}.apk"
+      - name: Rename APK and generate checksum
+        run: |
+          apk_name="eink-audiobook-player-${GITHUB_REF_NAME}.apk"
+          cp app/build/outputs/apk/free/release/app-free-release.apk "$apk_name"
+          sha256sum "$apk_name" > "${apk_name}.sha256"
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          files: eink-audiobook-player-*.apk
+          files: |
+            eink-audiobook-player-*.apk
+            eink-audiobook-player-*.apk.sha256
           generate_release_notes: true

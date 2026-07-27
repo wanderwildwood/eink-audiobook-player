@@ -17,7 +17,7 @@ This is a personal fork of [Voice](https://github.com/PaulWoitaschek/Voice) by P
 
 Grab the latest APK from [Releases](https://github.com/wanderwildwood/eink-audiobook-player/releases) and sideload it with `adb install`. Every release is signed with the same fixed debug key (`app/debug.keystore`, checked into this repo — see [Releases workflow](.github/workflows/release.yml)), so installing a newer release over an older one works like a normal app update instead of requiring an uninstall first.
 
-Or build it yourself with the bundled Gradle wrapper: `./gradlew assembleFreeDebug`.
+Or build it yourself with the bundled Gradle wrapper: `./gradlew :app:assembleFreeRelease`.
 
 ## License
 
