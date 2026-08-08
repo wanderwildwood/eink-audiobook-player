@@ -19,6 +19,7 @@ dependencies {
   implementation(projects.core.documentfile)
   implementation(projects.navigation)
   implementation(projects.core.featureflag)
+  implementation(projects.core.scanner)
 
   implementation(libs.coil)
   implementation(libs.androidxCore)

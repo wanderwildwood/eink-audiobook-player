@@ -15,6 +15,7 @@ import voice.core.data.folders.FolderType
 import voice.core.documentfile.nameWithoutExtension
 import voice.core.featureflag.FeatureFlag
 import voice.core.featureflag.KioskModeFeatureFlagQualifier
+import voice.core.scanner.MediaScanTrigger
 import voice.navigation.Destination
 import voice.navigation.Navigator
 import voice.navigation.Origin
@@ -25,7 +26,16 @@ class FolderPickerViewModel(
   private val navigator: Navigator,
   @KioskModeFeatureFlagQualifier
   private val kioskModeFeatureFlag: FeatureFlag<Boolean>,
+  private val mediaScanTrigger: MediaScanTrigger,
 ) {
+
+  /**
+   * Manual rescan. restartIfScanning so tapping it again actually restarts rather than
+   * no-opping while a scan is already running.
+   */
+  fun rescan() {
+    mediaScanTrigger.scan(restartIfScanning = true)
+  }
 
   @Composable
   fun viewState(): FolderPickerViewState {

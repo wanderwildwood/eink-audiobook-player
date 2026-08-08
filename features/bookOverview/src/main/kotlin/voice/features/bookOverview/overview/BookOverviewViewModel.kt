@@ -95,6 +95,15 @@ class BookOverviewViewModel(
     mediaScanner.scan()
   }
 
+  /**
+   * Manual rescan, from pull-to-refresh on the library or the button in the folder
+   * settings. Uses restartIfScanning so a second pull actually restarts the scan
+   * rather than silently doing nothing while one is already in flight.
+   */
+  fun onRefresh() {
+    mediaScanner.scan(restartIfScanning = true)
+  }
+
   @Composable
   internal fun state(): BookOverviewViewState {
     val kioskMode = remember { kioskModeFeatureFlag.get() }
@@ -177,6 +186,7 @@ class BookOverviewViewModel(
 
     return BookOverviewViewState(
       layoutMode = layoutMode,
+      isRefreshing = scannerActive,
       nowPlaying = nowPlaying,
       libraryOrganization = libraryOrganization,
       sections = sections,

@@ -11,6 +11,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -66,6 +67,7 @@ fun FolderOverview() {
       viewModel.removeFolder(it)
     },
     onCloseClick = viewModel::onCloseClick,
+    onRescanClick = viewModel::rescan,
   )
 }
 
@@ -75,6 +77,7 @@ private fun FolderOverviewView(
   onAddClick: () -> Unit,
   onDeleteClick: (FolderPickerViewState.Item) -> Unit,
   onCloseClick: () -> Unit,
+  onRescanClick: () -> Unit,
 ) {
   val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
   Scaffold(
@@ -91,6 +94,11 @@ private fun FolderOverviewView(
               imageVector = VoiceIcons.ArrowBack,
               contentDescription = stringResource(StringsR.string.common_action_close),
             )
+          }
+        },
+        actions = {
+          TextButton(onClick = onRescanClick) {
+            Text(text = stringResource(StringsR.string.library_scan_action))
           }
         },
       )
@@ -174,6 +182,7 @@ fun FolderOverviewPreview() {
     ),
     onAddClick = { },
     onDeleteClick = {},
-  ) {
-  }
+    onCloseClick = {},
+    onRescanClick = {},
+  )
 }

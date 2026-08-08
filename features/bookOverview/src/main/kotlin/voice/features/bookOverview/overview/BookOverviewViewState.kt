@@ -23,6 +23,8 @@ data class BookOverviewViewState(
   val nowPlaying: State<BookOverviewItemViewState>? = null,
   val libraryOrganization: LibraryOrganization = LibraryOrganization.AUTHOR_FOLDERS,
   val sections: List<LibrarySection> = emptyList(),
+  // True while the media scanner is running, so pull-to-refresh can show its spinner.
+  val isRefreshing: Boolean = false,
 ) {
 
   companion object {

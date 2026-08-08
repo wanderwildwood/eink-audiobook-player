@@ -123,6 +123,8 @@
     <string name="library.folders.moved.dialog.message">You can now manage audiobook folders in Preferences.</string>
     <!-- Static label shown while the library folder scan is running (no animated progress bar on this device). -->
     <string name="library.scanning.label">Scanning library…</string>
+    <!-- Action that manually restarts the media scan, on the audiobook folders screen. -->
+    <string name="library.scan.action">Scan now</string>
     <!-- Hint text for searching books in the library. -->
     <string name="library.search.hint">What are you looking for?</string>
     <!-- Button label for granting the storage permission workaround. -->

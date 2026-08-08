@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
@@ -108,6 +109,7 @@ fun BookOverviewScreen(modifier: Modifier = Modifier) {
     onSearchQueryChange = bookOverviewViewModel::onSearchQueryChange,
     onSearchBookClick = bookOverviewViewModel::onSearchBookClick,
     onPermissionBugCardClick = bookOverviewViewModel::onPermissionBugCardClick,
+    onRefresh = bookOverviewViewModel::onRefresh,
   )
   val deleteBookViewState = deleteBookViewModel.state.value
   if (deleteBookViewState != null) {
@@ -163,6 +165,7 @@ internal fun BookOverview(
   onSearchQueryChange: (String) -> Unit,
   onSearchBookClick: (BookId) -> Unit,
   onPermissionBugCardClick: () -> Unit,
+  onRefresh: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
   val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -192,8 +195,13 @@ internal fun BookOverview(
     },
     contentWindowInsets = WindowInsets(0, 0, 0, 0),
   ) { contentPadding ->
-    Box(
-      Modifier
+    // Pull down anywhere on the library to rescan. The app otherwise only scans on
+    // process start and when this screen attaches, which meant the only way to pick
+    // up changed files was to fully quit and reopen it.
+    PullToRefreshBox(
+      isRefreshing = viewState.isRefreshing,
+      onRefresh = onRefresh,
+      modifier = Modifier
         .padding(contentPadding)
         .consumeWindowInsets(contentPadding),
     ) {
@@ -271,6 +279,7 @@ fun BookOverviewPreview(
     BookOverview(
       viewState = viewState,
       onSettingsClick = {},
+      onRefresh = {},
       onBookClick = {},
       onBookLongClick = {},
       onBookFolderClick = {},
