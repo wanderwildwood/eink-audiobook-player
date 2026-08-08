@@ -7,10 +7,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
@@ -21,7 +24,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.retain.retain
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -198,9 +203,22 @@ internal fun BookOverview(
     // Pull down anywhere on the library to rescan. The app otherwise only scans on
     // process start and when this screen attaches, which meant the only way to pick
     // up changed files was to fully quit and reopen it.
+    val pullState = rememberPullToRefreshState()
     PullToRefreshBox(
       isRefreshing = viewState.isRefreshing,
       onRefresh = onRefresh,
+      state = pullState,
+      // The box starts below the top bar, so the default indicator position lands on
+      // top of the first book row. Pull it up into the header gap instead.
+      indicator = {
+        PullToRefreshDefaults.Indicator(
+          state = pullState,
+          isRefreshing = viewState.isRefreshing,
+          modifier = Modifier
+            .align(Alignment.TopCenter)
+            .offset(y = (-46).dp),
+        )
+      },
       modifier = Modifier
         .padding(contentPadding)
         .consumeWindowInsets(contentPadding),

@@ -57,17 +57,7 @@ internal fun ListBooks(
       when (section) {
         is LibrarySection.Folders -> {
           if (section.folders.isNotEmpty()) {
-            stickyHeader(
-              key = "folders-header-$sectionIndex",
-              contentType = "header",
-            ) {
-              BrowseHeader(
-                modifier = Modifier
-                  .fillMaxWidth()
-                  .background(MaterialTheme.colorScheme.surface)
-                  .padding(vertical = 8.dp, horizontal = 8.dp),
-              )
-            }
+            // The "Library" heading lives in the top bar now.
             items(
               items = section.folders,
               key = { it.folderName ?: "" },

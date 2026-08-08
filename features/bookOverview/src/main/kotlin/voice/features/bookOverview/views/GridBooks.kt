@@ -66,15 +66,7 @@ internal fun GridBooks(
       when (section) {
         is LibrarySection.Folders -> {
           if (section.folders.isNotEmpty()) {
-            item(
-              span = { GridItemSpan(maxLineSpan) },
-              key = "folders-header-$sectionIndex",
-              contentType = "header",
-            ) {
-              BrowseHeader(
-                modifier = Modifier.padding(top = 8.dp, bottom = 4.dp, start = 8.dp, end = 8.dp),
-              )
-            }
+            // The "Library" heading lives in the top bar now.
             items(
               items = section.folders,
               span = { GridItemSpan(maxLineSpan) },
