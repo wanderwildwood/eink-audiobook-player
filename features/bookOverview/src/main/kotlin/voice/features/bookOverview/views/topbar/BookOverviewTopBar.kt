@@ -5,22 +5,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.delay
 import voice.core.data.BookId
 import voice.core.ui.VoiceTheme
 import voice.features.bookOverview.overview.BookOverviewLayoutMode
 import voice.features.bookOverview.overview.BookOverviewViewState
 import voice.features.bookOverview.search.BookSearchViewState
-import kotlin.time.Duration.Companion.seconds
 import voice.core.strings.R as StringsR
 
 @Composable
@@ -46,14 +39,9 @@ internal fun BookOverviewTopBar(
       showFolderPickerIcon = viewState.showFolderPickerIcon,
       searchViewState = viewState.searchViewState,
     )
-    var showLoading by remember { mutableStateOf(false) }
-    LaunchedEffect(viewState.isLoading) {
-      if (viewState.isLoading) {
-        delay(3.seconds)
-      }
-      showLoading = viewState.isLoading
-    }
-    if (showLoading) {
+    // Shown as soon as a scan starts, with no settling delay: this label is the only
+    // feedback a pull-to-refresh gets now that the spinner is gone.
+    if (viewState.isLoading) {
       Text(
         text = stringResource(id = StringsR.string.library_scanning_label),
         style = MaterialTheme.typography.labelMedium,
