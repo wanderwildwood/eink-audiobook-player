@@ -89,6 +89,7 @@ class BookPlayViewModelTest {
     sleepTimer = sleepTimer,
     playStateManager = playStateManager,
     currentBookStoreId = currentBookStoreId,
+    sleepTimerPreferenceStore = sleepTimerDataStore,
     navigator = mockk(),
     bookmarkRepository = mockk {
       coEvery { addBookmarkAtBookPosition(book, any(), any()) } returns Bookmark(
@@ -130,6 +131,21 @@ class BookPlayViewModelTest {
       sleepTimer.disable()
     }
     assertIs<SleepTimerState.Disabled>(sleepTimer.state.value)
+  }
+
+  @Test
+  fun enablingSleepTimerRemembersItForTheNextSession() = scope.runTest {
+    viewModel.toggleSleepTimer()
+    yield()
+    assertEquals(expected = true, actual = sleepTimerDataStore.data.first().enabledLastSession)
+  }
+
+  @Test
+  fun disablingSleepTimerForgetsItForTheNextSession() = scope.runTest {
+    viewModel.toggleSleepTimer()
+    viewModel.toggleSleepTimer()
+    yield()
+    assertEquals(expected = false, actual = sleepTimerDataStore.data.first().enabledLastSession)
   }
 
   @Test
@@ -306,6 +322,7 @@ class BookPlayViewModelTest {
         every { playState } returns playStateFlow.value
       },
       currentBookStoreId = MemoryDataStore(null),
+      sleepTimerPreferenceStore = MemoryDataStore(SleepTimerPreference.Default),
       navigator = mockk(),
       bookmarkRepository = mockk(),
       volumeGainFormatter = mockk(),

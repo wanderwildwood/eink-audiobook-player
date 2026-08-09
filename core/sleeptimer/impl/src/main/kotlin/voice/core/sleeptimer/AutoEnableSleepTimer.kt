@@ -31,14 +31,16 @@ class AutoEnableSleepTimer(
     playStateManager.playStateFlow
       .filter { it == Playing }
       .onEach {
-        val autoSleepTimerPreference = sleepTimerPreferenceStore.data.first()
-        if (shouldEnableSleepTimer(
-            autoSleepTimer = autoSleepTimerPreference,
-            sleepTimerActive = sleepTimer.state.value.enabled,
-          )
-        ) {
-          sleepTimer.enable(SleepTimerMode.TimedWithDefault)
-          createBookmark()
+        if (sleepTimer.state.value.enabled) return@onEach
+        val preference = sleepTimerPreferenceStore.data.first()
+        when {
+          // Re-arming what the user left on isn't a "you fell asleep here" moment, so it gets no
+          // bookmark - otherwise every resume would add one.
+          preference.enabledLastSession -> sleepTimer.enable(SleepTimerMode.TimedWithDefault)
+          shouldEnableNightlySleepTimer(preference) -> {
+            sleepTimer.enable(SleepTimerMode.TimedWithDefault)
+            createBookmark()
+          }
         }
       }
       .launchIn(scope)
@@ -48,12 +50,8 @@ class AutoEnableSleepTimer(
     createBookmarkAtCurrentPosition.create()
   }
 
-  private fun shouldEnableSleepTimer(
-    autoSleepTimer: SleepTimerPreference,
-    sleepTimerActive: Boolean,
-  ): Boolean {
+  private fun shouldEnableNightlySleepTimer(autoSleepTimer: SleepTimerPreference): Boolean {
     return autoSleepTimer.autoSleepTimerEnabled &&
-      !sleepTimerActive &&
       isTimeInRange(
         currentTime = clock.instant().atZone(clock.zone).toLocalTime(),
         startTime = autoSleepTimer.autoSleepStartTime,

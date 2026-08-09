@@ -42,26 +42,32 @@ class AutoEnableSleepTimerMinimalTest {
     }
   }
 
+  private val createBookmarkAtCurrentPosition = mockk<CreateBookmarkAtCurrentPosition>(relaxed = true)
+
   private fun prefs(
     enabled: Boolean,
     start: LocalTime = LocalTime.of(22, 0),
     end: LocalTime = LocalTime.of(6, 0),
     duration: Duration = 30.minutes,
+    enabledLastSession: Boolean = false,
   ) = SleepTimerPreference(
     autoSleepTimerEnabled = enabled,
     autoSleepStartTime = start,
     autoSleepEndTime = end,
     duration = duration,
+    enabledLastSession = enabledLastSession,
   )
 
-  private val sut = AutoEnableSleepTimer(
+  private fun sut(now: String = "2020-01-01T23:00:00Z") = AutoEnableSleepTimer(
     sleepTimerPreferenceStore = sleepTimerPreferenceStore,
     playStateManager = playStateManager,
     sleepTimer = sleepTimer,
-    clock = Clock.fixed(Instant.parse("2020-01-01T23:00:00Z"), ZoneId.of("UTC")),
-    createBookmarkAtCurrentPosition = mockk(relaxed = true),
+    clock = Clock.fixed(Instant.parse(now), ZoneId.of("UTC")),
+    createBookmarkAtCurrentPosition = createBookmarkAtCurrentPosition,
     scope = testScope.backgroundScope,
   )
+
+  private val sut = sut()
 
   @Test
   fun `enables when playing and in time window`() = testScope.runTest {
@@ -80,6 +86,42 @@ class AutoEnableSleepTimerMinimalTest {
     sleepTimerPreferenceStore.updateData { prefs(enabled = false) }
 
     sut.onAppStart(mockk())
+    playStateManager.playState = PlayStateManager.PlayState.Playing
+    advanceUntilIdle()
+    yield()
+
+    coVerify(exactly = 0) { sleepTimer.enable(any()) }
+  }
+
+  @Test
+  fun `re-enables outside of the time window when it was left on last session`() = testScope.runTest {
+    sleepTimerPreferenceStore.updateData { prefs(enabled = false, enabledLastSession = true) }
+
+    sut(now = "2020-01-01T12:00:00Z").onAppStart(mockk())
+    playStateManager.playState = PlayStateManager.PlayState.Playing
+    advanceUntilIdle()
+    yield()
+
+    coVerify { sleepTimer.enable(SleepTimerMode.TimedWithDefault) }
+  }
+
+  @Test
+  fun `re-enabling from the last session adds no bookmark`() = testScope.runTest {
+    sleepTimerPreferenceStore.updateData { prefs(enabled = false, enabledLastSession = true) }
+
+    sut(now = "2020-01-01T12:00:00Z").onAppStart(mockk())
+    playStateManager.playState = PlayStateManager.PlayState.Playing
+    advanceUntilIdle()
+    yield()
+
+    coVerify(exactly = 0) { createBookmarkAtCurrentPosition.create() }
+  }
+
+  @Test
+  fun `does nothing when it was switched off last session`() = testScope.runTest {
+    sleepTimerPreferenceStore.updateData { prefs(enabled = false, enabledLastSession = false) }
+
+    sut(now = "2020-01-01T12:00:00Z").onAppStart(mockk())
     playStateManager.playState = PlayStateManager.PlayState.Playing
     advanceUntilIdle()
     yield()

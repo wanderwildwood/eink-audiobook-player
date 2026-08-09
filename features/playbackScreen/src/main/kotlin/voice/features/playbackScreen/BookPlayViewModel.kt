@@ -24,7 +24,9 @@ import voice.core.data.durationMs
 import voice.core.data.markForPosition
 import voice.core.data.repo.BookRepository
 import voice.core.data.repo.BookmarkRepo
+import voice.core.data.sleeptimer.SleepTimerPreference
 import voice.core.data.store.CurrentBookStore
+import voice.core.data.store.SleepTimerPreferenceStore
 import voice.core.featureflag.ExperimentalPlaybackPersistenceQualifier
 import voice.core.featureflag.FeatureFlag
 import voice.core.featureflag.KioskModeFeatureFlagQualifier
@@ -56,6 +58,8 @@ class BookPlayViewModel(
   private val playStateManager: PlayStateManager,
   @CurrentBookStore
   private val currentBookStoreId: DataStore<BookId?>,
+  @SleepTimerPreferenceStore
+  private val sleepTimerPreferenceStore: DataStore<SleepTimerPreference>,
   private val navigator: Navigator,
   private val bookmarkRepository: BookmarkRepo,
   private val volumeGainFormatter: VolumeGainFormatter,
@@ -285,6 +289,7 @@ class BookPlayViewModel(
       Logger.d("toggleSleepTimer while active=${sleepTimer.state.value}")
       if (sleepTimer.state.value.enabled) {
         sleepTimer.disable()
+        rememberSleepTimerEnabled(false)
       } else {
         val book = currentBook()
         if (book != null) {
@@ -296,9 +301,19 @@ class BookPlayViewModel(
             )
           }
           sleepTimer.enable(SleepTimerMode.TimedWithDefault)
+          rememberSleepTimerEnabled(true)
         }
       }
     }
+  }
+
+  /**
+   * Remembers that the user wants the sleep timer on (or off), so it can be re-armed automatically
+   * on the next playback start. Deliberately only written on an explicit toggle - the timer
+   * disabling itself when it expires must not count as switching it off.
+   */
+  private suspend fun rememberSleepTimerEnabled(enabled: Boolean) {
+    sleepTimerPreferenceStore.updateData { it.copy(enabledLastSession = enabled) }
   }
 
   fun onBatteryOptimizationRequested() {

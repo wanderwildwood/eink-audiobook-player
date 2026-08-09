@@ -25,6 +25,12 @@ public data class SleepTimerPreference(
    * stops playback at the end of the current chapter instead of after [duration].
    */
   val endOfChapterEnabled: Boolean = false,
+  /**
+   * Whether the user last left the sleep timer switched on. If so it is re-armed automatically the
+   * next time playback starts, at any time of day, so the timer stays on across reading sessions
+   * until it is explicitly switched off again.
+   */
+  val enabledLastSession: Boolean = false,
 ) {
 
   public companion object {
@@ -34,6 +40,7 @@ public data class SleepTimerPreference(
       autoSleepEndTime = LocalTime.of(6, 0),
       duration = 10.minutes,
       endOfChapterEnabled = false,
+      enabledLastSession = false,
     )
   }
 }
