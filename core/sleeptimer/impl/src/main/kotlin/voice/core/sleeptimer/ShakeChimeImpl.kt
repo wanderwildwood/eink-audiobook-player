@@ -100,17 +100,20 @@ class ShakeChimeImpl(dispatcherProvider: DispatcherProvider) : ShakeChime {
 
   private companion object {
     const val SAMPLE_RATE = 44_100
-    const val DURATION_SECONDS = 0.6
-    const val ATTACK_SECONDS = 0.008
-    const val DECAY_TIME_CONSTANT_SECONDS = 0.18
+    const val DURATION_SECONDS = 0.7
 
-    // A' and the fifth above it. High enough to read as a chime rather than a thud, low enough
-    // not to be piercing in a quiet room.
-    const val FUNDAMENTAL_HZ = 880.0
-    const val FIFTH_HZ = 1320.0
-    const val FIFTH_GAIN = 0.35
+    // A slow onset is most of what makes this read as soft rather than as a ping: the ear hears
+    // a fast attack as percussive however quiet it is.
+    const val ATTACK_SECONDS = 0.030
+    const val DECAY_TIME_CONSTANT_SECONDS = 0.22
+
+    // E5 and the fifth above it, down a fourth from where this started. Lower carries less in a
+    // quiet room, and the fifth is quiet enough now to add warmth rather than brightness.
+    const val FUNDAMENTAL_HZ = 659.25
+    const val FIFTH_HZ = 987.77
+    const val FIFTH_GAIN = 0.18
 
     // Deliberately quiet. This is a confirmation, not an alert.
-    const val PEAK_AMPLITUDE = 0.16
+    const val PEAK_AMPLITUDE = 0.085
   }
 }
