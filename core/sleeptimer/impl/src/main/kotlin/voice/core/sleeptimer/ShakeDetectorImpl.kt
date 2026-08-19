@@ -6,9 +6,13 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.core.content.getSystemService
+import androidx.datastore.core.DataStore
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.suspendCancellableCoroutine
+import voice.core.data.sleeptimer.SleepTimerPreference
+import voice.core.data.store.SleepTimerPreferenceStore
 import kotlin.coroutines.resume
 
 /**
@@ -26,9 +30,20 @@ import kotlin.coroutines.resume
  * the picture entirely, so those two goals are no longer in tension.
  */
 @ContributesBinding(AppScope::class)
-class ShakeDetectorImpl(private val context: Context) : ShakeDetector {
+class ShakeDetectorImpl(
+  private val context: Context,
+  @SleepTimerPreferenceStore
+  private val sleepTimerPreferenceStore: DataStore<SleepTimerPreference>,
+) : ShakeDetector {
 
   override suspend fun detect() {
+    // Read once per detection rather than per sensor event: this is a hot callback, and a
+    // sensitivity change mid-shake has nothing sensible to mean anyway.
+    val threshold = sleepTimerPreferenceStore.data.first()
+      .shakeSensitivity
+      .thresholdMetersPerSecondSquared
+    val thresholdSquared = (threshold * threshold).toDouble()
+
     suspendCancellableCoroutine { cont ->
       val sensorManager = context.getSystemService<SensorManager>()
         ?: return@suspendCancellableCoroutine
@@ -44,7 +59,7 @@ class ShakeDetectorImpl(private val context: Context) : ShakeDetector {
           val z = event.values[2]
           val magnitudeSquared = (x * x + y * y + z * z).toDouble()
 
-          window.addLast(Sample(event.timestamp, magnitudeSquared > ACCELERATION_THRESHOLD_SQUARED))
+          window.addLast(Sample(event.timestamp, magnitudeSquared > thresholdSquared))
           while (window.size > 1 && event.timestamp - window.first().timestampNanos > WINDOW_NANOS) {
             window.removeFirst()
           }
@@ -79,15 +94,16 @@ class ShakeDetectorImpl(private val context: Context) : ShakeDetector {
   )
 
   private companion object {
-    // With gravity already removed, true rest reads close to 0 m/s^2 - this can be a low,
-    // easy-to-trigger value without also catching ambient vibration or sensor noise.
-    const val ACCELERATION_THRESHOLD = 4.0
-    const val ACCELERATION_THRESHOLD_SQUARED = ACCELERATION_THRESHOLD * ACCELERATION_THRESHOLD
+    // The magnitude threshold itself is the user-facing sensitivity setting - see
+    // [voice.core.data.sleeptimer.ShakeSensitivity]. With gravity already removed by the
+    // platform, true rest reads close to 0 m/s^2, so these can be small values.
 
-    // Mirrors com.squareup.seismic.ShakeDetector's own window sizing (250-500ms, 75% of
-    // samples in the window must be "accelerating") - a proven balance between reacting
-    // quickly and not tripping on a single noisy sample.
-    const val MIN_WINDOW_NANOS = 250_000_000L
+    // Sizing adapted from com.squareup.seismic.ShakeDetector (75% of samples in the window
+    // must be "accelerating", which keeps a single noisy sample from firing). Its 250ms
+    // minimum wanted a sustained shake, though, which is a lot to ask of someone half asleep
+    // - 150ms lets a single quick flick of the wrist through while still needing several
+    // consecutive samples to agree.
+    const val MIN_WINDOW_NANOS = 150_000_000L
     const val WINDOW_NANOS = 500_000_000L
   }
 }

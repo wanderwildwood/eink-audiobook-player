@@ -31,6 +31,10 @@ public data class SleepTimerPreference(
    * until it is explicitly switched off again.
    */
   val enabledLastSession: Boolean = false,
+  /**
+   * How hard the device has to be shaken to reset the sleep timer.
+   */
+  val shakeSensitivity: ShakeSensitivity = ShakeSensitivity.Default,
 ) {
 
   public companion object {
@@ -41,6 +45,7 @@ public data class SleepTimerPreference(
       duration = 10.minutes,
       endOfChapterEnabled = false,
       enabledLastSession = false,
+      shakeSensitivity = ShakeSensitivity.Default,
     )
   }
 }

@@ -170,6 +170,13 @@ private fun Settings(
       }
 
       item {
+        ShakeSensitivityRow(
+          sensitivity = viewState.shakeSensitivity,
+          onClick = listener::onShakeSensitivityRowClick,
+        )
+      }
+
+      item {
         ListItem(
           modifier = Modifier.clickable { listener.openFaq() },
           leadingContent = {
@@ -312,6 +319,13 @@ private fun Dialog(
         currentEndOfChapter = viewState.sleepTimerEndOfChapter,
         onDurationSelect = listener::setSleepTimerDurationMinutes,
         onEndOfChapterSelect = listener::setSleepTimerEndOfChapter,
+        onDismiss = listener::dismissDialog,
+      )
+    }
+    SettingsViewState.Dialog.ShakeSensitivity -> {
+      ShakeSensitivityDialog(
+        current = viewState.shakeSensitivity,
+        onSelect = listener::setShakeSensitivity,
         onDismiss = listener::dismissDialog,
       )
     }

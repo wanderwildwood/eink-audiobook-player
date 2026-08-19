@@ -16,6 +16,7 @@ import voice.core.common.DispatcherProvider
 import voice.core.common.MainScope
 import voice.core.data.GridMode
 import voice.core.data.LibraryOrganization
+import voice.core.data.sleeptimer.ShakeSensitivity
 import voice.core.data.sleeptimer.SleepTimerPreference
 import voice.core.data.store.AnalyticsConsentStore
 import voice.core.data.store.AutoRewindAmountStore
@@ -96,6 +97,7 @@ class SettingsViewModel(
       ),
       sleepTimerDurationMinutes = autoSleepTimer.duration.inWholeMinutes.toInt(),
       sleepTimerEndOfChapter = autoSleepTimer.endOfChapterEnabled,
+      shakeSensitivity = autoSleepTimer.shakeSensitivity,
       analyticsEnabled = analyticsEnabled,
       showAnalyticSetting = appInfoProvider.analyticsIncluded,
       showDeveloperMenu = showDeveloperMenu,
@@ -211,6 +213,19 @@ class SettingsViewModel(
     mainScope.launch {
       sleepTimerPreferenceStore.updateData { currentPrefs ->
         currentPrefs.copy(endOfChapterEnabled = true)
+      }
+    }
+    dialog.value = null
+  }
+
+  override fun onShakeSensitivityRowClick() {
+    dialog.value = SettingsViewState.Dialog.ShakeSensitivity
+  }
+
+  override fun setShakeSensitivity(sensitivity: ShakeSensitivity) {
+    mainScope.launch {
+      sleepTimerPreferenceStore.updateData { currentPrefs ->
+        currentPrefs.copy(shakeSensitivity = sensitivity)
       }
     }
     dialog.value = null

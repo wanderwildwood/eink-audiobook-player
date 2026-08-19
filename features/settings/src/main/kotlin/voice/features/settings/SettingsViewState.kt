@@ -1,6 +1,7 @@
 package voice.features.settings
 
 import voice.core.data.LibraryOrganization
+import voice.core.data.sleeptimer.ShakeSensitivity
 import java.time.LocalTime
 
 data class SettingsViewState(
@@ -13,6 +14,7 @@ data class SettingsViewState(
   val autoSleepTimer: AutoSleepTimerViewState,
   val sleepTimerDurationMinutes: Int,
   val sleepTimerEndOfChapter: Boolean,
+  val shakeSensitivity: ShakeSensitivity,
   val showAnalyticSetting: Boolean,
   val analyticsEnabled: Boolean,
   val showDeveloperMenu: Boolean,
@@ -23,6 +25,7 @@ data class SettingsViewState(
     AutoRewindAmount,
     SeekTime,
     SleepTimerDuration,
+    ShakeSensitivity,
     LibraryOrganization,
   }
 
@@ -38,6 +41,7 @@ data class SettingsViewState(
         autoSleepTimer = AutoSleepTimerViewState.preview(),
         sleepTimerDurationMinutes = 10,
         sleepTimerEndOfChapter = false,
+        shakeSensitivity = ShakeSensitivity.Default,
         analyticsEnabled = false,
         showAnalyticSetting = true,
         showDeveloperMenu = true,

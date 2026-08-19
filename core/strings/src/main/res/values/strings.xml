@@ -237,6 +237,20 @@
     <string name="settings.playback.auto_rewind.title">Auto rewind</string>
     <!-- Title for the setting that controls skip-forward and rewind duration. -->
     <string name="settings.playback.seek_time.title">Skip amount</string>
+    <!-- Settings row title for how hard the device must be shaken to reset the sleep timer. -->
+    <string name="settings.shake_sensitivity.title">Shake sensitivity</string>
+    <!-- Shake sensitivity option requiring the firmest shake. -->
+    <string name="settings.shake_sensitivity.low">Low</string>
+    <!-- Description of the low shake sensitivity option. -->
+    <string name="settings.shake_sensitivity.low.description">Takes a firm shake</string>
+    <!-- Shake sensitivity option in the middle. -->
+    <string name="settings.shake_sensitivity.medium">Medium</string>
+    <!-- Description of the medium shake sensitivity option. -->
+    <string name="settings.shake_sensitivity.medium.description">A normal flick of the wrist</string>
+    <!-- Shake sensitivity option requiring the gentlest shake. -->
+    <string name="settings.shake_sensitivity.high">High</string>
+    <!-- Description of the high shake sensitivity option. -->
+    <string name="settings.shake_sensitivity.high.description">A small nudge is enough</string>
     <!-- Settings row title for choosing what the sleep timer button does. -->
     <string name="settings.sleep_timer.duration.title">Sleep timer duration</string>
     <!-- Settings support row for opening the FAQ. -->

@@ -24,16 +24,28 @@ import voice.core.logging.api.Logger
 import voice.core.playback.LivePlaybackState
 import voice.core.playback.PlayerController
 import voice.core.playback.playstate.PlayStateManager
+import voice.core.sleeptimer.ManualClock
+import voice.core.sleeptimer.ShakeChime
 import voice.core.sleeptimer.ShakeDetector
 import voice.core.sleeptimer.SleepTimer
 import voice.core.sleeptimer.SleepTimerImpl
 import voice.core.sleeptimer.SleepTimerMode
 import voice.core.sleeptimer.SleepTimerState
+import java.time.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
+
+private class TestShakeChime : ShakeChime {
+  var plays = 0
+    private set
+
+  override fun play() {
+    plays++
+  }
+}
 
 private class TestShakeDetector : ShakeDetector {
   private val shakes = Channel<Unit>(capacity = Channel.UNLIMITED)
@@ -67,6 +79,11 @@ class SleepTimerImplTest {
   }
 
   private val fadeOutStore = MemoryDataStore(2.seconds)
+  private val shakeChime = TestShakeChime()
+
+  // Wall-clock time, which unlike the test scheduler's virtual time is what the grace window is
+  // measured against. Tests that care advance it explicitly.
+  private val clock = ManualClock(Instant.parse("2026-08-19T22:00:00Z"))
   private val testDispatcher = StandardTestDispatcher()
   private val testScope = TestScope(testDispatcher)
 
@@ -82,6 +99,8 @@ class SleepTimerImplTest {
       fadeOutStore,
       dispatcherProvider,
       tracker = mockk(relaxed = true),
+      shakeChime = shakeChime,
+      clock = clock,
     )
   }
 
@@ -158,6 +177,57 @@ class SleepTimerImplTest {
     // The second countdown should complete normally
     coVerify(exactly = 2) { playerController.pauseWithRewind(any()) }
     assertEquals(expected = SleepTimerState.Disabled, actual = sleepTimer.state.value)
+  }
+
+  @Test
+  fun shake_after_grace_window_elapsed_in_wall_clock_does_not_resume() = testScope.runTest {
+    val duration = 1.minutes
+    sleepTimer.enable(SleepTimerMode.TimedWithDuration(duration))
+
+    advanceTimeBy(duration + 1.seconds)
+    runCurrent()
+    coVerify(exactly = 1) { playerController.pauseWithRewind(any()) }
+
+    // The device suspends here. Virtual time does not move, exactly as the coroutine timeout and
+    // the non-wakeup sensor both stall while the CPU is asleep - but hours of real time pass.
+    clock.instant = clock.instant.plusSeconds(4 * 60 * 60)
+
+    // Picking the phone up to check the time registers as a shake once the device wakes.
+    shakeDetector.shake()
+    runCurrent()
+
+    verify(exactly = 0) { playerController.play() }
+    assertEquals(expected = 0, actual = shakeChime.plays)
+    assertEquals(expected = SleepTimerState.Disabled, actual = sleepTimer.state.value)
+  }
+
+  @Test
+  fun shake_within_grace_window_still_resumes_and_chimes() = testScope.runTest {
+    val duration = 1.minutes
+    sleepTimer.enable(SleepTimerMode.TimedWithDuration(duration))
+
+    advanceTimeBy(duration + 1.seconds)
+    runCurrent()
+
+    clock.instant = clock.instant.plusSeconds(5)
+    shakeDetector.shake()
+    runCurrent()
+
+    verify(exactly = 1) { playerController.play() }
+    assertEquals(expected = 1, actual = shakeChime.plays)
+    assertEquals(expected = SleepTimerState.Enabled.WithDuration(duration), actual = sleepTimer.state.value)
+  }
+
+  @Test
+  fun shake_mid_countdown_chimes() = testScope.runTest {
+    sleepTimer.enable(SleepTimerMode.TimedWithDuration(5.minutes))
+    advanceTimeBy(2.minutes)
+    runCurrent()
+
+    shakeDetector.shake()
+    runCurrent()
+
+    assertEquals(expected = 1, actual = shakeChime.plays)
   }
 
   @Test

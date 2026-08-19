@@ -1,6 +1,7 @@
 package voice.features.settings
 
 import voice.core.data.LibraryOrganization
+import voice.core.data.sleeptimer.ShakeSensitivity
 import java.time.LocalTime
 
 interface SettingsListener {
@@ -21,6 +22,8 @@ interface SettingsListener {
   fun onSleepTimerDurationRowClick()
   fun setSleepTimerDurationMinutes(minutes: Int)
   fun setSleepTimerEndOfChapter()
+  fun onShakeSensitivityRowClick()
+  fun setShakeSensitivity(sensitivity: ShakeSensitivity)
   fun toggleAnalytics()
   fun openFolderPicker()
   fun onAppVersionClick()
@@ -46,6 +49,8 @@ interface SettingsListener {
       override fun onSleepTimerDurationRowClick() {}
       override fun setSleepTimerDurationMinutes(minutes: Int) {}
       override fun setSleepTimerEndOfChapter() {}
+      override fun onShakeSensitivityRowClick() {}
+      override fun setShakeSensitivity(sensitivity: ShakeSensitivity) {}
       override fun toggleAnalytics() {}
       override fun openFolderPicker() {}
       override fun onAppVersionClick() {}

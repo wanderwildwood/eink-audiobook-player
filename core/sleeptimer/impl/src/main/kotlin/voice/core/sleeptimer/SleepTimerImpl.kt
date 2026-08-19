@@ -24,6 +24,7 @@ import voice.core.logging.api.Logger
 import voice.core.playback.PlayerController
 import voice.core.playback.playstate.PlayStateManager
 import voice.core.playback.playstate.PlayStateManager.PlayState.Playing
+import java.time.Clock
 import kotlin.math.max
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
@@ -41,6 +42,8 @@ class SleepTimerImpl internal constructor(
   private val fadeOutStore: DataStore<Duration>,
   dispatcherProvider: DispatcherProvider,
   private val tracker: SleepTimerTracker,
+  private val shakeChime: ShakeChime,
+  private val clock: Clock,
 ) : SleepTimer {
 
   private val scope = MainScope(dispatcherProvider)
@@ -118,6 +121,7 @@ class SleepTimerImpl internal constructor(
 
     if (shookDuringCountdown) {
       Logger.i("Shake detected, resetting timer")
+      shakeChime.play()
       startCountdown(duration)
       return
     }
@@ -128,15 +132,27 @@ class SleepTimerImpl internal constructor(
     val fadeOutDuration = fadeOutStore.data.first()
     playerController.pauseWithRewind(fadeOutDuration)
 
+    val pausedAtMillis = clock.millis()
     val shookDuringGrace = withTimeoutOrNull(SHAKE_TO_RESET_TIME) {
       shakeDetector.detect()
       true
     } ?: false
     playerController.setVolume(1F)
-    if (shookDuringGrace) {
+    // The timeout above is not enough on its own to bound this window. Coroutine delays run on a
+    // monotonic clock that does not advance while the device is suspended, and a non-wakeup
+    // sensor delivers nothing during suspend either - so once the screen goes off and the device
+    // sleeps, this window stops elapsing and simply resumes hours later. The first movement after
+    // that, picking the phone up to check the time in the middle of the night, arrived as a shake
+    // inside a window that should have closed long ago, and the book started playing again.
+    // [clock] is wall-clock time, which does include time spent suspended.
+    val elapsed = (clock.millis() - pausedAtMillis).milliseconds
+    if (shookDuringGrace && elapsed <= SHAKE_TO_RESET_TIME) {
       Logger.i("Shake detected, resetting timer")
+      shakeChime.play()
       playerController.play()
       startCountdown(duration)
+    } else if (shookDuringGrace) {
+      Logger.i("Shake ignored, $elapsed elapsed since playback was paused")
     }
   }
 
