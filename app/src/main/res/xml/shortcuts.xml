@@ -6,6 +6,6 @@
     <intent
       android:action="playCurrent"
       android:targetClass="voice.app.MainActivity"
-      android:targetPackage="de.ph1b.audiobook" />
+      android:targetPackage="com.wanderwildwood.einkaudiobookplayer" />
   </shortcut>
 </shortcuts>
