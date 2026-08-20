@@ -200,6 +200,10 @@
     <string name="playback.option.volume_boost">Volume boost</string>
     <!-- Title and content description for playback-speed controls. -->
     <string name="playback.speed.title">Playback speed</string>
+    <!-- Content description for the button that lowers the playback speed. -->
+    <string name="playback.speed.slower">Slower</string>
+    <!-- Content description for the button that raises the playback speed. -->
+    <string name="playback.speed.faster">Faster</string>
     <!-- Negative button for cancelling feedback. -->
     <string name="review.feedback.action.cancel" tools:ignore="UnusedResources">Cancel</string>
     <!-- Positive button for sending feedback. -->
