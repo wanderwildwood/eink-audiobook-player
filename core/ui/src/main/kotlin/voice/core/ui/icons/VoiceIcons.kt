@@ -3141,4 +3141,99 @@ object VoiceIcons {
         }
       }
       .build()
+
+  /*
+   * Material Symbols "skip_previous". Mirror it horizontally for skip_next, the way the playback
+   * controls already mirror FastRewind - the two glyphs are exact reflections of each other.
+   */
+  val SkipPrevious: ImageVector =
+    ImageVector.Builder(
+      name = "SkipPrevious",
+      defaultWidth = 24.dp,
+      defaultHeight = 24.dp,
+      viewportWidth = 24f,
+      viewportHeight = 24f,
+    )
+      .apply {
+        path(
+          fill = SolidColor(Color.Black),
+          fillAlpha = 1f,
+          stroke = null,
+          strokeAlpha = 1f,
+          strokeLineWidth = 1f,
+          strokeLineCap = StrokeCap.Butt,
+          strokeLineJoin = StrokeJoin.Bevel,
+          strokeLineMiter = 1f,
+          pathFillType = PathFillType.NonZero,
+        ) {
+          // the bar
+          moveTo(6f, 18f)
+          verticalLineTo(6f)
+          horizontalLineToRelative(2f)
+          verticalLineTo(18f)
+          close()
+          // the triangle
+          moveTo(19f, 18f)
+          lineToRelative(-9f, -6f)
+          lineToRelative(9f, -6f)
+          verticalLineTo(18f)
+          close()
+        }
+      }
+      .build()
+
+  /*
+   * Material Symbols "lock" - the closed counterpart to LockOpen above, for the playback
+   * screen's controls lock.
+   */
+  val Lock: ImageVector =
+    ImageVector.Builder(
+      name = "Lock",
+      defaultWidth = 24.dp,
+      defaultHeight = 24.dp,
+      viewportWidth = 24f,
+      viewportHeight = 24f,
+    )
+      .apply {
+        path(
+          fill = SolidColor(Color.Black),
+          fillAlpha = 1f,
+          stroke = null,
+          strokeAlpha = 1f,
+          strokeLineWidth = 1f,
+          strokeLineCap = StrokeCap.Butt,
+          strokeLineJoin = StrokeJoin.Bevel,
+          strokeLineMiter = 1f,
+          pathFillType = PathFillType.EvenOdd,
+        ) {
+          // shackle
+          moveTo(8f, 10f)
+          verticalLineTo(7f)
+          quadTo(8f, 5.34f, 9.17f, 4.17f)
+          reflectiveQuadTo(12f, 3f)
+          reflectiveQuadTo(14.83f, 4.17f)
+          quadTo(16f, 5.34f, 16f, 7f)
+          verticalLineTo(10f)
+          horizontalLineTo(14f)
+          verticalLineTo(7f)
+          quadTo(14f, 6.17f, 13.41f, 5.59f)
+          reflectiveQuadTo(12f, 5f)
+          reflectiveQuadTo(10.59f, 5.59f)
+          quadTo(10f, 6.17f, 10f, 7f)
+          verticalLineTo(10f)
+          close()
+          // body
+          moveTo(6f, 10f)
+          horizontalLineTo(18f)
+          quadTo(19f, 10f, 19f, 11f)
+          verticalLineTo(20f)
+          quadTo(19f, 21f, 18f, 21f)
+          horizontalLineTo(6f)
+          quadTo(5f, 21f, 5f, 20f)
+          verticalLineTo(11f)
+          quadTo(5f, 10f, 6f, 10f)
+          close()
+        }
+      }
+      .build()
 }

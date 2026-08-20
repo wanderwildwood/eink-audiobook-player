@@ -24,8 +24,6 @@ import voice.core.ui.icons.VoiceIcons
 internal fun ChapterRow(
   chapterName: String,
   nextPreviousVisible: Boolean,
-  onSkipToNext: () -> Unit,
-  onSkipToPrevious: () -> Unit,
   onCurrentChapterClick: () -> Unit,
 ) {
   Row(
@@ -34,15 +32,6 @@ internal fun ChapterRow(
       .padding(horizontal = 8.dp),
     verticalAlignment = Alignment.CenterVertically,
   ) {
-    if (nextPreviousVisible) {
-      IconButton(onClick = onSkipToPrevious) {
-        Icon(
-          modifier = Modifier.size(36.dp),
-          imageVector = VoiceIcons.ChevronLeft,
-          contentDescription = stringResource(id = R.string.playback_chapter_previous),
-        )
-      }
-    }
     Row(
       modifier = Modifier
         .weight(1F)
@@ -51,9 +40,6 @@ internal fun ChapterRow(
       horizontalArrangement = Arrangement.Center,
       verticalAlignment = Alignment.CenterVertically,
     ) {
-      if (nextPreviousVisible) {
-        Spacer(modifier = Modifier.size(28.dp))
-      }
       Text(
         modifier = Modifier.padding(horizontal = 4.dp),
         text = chapterName,
@@ -64,15 +50,6 @@ internal fun ChapterRow(
         Icon(
           modifier = Modifier.size(28.dp),
           imageVector = VoiceIcons.ExpandMore,
-          contentDescription = stringResource(id = R.string.playback_chapter_next),
-        )
-      }
-    }
-    if (nextPreviousVisible) {
-      IconButton(onClick = onSkipToNext) {
-        Icon(
-          modifier = Modifier.size(36.dp),
-          imageVector = VoiceIcons.ChevronRight,
           contentDescription = stringResource(id = R.string.playback_chapter_next),
         )
       }

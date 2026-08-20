@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.unit.dp
@@ -21,25 +22,19 @@ import voice.core.strings.R
 import voice.core.ui.icons.VoiceIcons
 
 /**
- * Rewind / fast-forward, with the amount they move printed underneath.
+ * One transport control: a glyph with the distance it travels printed underneath.
  *
- * Without the number these are two bare curved arrows sitting directly below the chapter
- * chevrons, and nothing on screen says whether they step by seconds or by chapters, let alone
- * how far. The label is the whole point of the button, so it is part of the button.
+ * Both pairs are drawn from their "backwards" glyph mirrored horizontally, so the two
+ * directions cannot drift apart visually.
  */
 @Composable
-internal fun SkipButton(
-  forward: Boolean,
-  seconds: Int,
+private fun TransportButton(
+  icon: ImageVector,
+  mirrored: Boolean,
+  label: String,
+  contentDescription: String,
   onClick: () -> Unit,
 ) {
-  val label = stringResource(
-    id = if (forward) {
-      R.string.playback_action_fast_forward
-    } else {
-      R.string.playback_action_rewind
-    },
-  )
   Column(
     modifier = Modifier
       .clickable(
@@ -47,22 +42,57 @@ internal fun SkipButton(
         indication = ripple(bounded = false),
         onClick = onClick,
       )
-      // One target, one announcement: without this a screen reader reads the icon and the
-      // number as two separate things.
+      // One target, one announcement - otherwise a screen reader reads the glyph and the
+      // label as two separate controls.
       .clearAndSetSemantics { },
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center,
   ) {
     Icon(
       modifier = Modifier
-        .size(40.dp)
-        .scale(scaleX = if (forward) -1f else 1F, scaleY = 1f),
-      imageVector = VoiceIcons.Undo,
-      contentDescription = label,
+        .size(36.dp)
+        .scale(scaleX = if (mirrored) -1f else 1f, scaleY = 1f),
+      imageVector = icon,
+      contentDescription = contentDescription,
     )
     Text(
-      text = "${seconds}s",
+      text = label,
       style = MaterialTheme.typography.labelMedium,
     )
   }
+}
+
+/** Jumps [seconds] within the chapter. Double triangles, the traditional scan glyph. */
+@Composable
+internal fun SkipButton(
+  forward: Boolean,
+  seconds: Int,
+  onClick: () -> Unit,
+) {
+  TransportButton(
+    icon = VoiceIcons.FastRewind,
+    mirrored = forward,
+    label = "${seconds}s",
+    contentDescription = stringResource(
+      id = if (forward) R.string.playback_action_fast_forward else R.string.playback_action_rewind,
+    ),
+    onClick = onClick,
+  )
+}
+
+/** Jumps a whole chapter. Triangle against a bar, which is what that glyph has always meant. */
+@Composable
+internal fun ChapterSkipButton(
+  forward: Boolean,
+  onClick: () -> Unit,
+) {
+  TransportButton(
+    icon = VoiceIcons.SkipPrevious,
+    mirrored = forward,
+    label = stringResource(id = R.string.playback_action_chapter),
+    contentDescription = stringResource(
+      id = if (forward) R.string.playback_chapter_next else R.string.playback_chapter_previous,
+    ),
+    onClick = onClick,
+  )
 }

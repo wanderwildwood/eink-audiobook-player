@@ -51,8 +51,6 @@ internal fun BookPlayContent(
           ChapterRow(
             chapterName = chapterName,
             nextPreviousVisible = viewState.showPreviousNextButtons,
-            onSkipToNext = onSkipToNext,
-            onSkipToPrevious = onSkipToPrevious,
             onCurrentChapterClick = onCurrentChapterClick,
           )
         }
@@ -66,9 +64,12 @@ internal fun BookPlayContent(
         PlaybackRow(
           playing = viewState.playing,
           seekTimeSeconds = viewState.seekTimeSeconds,
+          showChapterButtons = viewState.showPreviousNextButtons,
           onPlayClick = onPlayClick,
           onRewindClick = onRewindClick,
           onFastForwardClick = onFastForwardClick,
+          onSkipToPrevious = onSkipToPrevious,
+          onSkipToNext = onSkipToNext,
         )
       }
     }
@@ -88,8 +89,6 @@ internal fun BookPlayContent(
         ChapterRow(
           chapterName = chapterName,
           nextPreviousVisible = viewState.showPreviousNextButtons,
-          onSkipToNext = onSkipToNext,
-          onSkipToPrevious = onSkipToPrevious,
           onCurrentChapterClick = onCurrentChapterClick,
         )
       }
@@ -103,9 +102,12 @@ internal fun BookPlayContent(
       PlaybackRow(
         playing = viewState.playing,
         seekTimeSeconds = viewState.seekTimeSeconds,
+        showChapterButtons = viewState.showPreviousNextButtons,
         onPlayClick = onPlayClick,
         onRewindClick = onRewindClick,
         onFastForwardClick = onFastForwardClick,
+        onSkipToPrevious = onSkipToPrevious,
+        onSkipToNext = onSkipToNext,
       )
       Spacer(modifier = Modifier.size(24.dp))
     }
