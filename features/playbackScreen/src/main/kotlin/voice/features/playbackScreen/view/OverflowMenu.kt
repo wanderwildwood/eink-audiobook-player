@@ -21,10 +21,12 @@ internal fun OverflowMenu(
   skipSilence: Boolean,
   onSkipSilenceClick: () -> Unit,
   onVolumeBoostClick: () -> Unit,
+  enabled: Boolean = true,
 ) {
   Box {
     var expanded by remember { mutableStateOf(false) }
     IconButton(
+      enabled = enabled,
       onClick = {
         expanded = !expanded
       },

@@ -170,6 +170,11 @@
     <!-- Title on the onboarding welcome screen. -->
     <string name="onboarding.welcome.title">Welcome to eInk Audiobook Player!</string>
     <!-- Label for the playback action that skips forward. -->
+    <!-- Label under the chapter skip buttons on the playback screen. Keep it short. -->
+    <string name="playback.action.chapter">Chapter</string>
+    <!-- Locks the playback controls so a stray touch cannot change anything. -->
+    <string name="playback.action.lock">Lock controls</string>
+    <string name="playback.action.unlock">Unlock controls</string>
     <string name="playback.action.fast_forward">Fast forward</string>
     <!-- Content description for a playback button that pauses audio. -->
     <string name="playback.action.pause">Pause</string>

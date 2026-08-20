@@ -1,6 +1,11 @@
 package voice.features.playbackScreen.view
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.Scaffold
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -31,6 +36,7 @@ internal fun BookPlayView(
   onVolumeBoostClick: () -> Unit,
   onSkipToNext: () -> Unit,
   onSkipToPrevious: () -> Unit,
+  onLockClick: () -> Unit,
   onCloseClick: () -> Unit,
   onCurrentChapterClick: () -> Unit,
   snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
@@ -49,10 +55,30 @@ internal fun BookPlayView(
         onSkipSilenceClick = onSkipSilenceClick,
         onVolumeBoostClick = onVolumeBoostClick,
         onCloseClick = onCloseClick,
+        onLockClick = onLockClick,
         useLandscapeLayout = useLandscapeLayout,
       )
     },
     content = {
+      // Locking has to swallow touches here, not just disable the toolbar - the play button,
+      // the skip buttons and the seek bar all live in the content. Consuming on the Initial
+      // pass means nothing below ever sees the gesture. Dimmed as well, so a tap that does
+      // nothing looks deliberate rather than broken.
+      Box(
+        modifier = if (viewState.locked) {
+          Modifier
+            .alpha(0.6f)
+            .pointerInput(Unit) {
+              awaitPointerEventScope {
+                while (true) {
+                  awaitPointerEvent(PointerEventPass.Initial).changes.forEach { it.consume() }
+                }
+              }
+            }
+        } else {
+          Modifier
+        },
+      ) {
       BookPlayContent(
         contentPadding = it,
         viewState = viewState,
@@ -66,6 +92,7 @@ internal fun BookPlayView(
         onCurrentChapterClick = onCurrentChapterClick,
         useLandscapeLayout = useLandscapeLayout,
       )
+      }
     },
   )
 }
@@ -92,6 +119,7 @@ private fun BookPlayPreview(
       onVolumeBoostClick = {},
       onSkipToNext = {},
       onSkipToPrevious = {},
+      onLockClick = {},
       onCloseClick = {},
       onCurrentChapterClick = {},
       useLandscapeLayout = false,
@@ -112,6 +140,8 @@ private class BookPlayViewStatePreviewProvider : PreviewParameterProvider<BookPl
       sleepTimerState = BookPlayViewState.SleepTimerViewState.Disabled,
       title = "Das Ende der Welt",
       seekTimeSeconds = 20,
+      playbackSpeed = 1.5F,
+      locked = false,
     )
     yield(initial)
     yield(

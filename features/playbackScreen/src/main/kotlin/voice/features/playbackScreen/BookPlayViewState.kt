@@ -17,6 +17,10 @@ data class BookPlayViewState(
   val skipSilence: Boolean,
   /** Seconds the rewind/fast-forward buttons move, shown on the buttons themselves. */
   val seekTimeSeconds: Int,
+  /** Current playback speed. Surfaced under the speed icon when it is not 1x. */
+  val playbackSpeed: Float,
+  /** When true every control is inert except the lock itself, so a stray touch cannot seek. */
+  val locked: Boolean,
 ) {
 
   sealed interface SleepTimerViewState {

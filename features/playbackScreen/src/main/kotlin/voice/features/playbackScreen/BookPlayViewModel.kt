@@ -84,6 +84,10 @@ class BookPlayViewModel(
   internal val dialogState: State<BookPlayDialogViewState?>
     field = mutableStateOf<BookPlayDialogViewState?>(null)
 
+  // Deliberately not persisted: a lock is for the session you are in - waking up to a player
+  // you cannot operate, with no memory of locking it, would be worse than the stray touch.
+  private val locked = mutableStateOf(false)
+
   init {
     scope.launch {
       player.pauseIfCurrentBookDifferentFrom(bookId)
@@ -142,6 +146,8 @@ class BookPlayViewModel(
       cover = book.content.coverUrl,
       skipSilence = book.content.skipSilence,
       seekTimeSeconds = seekTimeSeconds,
+      playbackSpeed = book.content.playbackSpeed,
+      locked = locked.value,
     )
   }
 
@@ -159,12 +165,18 @@ class BookPlayViewModel(
       cover = book.coverUrl,
       skipSilence = false,
       seekTimeSeconds = 20,
+      playbackSpeed = 1F,
+      locked = false,
     )
   }
 
   fun dismissDialog() {
     Logger.d("dismissDialog")
     dialogState.value = null
+  }
+
+  fun toggleLock() {
+    locked.value = !locked.value
   }
 
   fun onPlaybackSpeedChanged(speed: Float) {
