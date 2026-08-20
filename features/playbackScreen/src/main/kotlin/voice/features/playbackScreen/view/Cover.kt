@@ -35,7 +35,10 @@ internal fun Cover(
         )
       }
       .clip(RoundedCornerShape(20.dp)),
-    contentScale = ContentScale.Crop,
+    // Fit, not Crop. These covers are square and small - the widest slot they were given
+    // letterboxed them, which threw away the title and author printed across the top and
+    // bottom, the only part that tells you which book this is at a glance.
+    contentScale = ContentScale.Fit,
     model = cover,
     placeholder = painterResource(id = UiR.drawable.album_art),
     error = painterResource(id = UiR.drawable.album_art),
