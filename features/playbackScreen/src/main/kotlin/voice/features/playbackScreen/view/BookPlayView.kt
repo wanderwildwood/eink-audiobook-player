@@ -132,7 +132,7 @@ private class BookPlayViewStatePreviewProvider : PreviewParameterProvider<BookPl
     val initial = BookPlayViewState(
       chapterName = "My Chapter",
       showPreviousNextButtons = false,
-      cover = null,
+      author = "Philip Pullman",
       duration = 10.minutes,
       playedTime = 3.minutes,
       playing = true,

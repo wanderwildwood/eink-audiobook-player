@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -81,27 +80,15 @@ internal fun BookPlayAppBar(
       )
     }
   }
-  if (useLandscapeLayout) {
-    TopAppBar(
-      navigationIcon = {
-        CloseIcon(onCloseClick)
-      },
-      actions = appBarActions,
-      title = {
-        AppBarTitle(viewState.title)
-      },
-    )
-  } else {
-    LargeTopAppBar(
-      navigationIcon = {
-        CloseIcon(onCloseClick)
-      },
-      actions = appBarActions,
-      title = {
-        AppBarTitle(viewState.title)
-      },
-    )
-  }
+  // No title here any more: the book is named in the content, in the size it deserves, and a
+  // LargeTopAppBar repeating it cost a fifth of the page to say the same thing twice.
+  TopAppBar(
+    navigationIcon = {
+      CloseIcon(onCloseClick)
+    },
+    actions = appBarActions,
+    title = {},
+  )
 }
 
 // The sleep timer defaults to 10 minutes everywhere it's started - passing it as the reference

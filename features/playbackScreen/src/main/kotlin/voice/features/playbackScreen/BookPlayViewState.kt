@@ -13,7 +13,7 @@ data class BookPlayViewState(
   val playedTime: Duration,
   val duration: Duration,
   val playing: Boolean,
-  val cover: String?,
+  val author: String?,
   val skipSilence: Boolean,
   /** Seconds the rewind/fast-forward buttons move, shown on the buttons themselves. */
   val seekTimeSeconds: Int,
