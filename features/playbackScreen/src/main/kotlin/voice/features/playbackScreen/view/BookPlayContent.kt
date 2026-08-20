@@ -46,31 +46,26 @@ internal fun BookPlayContent(
       .padding(contentPadding)
       .padding(horizontal = 16.dp),
   ) {
-    // The text sits in the middle of the page rather than at the top, so it lands where the eye
-    // already is when the screen wakes, and so a long title grows into empty space instead of
-    // pushing the controls around.
-    Column(
-      modifier = Modifier
-        .fillMaxWidth()
-        .weight(1f),
-      verticalArrangement = Arrangement.Center,
-    ) {
-      viewState.author?.let { author ->
-        Text(
-          text = author,
-          style = MaterialTheme.typography.titleMedium,
-          maxLines = 1,
-          overflow = TextOverflow.Ellipsis,
-        )
-        Spacer(modifier = Modifier.size(4.dp))
-      }
+    // Empty space above rather than below: author, title and chapter read as one left-aligned
+    // block sitting directly on top of the progress bar, instead of the title floating in the
+    // middle of the page with a gap under it.
+    Spacer(modifier = Modifier.weight(1f))
+
+    viewState.author?.let { author ->
       Text(
-        text = viewState.title,
-        style = MaterialTheme.typography.headlineMedium,
-        maxLines = 3,
+        text = author,
+        style = MaterialTheme.typography.titleMedium,
+        maxLines = 1,
         overflow = TextOverflow.Ellipsis,
       )
+      Spacer(modifier = Modifier.size(4.dp))
     }
+    Text(
+      text = viewState.title,
+      style = MaterialTheme.typography.headlineMedium,
+      maxLines = 3,
+      overflow = TextOverflow.Ellipsis,
+    )
 
     viewState.chapterName?.let { chapterName ->
       ChapterRow(

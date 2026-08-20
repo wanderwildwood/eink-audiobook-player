@@ -2,7 +2,9 @@ package voice.features.playbackScreen.view
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.unit.Dp
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -28,12 +30,14 @@ import voice.core.ui.icons.VoiceIcons
  * directions cannot drift apart visually.
  */
 @Composable
-private fun TransportButton(
-  icon: ImageVector,
+internal fun TransportButton(
   mirrored: Boolean,
-  label: String,
   contentDescription: String,
   onClick: () -> Unit,
+  icon: ImageVector? = null,
+  painter: Painter? = null,
+  iconSize: Dp = 36.dp,
+  label: String? = null,
 ) {
   Column(
     modifier = Modifier
@@ -46,21 +50,31 @@ private fun TransportButton(
       // label as two separate controls.
       .clearAndSetSemantics { },
     horizontalAlignment = Alignment.CenterHorizontally,
-    verticalArrangement = Arrangement.Center,
   ) {
-    Icon(
-      modifier = Modifier
-        .size(36.dp)
-        .scale(scaleX = if (mirrored) -1f else 1f, scaleY = 1f),
-      imageVector = icon,
-      contentDescription = contentDescription,
-    )
-    Text(
-      text = label,
-      style = MaterialTheme.typography.labelMedium,
-    )
+    // Every glyph is centred in a box of the same height, whatever its own size, so all five
+    // sit on one line however big they are and whether or not they carry a label underneath.
+    Box(
+      modifier = Modifier.size(ICON_SLOT),
+      contentAlignment = Alignment.Center,
+    ) {
+      val iconModifier = Modifier
+        .size(iconSize)
+        .scale(scaleX = if (mirrored) -1f else 1f, scaleY = 1f)
+      when {
+        painter != null -> Icon(modifier = iconModifier, painter = painter, contentDescription = contentDescription)
+        icon != null -> Icon(modifier = iconModifier, imageVector = icon, contentDescription = contentDescription)
+      }
+    }
+    if (label != null) {
+      Text(
+        text = label,
+        style = MaterialTheme.typography.labelMedium,
+      )
+    }
   }
 }
+
+private val ICON_SLOT = 56.dp
 
 /** Jumps [seconds] within the chapter. Double triangles, the traditional scan glyph. */
 @Composable
@@ -73,6 +87,7 @@ internal fun SkipButton(
     icon = VoiceIcons.FastRewind,
     mirrored = forward,
     label = "${seconds}s",
+    iconSize = 36.dp,
     contentDescription = stringResource(
       id = if (forward) R.string.playback_action_fast_forward else R.string.playback_action_rewind,
     ),
@@ -80,7 +95,10 @@ internal fun SkipButton(
   )
 }
 
-/** Jumps a whole chapter. Triangle against a bar, which is what that glyph has always meant. */
+/**
+ * Jumps a whole chapter. Triangle against a bar, which is what that glyph has always meant -
+ * well enough known to go unlabelled, unlike a bare arrow that could mean any distance.
+ */
 @Composable
 internal fun ChapterSkipButton(
   forward: Boolean,
@@ -89,7 +107,6 @@ internal fun ChapterSkipButton(
   TransportButton(
     icon = VoiceIcons.SkipPrevious,
     mirrored = forward,
-    label = stringResource(id = R.string.playback_action_chapter),
     contentDescription = stringResource(
       id = if (forward) R.string.playback_chapter_next else R.string.playback_chapter_previous,
     ),
