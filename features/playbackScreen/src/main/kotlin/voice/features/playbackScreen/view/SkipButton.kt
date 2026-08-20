@@ -68,7 +68,9 @@ internal fun TransportButton(
     if (label != null) {
       Text(
         text = label,
-        style = MaterialTheme.typography.labelLarge,
+        // Small on purpose. It is a footnote on the glyph, not a thing to read - the arrows
+        // carry the meaning and this only settles how far.
+        style = MaterialTheme.typography.labelMedium,
       )
     }
   }

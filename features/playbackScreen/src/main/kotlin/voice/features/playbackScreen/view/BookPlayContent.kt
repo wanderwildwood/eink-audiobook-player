@@ -75,6 +75,10 @@ internal fun BookPlayContent(
       )
     }
 
+    // A gap between the words and the bar. Without it the chapter line sits right on top of
+    // the progress, and the two read as one control rather than a heading above a scale.
+    Spacer(modifier = Modifier.size(16.dp))
+
     SliderRow(
       duration = viewState.duration,
       playedTime = viewState.playedTime,
