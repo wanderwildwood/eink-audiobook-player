@@ -1,7 +1,6 @@
 package voice.core.sleeptimer
 
 import androidx.datastore.core.DataStore
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.SingleIn
@@ -26,6 +25,7 @@ import voice.core.playback.playstate.PlayStateManager
 import voice.core.playback.playstate.PlayStateManager.PlayState.Playing
 import java.time.Clock
 import kotlin.math.max
+import kotlin.math.pow
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
@@ -204,12 +204,26 @@ class SleepTimerImpl internal constructor(
     ShookWhileFading,
   }
 
+  /**
+   * Fades evenly in decibels, which is how the ear hears loudness - a steady wind-down rather
+   * than a lurch.
+   *
+   * The interpolated curve this replaces was front-loaded: it gave up only 2dB in the first
+   * quarter of the fade and then fell off, passing -13dB by the halfway point and being
+   * inaudible for the last third. That made the fade feel abrupt, and left most of its length
+   * as silence you could not hear well enough to react to. Same duration, spread evenly, is
+   * about 1.5dB per second across a 30 second fade.
+   */
   private fun updateVolume(
     left: Duration,
     fadeOutDuration: Duration,
   ) {
-    val percentage = (left / fadeOutDuration).toFloat().coerceIn(0f, 1f)
-    val volume = 1 - FastOutSlowInInterpolator().getInterpolation(1 - percentage)
+    val remaining = (left / fadeOutDuration).toFloat().coerceIn(0f, 1f)
+    val volume = if (remaining <= 0f) {
+      0f
+    } else {
+      10.0.pow(-FADE_OUT_RANGE_DB * (1f - remaining) / 20.0).toFloat()
+    }
     playerController.setVolume(volume)
   }
 
@@ -223,5 +237,8 @@ class SleepTimerImpl internal constructor(
 
   internal companion object {
     val SHAKE_TO_RESET_TIME = 30.seconds
+
+    /** How far the fade travels before playback pauses. -45dB is inaudible in a quiet room. */
+    const val FADE_OUT_RANGE_DB = 45.0
   }
 }
