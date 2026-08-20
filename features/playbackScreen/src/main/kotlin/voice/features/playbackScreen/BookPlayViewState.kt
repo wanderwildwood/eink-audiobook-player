@@ -15,6 +15,8 @@ data class BookPlayViewState(
   val playing: Boolean,
   val cover: String?,
   val skipSilence: Boolean,
+  /** Seconds the rewind/fast-forward buttons move, shown on the buttons themselves. */
+  val seekTimeSeconds: Int,
 ) {
 
   sealed interface SleepTimerViewState {

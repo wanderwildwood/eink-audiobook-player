@@ -26,6 +26,7 @@ import voice.core.data.repo.BookRepository
 import voice.core.data.repo.BookmarkRepo
 import voice.core.data.sleeptimer.SleepTimerPreference
 import voice.core.data.store.CurrentBookStore
+import voice.core.data.store.SeekTimeStore
 import voice.core.data.store.SleepTimerPreferenceStore
 import voice.core.featureflag.ExperimentalPlaybackPersistenceQualifier
 import voice.core.featureflag.FeatureFlag
@@ -60,6 +61,8 @@ class BookPlayViewModel(
   private val currentBookStoreId: DataStore<BookId?>,
   @SleepTimerPreferenceStore
   private val sleepTimerPreferenceStore: DataStore<SleepTimerPreference>,
+  @SeekTimeStore
+  private val seekTimeStore: DataStore<Int>,
   private val navigator: Navigator,
   private val bookmarkRepository: BookmarkRepo,
   private val volumeGainFormatter: VolumeGainFormatter,
@@ -124,6 +127,9 @@ class BookPlayViewModel(
     }
 
     val sleepTime = remember { sleepTimer.state }.collectAsState().value
+    // The initial matches SeekTimeStore's own default, so the buttons never render a number
+    // that contradicts what they'd actually do - it only applies for the first frame anyway.
+    val seekTimeSeconds = remember { seekTimeStore.data }.collectAsState(initial = 20).value
     val hasMoreThanOneChapter = book.chapters.sumOf { it.chapterMarks.count() } > 1
     return BookPlayViewState(
       sleepTimerState = sleepTime.toViewState(),
@@ -135,6 +141,7 @@ class BookPlayViewModel(
       playedTime = positionInCurrentMark.milliseconds,
       cover = book.content.coverUrl,
       skipSilence = book.content.skipSilence,
+      seekTimeSeconds = seekTimeSeconds,
     )
   }
 
@@ -151,6 +158,7 @@ class BookPlayViewModel(
       playedTime = 10.hours + 24.minutes,
       cover = book.coverUrl,
       skipSilence = false,
+      seekTimeSeconds = 20,
     )
   }
 
