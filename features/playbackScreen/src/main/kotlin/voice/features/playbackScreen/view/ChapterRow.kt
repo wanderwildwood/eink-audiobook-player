@@ -39,13 +39,13 @@ internal fun ChapterRow(
   ) {
     Text(
       text = chapterName,
-      style = MaterialTheme.typography.bodyLarge,
+      style = MaterialTheme.typography.titleLarge,
     )
     if (nextPreviousVisible) {
       Icon(
         modifier = Modifier
           .padding(start = 4.dp)
-          .size(28.dp),
+          .size(32.dp),
         imageVector = VoiceIcons.ExpandMore,
         contentDescription = stringResource(id = R.string.playback_chapter_next),
       )

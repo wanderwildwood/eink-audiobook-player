@@ -98,14 +98,14 @@ internal fun SliderRow(
           },
           durationMs = duration.inWholeMilliseconds,
         ),
-        style = MaterialTheme.typography.labelLarge,
+        style = MaterialTheme.typography.titleMedium,
       )
       Text(
         text = formatTime(
           timeMs = duration.inWholeMilliseconds,
           durationMs = duration.inWholeMilliseconds,
         ),
-        style = MaterialTheme.typography.labelLarge,
+        style = MaterialTheme.typography.titleMedium,
       )
     }
   }

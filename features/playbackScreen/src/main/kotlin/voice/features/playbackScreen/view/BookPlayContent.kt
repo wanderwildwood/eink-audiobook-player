@@ -46,15 +46,15 @@ internal fun BookPlayContent(
       .padding(contentPadding)
       .padding(horizontal = 16.dp),
   ) {
-    // Empty space above rather than below: author, title and chapter read as one left-aligned
-    // block sitting directly on top of the progress bar, instead of the title floating in the
-    // middle of the page with a gap under it.
+    // Slack above and below, so the whole block sits high on the page rather than pressed to
+    // the bottom edge. Weighted rather than a fixed height: the two spacers keep their ratio
+    // whatever the screen, and whether or not there is an author line and a chapter line.
     Spacer(modifier = Modifier.weight(1f))
 
     viewState.author?.let { author ->
       Text(
         text = author,
-        style = MaterialTheme.typography.titleMedium,
+        style = MaterialTheme.typography.titleLarge,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
       )
@@ -62,7 +62,7 @@ internal fun BookPlayContent(
     }
     Text(
       text = viewState.title,
-      style = MaterialTheme.typography.headlineMedium,
+      style = MaterialTheme.typography.headlineLarge,
       maxLines = 3,
       overflow = TextOverflow.Ellipsis,
     )
@@ -94,6 +94,8 @@ internal fun BookPlayContent(
       onSkipToNext = onSkipToNext,
     )
 
-    Spacer(modifier = Modifier.size(32.dp))
+    // Roughly a third of the leftover space, against a whole one above: enough to lift the
+    // controls off the bottom edge without moving them out of thumb reach.
+    Spacer(modifier = Modifier.weight(0.5f))
   }
 }

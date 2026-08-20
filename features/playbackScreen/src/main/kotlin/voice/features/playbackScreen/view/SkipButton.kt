@@ -68,7 +68,7 @@ internal fun TransportButton(
     if (label != null) {
       Text(
         text = label,
-        style = MaterialTheme.typography.labelMedium,
+        style = MaterialTheme.typography.labelLarge,
       )
     }
   }
