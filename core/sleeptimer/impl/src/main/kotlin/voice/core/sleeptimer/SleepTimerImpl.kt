@@ -100,11 +100,11 @@ class SleepTimerImpl internal constructor(
    * Runs the countdown, listening for a shake the whole time (not just after expiry) - a shake
    * at any point resets the countdown back to [duration] and keeps it running. Only if it
    * expires with no shake does playback actually pause, with one more grace window to catch a
-   * late shake before giving up.
+   * late shake before giving up. Only a shake during the fade-out chimes; see below.
    */
   private tailrec suspend fun startCountdown(duration: Duration) {
     Logger.d("startCountdown(duration=$duration)")
-    val shookDuringCountdown = coroutineScope {
+    val countdownEnd = coroutineScope {
       val shakeSignal = Channel<Unit>(Channel.CONFLATED)
       val shakeJob = launch {
         while (isActive) {
@@ -119,9 +119,16 @@ class SleepTimerImpl internal constructor(
       }
     }
 
-    if (shookDuringCountdown) {
+    if (countdownEnd != CountdownEnd.Expired) {
       Logger.i("Shake detected, resetting timer")
-      shakeChime.play()
+      // Only while the volume is on its way down. A shake resets the timer at any point in the
+      // countdown, and most of those are just someone moving in bed with the book still playing
+      // normally - chiming for each one turns a confirmation into a nuisance. Once the fade has
+      // started the book is audibly winding down, which is the moment it's worth being told that
+      // the shake registered.
+      if (countdownEnd == CountdownEnd.ShookWhileFading) {
+        shakeChime.play()
+      }
       startCountdown(duration)
       return
     }
@@ -148,7 +155,6 @@ class SleepTimerImpl internal constructor(
     val elapsed = (clock.millis() - pausedAtMillis).milliseconds
     if (shookDuringGrace && elapsed <= SHAKE_TO_RESET_TIME) {
       Logger.i("Shake detected, resetting timer")
-      shakeChime.play()
       playerController.play()
       startCountdown(duration)
     } else if (shookDuringGrace) {
@@ -164,7 +170,7 @@ class SleepTimerImpl internal constructor(
   private suspend fun tickDownOrUntilShake(
     duration: Duration,
     shakeSignal: ReceiveChannel<Unit>,
-  ): Boolean {
+  ): CountdownEnd {
     var left = duration
     state.value = SleepTimerState.Enabled.WithDuration(left)
     playerController.setVolume(1F)
@@ -172,8 +178,9 @@ class SleepTimerImpl internal constructor(
 
     while (left > Duration.ZERO) {
       suspendUntilPlaying()
-      val interval = if (left < fadeOutDuration) 200.milliseconds else 500.milliseconds
-      if (left < fadeOutDuration) {
+      val fading = left < fadeOutDuration
+      val interval = if (fading) 200.milliseconds else 500.milliseconds
+      if (fading) {
         updateVolume(left, fadeOutDuration)
       }
       val shook = withTimeoutOrNull(interval) {
@@ -182,12 +189,19 @@ class SleepTimerImpl internal constructor(
       } ?: false
       if (shook) {
         playerController.setVolume(1F)
-        return true
+        return if (fading) CountdownEnd.ShookWhileFading else CountdownEnd.ShookWhileCounting
       }
       left = max((left - interval).inWholeMilliseconds, 0).milliseconds
       state.value = SleepTimerState.Enabled.WithDuration(left)
     }
-    return false
+    return CountdownEnd.Expired
+  }
+
+  /** How a countdown finished, which is what decides whether the shake is worth a chime. */
+  private enum class CountdownEnd {
+    Expired,
+    ShookWhileCounting,
+    ShookWhileFading,
   }
 
   private fun updateVolume(

@@ -202,7 +202,7 @@ class SleepTimerImplTest {
   }
 
   @Test
-  fun shake_within_grace_window_still_resumes_and_chimes() = testScope.runTest {
+  fun shake_within_grace_window_resumes_without_chiming() = testScope.runTest {
     val duration = 1.minutes
     sleepTimer.enable(SleepTimerMode.TimedWithDuration(duration))
 
@@ -214,12 +214,14 @@ class SleepTimerImplTest {
     runCurrent()
 
     verify(exactly = 1) { playerController.play() }
-    assertEquals(expected = 1, actual = shakeChime.plays)
+    // Playback starting again is its own confirmation - the chime is for the fade, when the book
+    // is still playing and a reset would otherwise be silent.
+    assertEquals(expected = 0, actual = shakeChime.plays)
     assertEquals(expected = SleepTimerState.Enabled.WithDuration(duration), actual = sleepTimer.state.value)
   }
 
   @Test
-  fun shake_mid_countdown_chimes() = testScope.runTest {
+  fun shake_mid_countdown_does_not_chime() = testScope.runTest {
     sleepTimer.enable(SleepTimerMode.TimedWithDuration(5.minutes))
     advanceTimeBy(2.minutes)
     runCurrent()
@@ -227,7 +229,24 @@ class SleepTimerImplTest {
     shakeDetector.shake()
     runCurrent()
 
+    // Rolling over in bed with the book still playing normally. It resets the timer, quietly.
+    assertEquals(expected = 0, actual = shakeChime.plays)
+  }
+
+  @Test
+  fun shake_while_volume_is_fading_chimes() = testScope.runTest {
+    val duration = 1.minutes
+    sleepTimer.enable(SleepTimerMode.TimedWithDuration(duration))
+
+    // fadeOutStore is 2s here, so this lands one second into the fade.
+    advanceTimeBy(duration - 1.seconds)
+    runCurrent()
+
+    shakeDetector.shake()
+    runCurrent()
+
     assertEquals(expected = 1, actual = shakeChime.plays)
+    assertEquals(expected = SleepTimerState.Enabled.WithDuration(duration), actual = sleepTimer.state.value)
   }
 
   @Test
