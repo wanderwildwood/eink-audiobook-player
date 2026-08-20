@@ -26,6 +26,7 @@ import voice.core.strings.R
 import voice.core.ui.formatTime
 import voice.core.ui.icons.VoiceIcons
 import voice.features.playbackScreen.BookPlayViewState
+import java.text.DecimalFormat
 import kotlin.time.Duration.Companion.minutes
 
 @Composable
@@ -138,6 +139,7 @@ private fun SpeedButton(
   speed: Float,
   onClick: () -> Unit,
 ) {
+  val speedFormatter = remember { DecimalFormat("0.#") }
   Column(
     modifier = Modifier
       .width(56.dp)
@@ -150,8 +152,10 @@ private fun SpeedButton(
     )
     if (speed != 1F) {
       Text(
-        // Trailing zero dropped: "1.5x", but "2x" rather than "2.0x".
-        text = "${speed.toString().removeSuffix(".0")}x",
+        // Trailing zero dropped: "1.5x", but "2x" rather than "2.0x". Formatted rather than
+        // toString'd - a float that has been stepped a few times is 1.3000001, not 1.3, and
+        // that spills onto a second line under the icon.
+        text = "${speedFormatter.format(speed)}x",
         style = MaterialTheme.typography.labelSmall,
         textAlign = TextAlign.Center,
       )
