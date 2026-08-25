@@ -117,7 +117,7 @@ internal class MediaScanner(
  * value would mean a library filed under one useless heading, and would block a proper genre from
  * ever replacing them.
  */
-private fun String?.asRealGenre(): String? {
+internal fun String?.asRealGenre(): String? {
   val trimmed = this?.trim().orEmpty()
   if (trimmed.isEmpty()) return null
   if (ID3_NUMERIC_GENRE.matches(trimmed)) return null
@@ -150,4 +150,10 @@ private val NON_GENRES = setOf(
   "interview",
   "lecture",
   "fiction & literature",
+
+  // Says only that it is not a novel. A book that is not a novel still has a subject - philosophy,
+  // psychology, spirituality - and that is the shelf it belongs on, so leave the slot open for one.
+  "nonfiction",
+  "non fiction",
+  "non-fiction",
 )

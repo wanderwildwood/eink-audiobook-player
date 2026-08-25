@@ -19,6 +19,7 @@ import voice.core.strings.R as StringsR
 private fun LibraryOrganization.labelRes(): Int = when (this) {
   LibraryOrganization.AUTHOR_FOLDERS -> StringsR.string.library_organization_author_folders
   LibraryOrganization.BY_STATUS -> StringsR.string.library_organization_by_status
+  LibraryOrganization.GENRE -> StringsR.string.library_organization_genre
 }
 
 @Composable

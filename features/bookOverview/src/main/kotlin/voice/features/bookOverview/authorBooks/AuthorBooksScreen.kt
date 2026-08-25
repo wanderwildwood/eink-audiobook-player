@@ -57,15 +57,15 @@ interface AuthorBooksProvider {
   @IntoSet
   fun authorBooksNavEntryProvider(): NavEntryProvider<*> = NavEntryProvider<Destination.AuthorBooks> { key ->
     NavEntry(key) {
-      AuthorBooksScreen(folderName = key.folderName)
+      AuthorBooksScreen(name = key.name, shelf = key.shelf)
     }
   }
 }
 
 @Composable
-fun AuthorBooksScreen(folderName: String?) {
-  val viewModel = retain(folderName) {
-    rootGraphAs<AuthorBooksGraph>().authorBooksViewModelFactory.create(folderName)
+fun AuthorBooksScreen(name: String?, shelf: Destination.AuthorBooks.Shelf) {
+  val viewModel = retain(name, shelf) {
+    rootGraphAs<AuthorBooksGraph>().authorBooksViewModelFactory.create(name, shelf)
   }
   val bookOverviewGraph = retain<BookOverviewGraph> {
     rootGraphAs<BookOverviewGraph.Factory.Provider>()
@@ -162,7 +162,7 @@ internal fun AuthorBooksScreen(
       TopAppBar(
         scrollBehavior = scrollBehavior,
         title = {
-          Text(viewState.folderName ?: stringResource(StringsR.string.library_browse_unsorted))
+          Text(viewState.title ?: stringResource(StringsR.string.library_browse_unsorted))
         },
         navigationIcon = {
           IconButton(onClick = onBackClick) {

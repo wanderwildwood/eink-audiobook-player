@@ -26,7 +26,9 @@ class AuthorBooksViewModel(
   private val gridModeStore: DataStore<GridMode>,
   private val gridCount: GridCount,
   @Assisted
-  private val folderName: String?,
+  private val name: String?,
+  @Assisted
+  private val shelf: Destination.AuthorBooks.Shelf,
 ) {
 
   @Composable
@@ -35,9 +37,14 @@ class AuthorBooksViewModel(
     val gridMode = remember { gridModeStore.data }.collectAsState(initial = null).value
 
     return AuthorBooksViewState(
-      folderName = folderName,
+      title = name,
       books = books
-        .filter { it.content.folderName == folderName }
+        .filter {
+          name == when (shelf) {
+            Destination.AuthorBooks.Shelf.AUTHOR_FOLDER -> it.content.folderName
+            Destination.AuthorBooks.Shelf.GENRE -> it.content.genre
+          }
+        }
         .sortedWith(BookComparator.ByName)
         .map { it.toItemViewState() },
     )
@@ -53,6 +60,6 @@ class AuthorBooksViewModel(
 
   @AssistedFactory
   interface Factory {
-    fun create(folderName: String?): AuthorBooksViewModel
+    fun create(name: String?, shelf: Destination.AuthorBooks.Shelf): AuthorBooksViewModel
   }
 }

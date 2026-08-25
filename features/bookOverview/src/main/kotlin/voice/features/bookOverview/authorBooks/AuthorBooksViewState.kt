@@ -6,6 +6,7 @@ import voice.features.bookOverview.overview.BookOverviewLayoutMode
 
 @Immutable
 data class AuthorBooksViewState(
-  val folderName: String?,
+  /** What the shelf is called: the author folder, or the genre. */
+  val title: String?,
   val books: List<BookOverviewItemViewState>,
 )

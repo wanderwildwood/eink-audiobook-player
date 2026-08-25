@@ -50,9 +50,23 @@ sealed interface Destination {
     override val trackingName: String get() = "BookOverview"
   }
 
+  /**
+   * One shelf of books, named [name] and holding whatever [shelf] groups by. [name] is null for
+   * the books that have no such name - no author folder, or no genre - so which of the two a null
+   * means has to be carried alongside it.
+   */
   @Serializable
-  data class AuthorBooks(val folderName: String?) : Compose {
+  data class AuthorBooks(
+    val name: String?,
+    val shelf: Shelf,
+  ) : Compose {
     override val trackingName: String get() = "AuthorBooks"
+
+    @Serializable
+    enum class Shelf {
+      AUTHOR_FOLDER,
+      GENRE,
+    }
   }
 
   @Serializable

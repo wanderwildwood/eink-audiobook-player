@@ -134,11 +134,11 @@
     <!-- Title for the card explaining a required storage permission workaround. -->
     <string name="library.storage_permission_bug.title">Permission required</string>
     <!-- Library view option: books grouped by author folder (the default view). -->
-    <string name="library.organization.author_folders">Author folders</string>
-    <!-- Library view option: all books in one alphabetical list. -->
-    <string name="library.organization.flat_list">Flat list</string>
+    <string name="library.organization.author_folders">Author</string>
+    <!-- Library view option: books grouped by genre. -->
+    <string name="library.organization.genre">Genre</string>
     <!-- Library view option: books grouped by Current/Not started/Completed status. -->
-    <string name="library.organization.by_status">By status</string>
+    <string name="library.organization.by_status">Status</string>
     <!-- Media browser title for recently played audiobooks. -->
     <string name="media_session.library.recent">Recent</string>
     <!-- Media browser root title for all audiobooks. -->

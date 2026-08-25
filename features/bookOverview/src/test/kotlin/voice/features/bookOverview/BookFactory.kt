@@ -14,6 +14,8 @@ fun book(
   currentChapter: ChapterId = chapters.first().id,
   name: String = Uuid.random().toString(),
   author: String? = Uuid.random().toString(),
+  genre: String? = null,
+  folderName: String? = null,
 ): Book {
   return Book(
     content = BookContent(
@@ -30,10 +32,11 @@ fun book(
       skipSilence = false,
       id = BookId(Uuid.random().toString()),
       gain = 0F,
-      genre = null,
+      genre = genre,
       narrator = null,
       series = null,
       part = null,
+      folderName = folderName,
     ),
     chapters = chapters,
   )

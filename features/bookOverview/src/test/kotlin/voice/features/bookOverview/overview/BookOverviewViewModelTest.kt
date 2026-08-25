@@ -3,6 +3,7 @@ package voice.features.bookOverview.overview
 import androidx.datastore.core.DataStore
 import app.cash.molecule.RecompositionMode
 import app.cash.molecule.launchMolecule
+import app.cash.turbine.ReceiveTurbine
 import app.cash.turbine.test
 import io.mockk.Runs
 import io.mockk.coEvery
@@ -14,10 +15,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.yield
 import voice.core.common.AppInfoProvider
 import voice.core.common.DispatcherProvider
+import voice.core.data.Book
 import voice.core.data.BookId
 import voice.core.data.GridMode
 import voice.core.data.KioskModeDemoData
@@ -282,6 +285,138 @@ class BookOverviewViewModelTest {
     }
   }
 
+  @Test
+  fun `genre view shelves the books by genre, ungenred last`() = runTest {
+    val viewModel = viewModel(
+      folderPickerInSettingsFeatureFlag = MemoryFeatureFlag(true),
+      folderPickerMovedDialogShownStore = MemoryDataStore(true),
+      libraryOrganization = LibraryOrganization.GENRE,
+      books = listOf(
+        book(name = "Redwall", genre = "Fantasy"),
+        book(name = "Mossflower", genre = "Fantasy"),
+        book(name = "Cosmos", genre = "Science"),
+        book(name = "Untagged", genre = null),
+      ),
+    )
+
+    backgroundScope.launchMolecule(RecompositionMode.Immediate) {
+      viewModel.state()
+    }.test {
+      assertEquals(expected = BookOverviewViewState.Loading, actual = awaitItem())
+      assertEquals(
+        expected = listOf(
+          LibrarySection.Folders(
+            listOf(
+              AuthorFolderViewState(folderName = "Fantasy", bookCount = 2),
+              AuthorFolderViewState(folderName = "Science", bookCount = 1),
+              AuthorFolderViewState(folderName = null, bookCount = 1),
+            ),
+          ),
+        ),
+        actual = awaitOrganization(LibraryOrganization.GENRE).sections,
+      )
+    }
+  }
+
+  @Test
+  fun `genre view shelves the books by author folder when the setting says so`() = runTest {
+    val viewModel = viewModel(
+      folderPickerInSettingsFeatureFlag = MemoryFeatureFlag(true),
+      folderPickerMovedDialogShownStore = MemoryDataStore(true),
+      libraryOrganization = LibraryOrganization.AUTHOR_FOLDERS,
+      books = listOf(
+        book(name = "Redwall", genre = "Fantasy", folderName = "Brian Jacques"),
+        book(name = "Cosmos", genre = "Science", folderName = "Carl Sagan"),
+      ),
+    )
+
+    backgroundScope.launchMolecule(RecompositionMode.Immediate) {
+      viewModel.state()
+    }.test {
+      assertEquals(expected = BookOverviewViewState.Loading, actual = awaitItem())
+      assertEquals(
+        expected = listOf(
+          LibrarySection.Folders(
+            listOf(
+              AuthorFolderViewState(folderName = "Brian Jacques", bookCount = 1),
+              AuthorFolderViewState(folderName = "Carl Sagan", bookCount = 1),
+            ),
+          ),
+        ),
+        actual = awaitItem().sections,
+      )
+    }
+  }
+
+  @Test
+  fun `a shelf opens as a genre in the genre view`() = runTest {
+    val navigator = mockk<Navigator>(relaxed = true)
+    val viewModel = viewModel(
+      folderPickerInSettingsFeatureFlag = MemoryFeatureFlag(true),
+      folderPickerMovedDialogShownStore = MemoryDataStore(true),
+      navigator = navigator,
+      libraryOrganization = LibraryOrganization.GENRE,
+    )
+
+    viewModel.onFolderClick("Fantasy")
+    runCurrent()
+
+    verify(exactly = 1) {
+      navigator.goTo(Destination.AuthorBooks(name = "Fantasy", shelf = Destination.AuthorBooks.Shelf.GENRE))
+    }
+  }
+
+  @Test
+  fun `the unsorted shelf opens as a genre in the genre view`() = runTest {
+    val navigator = mockk<Navigator>(relaxed = true)
+    val viewModel = viewModel(
+      folderPickerInSettingsFeatureFlag = MemoryFeatureFlag(true),
+      folderPickerMovedDialogShownStore = MemoryDataStore(true),
+      navigator = navigator,
+      libraryOrganization = LibraryOrganization.GENRE,
+    )
+
+    viewModel.onFolderClick(null)
+    runCurrent()
+
+    verify(exactly = 1) {
+      navigator.goTo(Destination.AuthorBooks(name = null, shelf = Destination.AuthorBooks.Shelf.GENRE))
+    }
+  }
+
+  @Test
+  fun `a shelf opens as an author folder otherwise`() = runTest {
+    val navigator = mockk<Navigator>(relaxed = true)
+    val viewModel = viewModel(
+      folderPickerInSettingsFeatureFlag = MemoryFeatureFlag(true),
+      folderPickerMovedDialogShownStore = MemoryDataStore(true),
+      navigator = navigator,
+      libraryOrganization = LibraryOrganization.AUTHOR_FOLDERS,
+    )
+
+    viewModel.onFolderClick("Brian Jacques")
+    runCurrent()
+
+    verify(exactly = 1) {
+      navigator.goTo(
+        Destination.AuthorBooks(name = "Brian Jacques", shelf = Destination.AuthorBooks.Shelf.AUTHOR_FOLDER),
+      )
+    }
+  }
+
+  /**
+   * The stored organization only reaches the state on a later recomposition - the first one runs
+   * with the data store's initial value.
+   */
+  private suspend fun ReceiveTurbine<BookOverviewViewState>.awaitOrganization(
+    organization: LibraryOrganization,
+  ): BookOverviewViewState {
+    while (true) {
+      val item = awaitItem()
+      if (item.libraryOrganization == organization) return item
+    }
+  }
+
   private fun BookOverviewViewState.currentBook(bookId: BookId): BookOverviewItemViewState {
     return books.getValue(BookOverviewCategory.CURRENT).getValue(bookId).value
   }
@@ -291,10 +426,12 @@ class BookOverviewViewModelTest {
     folderPickerMovedDialogShownStore: DataStore<Boolean>,
     navigator: Navigator = mockk(),
     appInfoProvider: AppInfoProvider = appInfoProvider(),
+    books: List<Book> = emptyList(),
+    libraryOrganization: LibraryOrganization = LibraryOrganization.AUTHOR_FOLDERS,
   ): BookOverviewViewModel {
     return BookOverviewViewModel(
       repo = mockk<BookRepository> {
-        every { flow() } returns MutableStateFlow(emptyList())
+        every { flow() } returns MutableStateFlow(books)
       },
       mediaScanner = mockk<MediaScanTrigger> {
         every { scannerActive } returns MutableStateFlow(false)
@@ -305,7 +442,7 @@ class BookOverviewViewModelTest {
       currentBookStoreDataStore = MemoryDataStore(null),
       folderPickerMovedDialogShownStore = folderPickerMovedDialogShownStore,
       gridModeStore = MemoryDataStore(GridMode.LIST),
-      libraryOrganizationStore = MemoryDataStore(LibraryOrganization.AUTHOR_FOLDERS),
+      libraryOrganizationStore = MemoryDataStore(libraryOrganization),
       gridCount = mockk<GridCount> {
         every { useGridAsDefault() } returns false
       },

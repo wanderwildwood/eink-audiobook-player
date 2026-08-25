@@ -18,6 +18,7 @@ import androidx.core.net.toUri
 import androidx.datastore.core.DataStore
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import voice.core.common.AppInfoProvider
 import voice.core.common.DispatcherProvider
@@ -144,19 +145,25 @@ class BookOverviewViewModel(
       livePlaybackState = { livePlaybackState.value },
     )
 
-    val folders = books
-      .groupBy { it.content.folderName }
+    // A shelf per distinct name, in natural order, with the unnamed books last.
+    fun shelves(shelfOf: (Book) -> String?): List<AuthorFolderViewState> = books
+      .groupBy(shelfOf)
       .entries
       .sortedWith(compareBy(nullsLast(NaturalOrderComparator.stringComparator)) { it.key })
-      .map { (folderName, folderBooks) ->
+      .map { (name, shelfBooks) ->
         AuthorFolderViewState(
-          folderName = folderName,
-          bookCount = folderBooks.size,
+          folderName = name,
+          bookCount = shelfBooks.size,
         )
       }
 
+    val folders = shelves { it.content.folderName }
+
     val sections = when (libraryOrganization) {
       LibraryOrganization.AUTHOR_FOLDERS -> listOf(LibrarySection.Folders(folders))
+      // Same shelf-then-open shape as the author folders. Books with no genre gather under the
+      // same "Unsorted" heading an unnamed author folder gets.
+      LibraryOrganization.GENRE -> listOf(LibrarySection.Folders(shelves { it.content.genre }))
       LibraryOrganization.BY_STATUS -> BookOverviewCategory.entries.mapNotNull { category ->
         val categoryBooks = books.filter { it.category == category }
         categoryBooks.takeIf { it.isNotEmpty() }?.let {
@@ -295,8 +302,17 @@ class BookOverviewViewModel(
     navigator.goTo(Destination.Playback(id))
   }
 
-  fun onFolderClick(folderName: String?) {
-    navigator.goTo(Destination.AuthorBooks(folderName))
+  fun onFolderClick(name: String?) {
+    // The shelves look the same either way; what they mean depends on the view that built them.
+    scope.launch {
+      val shelf = when (libraryOrganizationStore.data.first()) {
+        LibraryOrganization.GENRE -> Destination.AuthorBooks.Shelf.GENRE
+        LibraryOrganization.AUTHOR_FOLDERS,
+        LibraryOrganization.BY_STATUS,
+        -> Destination.AuthorBooks.Shelf.AUTHOR_FOLDER
+      }
+      navigator.goTo(Destination.AuthorBooks(name = name, shelf = shelf))
+    }
   }
 
   fun onBookFolderClick() {
