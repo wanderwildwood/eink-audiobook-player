@@ -109,7 +109,6 @@
     <string name="settings.library.use_grid.title">グリッド表示の使用</string>
     <string name="settings.playback.auto_rewind.title">自動巻き戻し</string>
     <string name="settings.playback.seek_time.title">スキップ量</string>
-    <string name="settings.support.faq.title">よくある質問</string>
     <string name="support.action.donate_kofi">Ko-fiで寄付</string>
     <string name="support.description.maintenance">Voiceは無料のオープンソースで、1人の開発者が保守しています。</string>
     <string name="support.description.maintenance_subtitle">寄付は継続的な保守と開発の資金になります。</string>

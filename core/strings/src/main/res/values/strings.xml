@@ -265,7 +265,6 @@
     <!-- Settings row title for choosing what the sleep timer button does. -->
     <string name="settings.sleep_timer.duration.title">Sleep timer duration</string>
     <!-- Settings support row for opening the FAQ. -->
-    <string name="settings.support.faq.title">FAQ</string>
     <!-- Settings support row linking to the source code repository. -->
     <string name="settings.support.source_code.title">Source code</string>
     <!-- Support screen action for donating through Ko-fi. -->

@@ -117,7 +117,6 @@
     <string name="settings.library.use_grid.title">Bain úsáid as leagan amach na greille</string>
     <string name="settings.playback.auto_rewind.title">Athchasadh uathoibríoch</string>
     <string name="settings.playback.seek_time.title">Scipeáil méid</string>
-    <string name="settings.support.faq.title">Ceisteanna Coitianta</string>
     <string name="support.action.donate_kofi">Tabhair síntiús ar Ko-fi</string>
     <string name="support.description.maintenance">Tá Voice saor in aisce, foinse oscailte, agus á chothabháil ag forbróir amháin.</string>
     <string name="support.description.maintenance_subtitle">Cuidíonn síntiúis le cothabháil agus forbairt leanúnach a mhaoiniú.</string>

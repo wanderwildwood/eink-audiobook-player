@@ -113,7 +113,6 @@
     <string name="settings.library.use_grid.title">תשתמש בפריסת רשת</string>
     <string name="settings.playback.auto_rewind.title">הרצה אוטומטית</string>
     <string name="settings.playback.seek_time.title">דלג כמות</string>
-    <string name="settings.support.faq.title">שאלות נפוצות</string>
     <string name="support.action.donate_kofi">לתרום ב-Ko-fi</string>
     <string name="support.description.maintenance">Voice חינמית, בקוד פתוח, ומתוחזקת בידי מפתח אחד.</string>
     <string name="support.description.maintenance_subtitle">תרומות עוזרות לממן תחזוקה ופיתוח שוטפים.</string>

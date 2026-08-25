@@ -111,7 +111,6 @@
     <string name="settings.library.use_grid.title">Raster-Layout verwenden</string>
     <string name="settings.playback.auto_rewind.title">Automatisch zurückspulen</string>
     <string name="settings.playback.seek_time.title">Vor- und zurückspulen</string>
-    <string name="settings.support.faq.title">Häufige Fragen</string>
     <string name="support.action.donate_kofi">Auf Ko-fi spenden</string>
     <string name="support.description.maintenance">Voice ist kostenlos, quelloffen und wird von einem Entwickler betreut.</string>
     <string name="support.description.maintenance_subtitle">Spenden helfen, laufende Wartung und Entwicklung zu finanzieren.</string>

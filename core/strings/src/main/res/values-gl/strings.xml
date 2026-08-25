@@ -111,7 +111,6 @@
     <string name="settings.library.use_grid.title">Usar disposición en grella</string>
     <string name="settings.playback.auto_rewind.title">Retroceso automático</string>
     <string name="settings.playback.seek_time.title">Tempo a omitir</string>
-    <string name="settings.support.faq.title">PMF</string>
     <string name="support.action.donate_kofi">Doar en Ko-fi</string>
     <string name="support.description.maintenance">Voice é gratuíto, de código aberto e mantido por unha soa persoa desenvolvedora.</string>
     <string name="support.description.maintenance_subtitle">As doazóns axudan a financiar o mantemento e desenvolvemento continuos.</string>

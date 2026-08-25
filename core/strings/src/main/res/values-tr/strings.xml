@@ -111,7 +111,6 @@
     <string name="settings.library.use_grid.title">Izgara düzenini kullan</string>
     <string name="settings.playback.auto_rewind.title">Otomatik geri sar</string>
     <string name="settings.playback.seek_time.title">Değeri atla</string>
-    <string name="settings.support.faq.title">SSS</string>
     <string name="support.action.donate_kofi">Ko-fi üzerinden bağış yap</string>
     <string name="support.description.maintenance">Voice ücretsiz, açık kaynaklıdır ve tek bir geliştirici tarafından sürdürülür.</string>
     <string name="support.description.maintenance_subtitle">Bağışlar sürekli bakım ve geliştirmeyi finanse etmeye yardımcı olur.</string>

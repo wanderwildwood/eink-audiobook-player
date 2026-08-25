@@ -111,7 +111,6 @@
     <string name="settings.library.use_grid.title">Прикажи како коцки</string>
     <string name="settings.playback.auto_rewind.title">Автоматско враќање назад</string>
     <string name="settings.playback.seek_time.title">Прескокни секунди</string>
-    <string name="settings.support.faq.title">ЧПП</string>
     <string name="support.action.donate_kofi">Донирајте на Ko-fi</string>
     <string name="support.description.maintenance">Voice е бесплатен, со отворен код и го одржува еден развивач.</string>
     <string name="support.description.maintenance_subtitle">Донациите помагаат да се финансираат тековното одржување и развој.</string>

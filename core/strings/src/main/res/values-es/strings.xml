@@ -113,7 +113,6 @@
     <string name="settings.library.use_grid.title">Utilizar el diseño en cuadrícula</string>
     <string name="settings.playback.auto_rewind.title">Retroceso automático</string>
     <string name="settings.playback.seek_time.title">Cantidad a omitir</string>
-    <string name="settings.support.faq.title">Preguntas frecuentes</string>
     <string name="support.action.donate_kofi">Donar en Ko-fi</string>
     <string name="support.description.maintenance">Voice es gratis, de código abierto y lo mantiene un desarrollador.</string>
     <string name="support.description.maintenance_subtitle">Las donaciones ayudan a financiar el mantenimiento y desarrollo continuos.</string>

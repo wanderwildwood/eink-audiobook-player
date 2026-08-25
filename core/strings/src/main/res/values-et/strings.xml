@@ -111,7 +111,6 @@
     <string name="settings.library.use_grid.title">Kasuta paigutust ruudustikuna</string>
     <string name="settings.playback.auto_rewind.title">Keri automaatselt tagasi</string>
     <string name="settings.playback.seek_time.title">Kerimise samm</string>
-    <string name="settings.support.faq.title">KKK</string>
     <string name="support.action.donate_kofi">Anneta Ko-fis</string>
     <string name="support.description.maintenance">Voice on tasuta, avatud lähtekoodiga ja seda hooldab üks arendaja.</string>
     <string name="support.description.maintenance_subtitle">Annetused aitavad rahastada pidevat hooldust ja arendust.</string>

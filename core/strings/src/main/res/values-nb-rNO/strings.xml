@@ -111,7 +111,6 @@
     <string name="settings.library.use_grid.title">Bruk rutenett</string>
     <string name="settings.playback.auto_rewind.title">Auto-tilbakespoling</string>
     <string name="settings.playback.seek_time.title">Hoppintervall</string>
-    <string name="settings.support.faq.title">Ofte stilte spørsmål</string>
     <string name="support.action.donate_kofi">Doner på Ko-fi</string>
     <string name="support.description.maintenance">Voice er gratis, åpen kildekode og vedlikeholdes av én utvikler.</string>
     <string name="support.description.maintenance_subtitle">Donasjoner bidrar til å finansiere løpende vedlikehold og utvikling.</string>

@@ -111,7 +111,6 @@
     <string name="settings.library.use_grid.title">கட்டம் தளவமைப்பைப் பயன்படுத்தவும்</string>
     <string name="settings.playback.auto_rewind.title">ஆட்டோ ரிவைண்ட்</string>
     <string name="settings.playback.seek_time.title">தொகையைத் தவிர்க்கவும்</string>
-    <string name="settings.support.faq.title">கேள்விகள்</string>
     <string name="support.action.donate_kofi">Ko-fi-யில் நன்கொடை அளிக்கவும்</string>
     <string name="support.description.maintenance">Voice இலவசம், திறந்த மூலமாகும், மேலும் ஒரே ஒரு உருவாக்குநரால் பராமரிக்கப்படுகிறது.</string>
     <string name="support.description.maintenance_subtitle">நன்கொடைகள் தொடர்ச்சியான பராமரிப்பு மற்றும் மேம்பாட்டிற்கு நிதியளிக்க உதவுகின்றன.</string>

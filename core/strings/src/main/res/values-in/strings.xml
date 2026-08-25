@@ -109,7 +109,6 @@
     <string name="settings.library.use_grid.title">Gunakan tata letak kisi</string>
     <string name="settings.playback.auto_rewind.title">Mundur otomatis</string>
     <string name="settings.playback.seek_time.title">Lewati jumlah</string>
-    <string name="settings.support.faq.title">FAQ</string>
     <string name="support.action.donate_kofi">Donasi di Ko-fi</string>
     <string name="support.description.maintenance">Voice gratis, bersumber terbuka, dan dirawat oleh satu pengembang.</string>
     <string name="support.description.maintenance_subtitle">Donasi membantu membiayai perawatan dan pengembangan berkelanjutan.</string>

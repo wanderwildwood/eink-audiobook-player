@@ -113,7 +113,6 @@
     <string name="settings.library.use_grid.title">Utilizar a disposição da grelha</string>
     <string name="settings.playback.auto_rewind.title">Rebobin automaticamente</string>
     <string name="settings.playback.seek_time.title">Quantidade de Salto</string>
-    <string name="settings.support.faq.title">Perguntas frequentes</string>
     <string name="support.action.donate_kofi">Doar no Ko-fi</string>
     <string name="support.description.maintenance">O Voice é gratuito, de código aberto e mantido por um único programador.</string>
     <string name="support.description.maintenance_subtitle">As doações ajudam a financiar a manutenção e o desenvolvimento contínuos.</string>

@@ -115,7 +115,6 @@
     <string name="settings.library.use_grid.title">Włącz tryb siatki</string>
     <string name="settings.playback.auto_rewind.title">Automatyczne cofnięcie</string>
     <string name="settings.playback.seek_time.title">Przewiń o</string>
-    <string name="settings.support.faq.title">Najczęściej zadawane pytania (FAQ)</string>
     <string name="support.action.donate_kofi">Przekaż darowiznę na Ko-fi</string>
     <string name="support.description.maintenance">Voice jest darmowy, open source i utrzymywany przez jednego programistę.</string>
     <string name="support.description.maintenance_subtitle">Darowizny pomagają finansować bieżące utrzymanie i rozwój.</string>

@@ -111,7 +111,6 @@
     <string name="settings.library.use_grid.title">چینش بصورت شبکه ای</string>
     <string name="settings.playback.auto_rewind.title">عقب بردن خودکار</string>
     <string name="settings.playback.seek_time.title">میزان پرش</string>
-    <string name="settings.support.faq.title">سوالات متداول</string>
     <string name="support.action.donate_kofi">کمک مالی در Ko-fi</string>
     <string name="support.description.maintenance">Voice رایگان، متن‌باز، و توسط یک توسعه‌دهنده نگهداری می‌شود.</string>
     <string name="support.description.maintenance_subtitle">کمک‌های مالی به تأمین هزینه نگهداری و توسعه مداوم کمک می‌کنند.</string>

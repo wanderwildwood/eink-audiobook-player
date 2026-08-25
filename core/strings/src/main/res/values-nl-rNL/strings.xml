@@ -111,7 +111,6 @@
     <string name="settings.library.use_grid.title">Roosterindeling gebruiken</string>
     <string name="settings.playback.auto_rewind.title">Automatisch terugspoelen</string>
     <string name="settings.playback.seek_time.title">Aantal overslaan</string>
-    <string name="settings.support.faq.title">Veelgestelde vragen</string>
     <string name="support.action.donate_kofi">Doneren op Ko-fi</string>
     <string name="support.description.maintenance">Voice is gratis, open source en wordt onderhouden door één ontwikkelaar.</string>
     <string name="support.description.maintenance_subtitle">Donaties helpen doorlopend onderhoud en ontwikkeling te financieren.</string>

@@ -115,7 +115,6 @@
     <string name="settings.library.use_grid.title">Использовать сетку</string>
     <string name="settings.playback.auto_rewind.title">Автоперемотка назад</string>
     <string name="settings.playback.seek_time.title">Интервал перемотки</string>
-    <string name="settings.support.faq.title">Частые Вопросы (ЧаВо)</string>
     <string name="support.action.donate_kofi">Пожертвовать на Ko-fi</string>
     <string name="support.description.maintenance">Voice бесплатен, имеет открытый исходный код и поддерживается одним разработчиком.</string>
     <string name="support.description.maintenance_subtitle">Пожертвования помогают финансировать постоянную поддержку и разработку.</string>

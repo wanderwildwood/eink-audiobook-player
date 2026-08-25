@@ -111,7 +111,6 @@
     <string name="settings.library.use_grid.title">Käytä ruudukkoasettelua</string>
     <string name="settings.playback.auto_rewind.title">Automaattinen takaisinkelaus</string>
     <string name="settings.playback.seek_time.title">Ohita määrä</string>
-    <string name="settings.support.faq.title">UKK</string>
     <string name="support.action.donate_kofi">Lahjoita Ko-fissa</string>
     <string name="support.description.maintenance">Voice on ilmainen avoimen lähdekoodin sovellus, jota ylläpitää yksi kehittäjä.</string>
     <string name="support.description.maintenance_subtitle">Lahjoitukset auttavat rahoittamaan jatkuvaa ylläpitoa ja kehitystä.</string>

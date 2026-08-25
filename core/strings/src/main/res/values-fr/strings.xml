@@ -113,7 +113,6 @@
     <string name="settings.library.use_grid.title">Utiliser la mise en page en grille</string>
     <string name="settings.playback.auto_rewind.title">Rembobinage automatique</string>
     <string name="settings.playback.seek_time.title">Sauter de</string>
-    <string name="settings.support.faq.title">FAQ</string>
     <string name="support.action.donate_kofi">Faire un don sur Ko-fi</string>
     <string name="support.description.maintenance">Voice est gratuit, open source et maintenu par un seul développeur.</string>
     <string name="support.description.maintenance_subtitle">Les dons aident à financer la maintenance et le développement continus.</string>

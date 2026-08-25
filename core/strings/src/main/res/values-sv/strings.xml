@@ -111,7 +111,6 @@
     <string name="settings.library.use_grid.title">Använd rutnätslayout</string>
     <string name="settings.playback.auto_rewind.title">Automatisk bakåtspolning</string>
     <string name="settings.playback.seek_time.title">Hopplängd</string>
-    <string name="settings.support.faq.title">Vanliga frågor</string>
     <string name="support.action.donate_kofi">Donera på Ko-fi</string>
     <string name="support.description.maintenance">Voice är gratis, öppen källkod och underhålls av en utvecklare.</string>
     <string name="support.description.maintenance_subtitle">Donationer hjälper till att finansiera löpande underhåll och utveckling.</string>

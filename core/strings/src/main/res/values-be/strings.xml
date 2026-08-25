@@ -115,7 +115,6 @@
     <string name="settings.library.use_grid.title">Выкарыстоўваць сетку</string>
     <string name="settings.playback.auto_rewind.title">Аўтаматычна перамотваць назад</string>
     <string name="settings.playback.seek_time.title">Перамотваць па</string>
-    <string name="settings.support.faq.title">FAQ</string>
     <string name="support.action.donate_kofi">Ахвяраваць на Ko-fi</string>
     <string name="support.description.maintenance">Voice бясплатны, з адкрытым зыходным кодам і падтрымліваецца адным распрацоўшчыкам.</string>
     <string name="support.description.maintenance_subtitle">Ахвяраванні дапамагаюць фінансаваць пастаянную падтрымку і распрацоўку.</string>
