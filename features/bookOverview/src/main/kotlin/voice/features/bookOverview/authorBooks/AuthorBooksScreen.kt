@@ -1,7 +1,5 @@
 package voice.features.bookOverview.authorBooks
 
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
@@ -81,20 +79,11 @@ fun AuthorBooksScreen(folderName: String?) {
   val bottomSheetViewModel = bookOverviewGraph.bottomSheetViewModel
   val deleteBookViewModel = bookOverviewGraph.deleteBookViewModel
   val editBookTitleViewModel = bookOverviewGraph.editBookTitleViewModel
-  val fileCoverViewModel = bookOverviewGraph.fileCoverViewModel
   val bookOverviewViewModel = bookOverviewGraph.bookOverviewViewModel
 
   val viewState = viewModel.state()
   val bookOverviewViewState = bookOverviewViewModel.state()
 
-  val getContentLauncher = rememberLauncherForActivityResult(
-    contract = ActivityResultContracts.GetContent(),
-    onResult = { uri ->
-      if (uri != null) {
-        fileCoverViewModel.onImagePicked(uri)
-      }
-    },
-  )
 
   var showBottomSheet by remember { mutableStateOf(false) }
 
@@ -140,9 +129,6 @@ fun AuthorBooksScreen(folderName: String?) {
       BottomSheetContent(
         state = bottomSheetViewModel.state.value,
         onItemClick = { item ->
-          if (item == BottomSheetItem.FileCover) {
-            getContentLauncher.launch("image/*")
-          }
           bottomSheetViewModel.onItemClick(item)
           showBottomSheet = false
         },

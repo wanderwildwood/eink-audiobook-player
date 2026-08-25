@@ -277,7 +277,6 @@ class BookOverviewViewModel(
       BookOverviewItemViewState(
         name = book.title,
         author = book.author,
-        cover = book.coverUrl,
         progress = book.progress / 100F,
         id = book.id,
         remainingTime = book.remaining,

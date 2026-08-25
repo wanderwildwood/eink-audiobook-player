@@ -21,7 +21,6 @@ dependencies {
   implementation(projects.core.featureflag)
   implementation(projects.core.scanner)
 
-  implementation(libs.coil)
   implementation(libs.androidxCore)
   implementation(libs.documentFile)
 

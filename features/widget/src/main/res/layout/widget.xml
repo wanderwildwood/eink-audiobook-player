@@ -7,12 +7,6 @@
   android:background="@drawable/widget_background"
   tools:ignore="Overdraw">
 
-  <ImageView
-    android:id="@+id/imageView"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:adjustViewBounds="true"
-    android:contentDescription="@string/cover.content_description.selectable" />
 
   <LinearLayout
     android:layout_width="match_parent"

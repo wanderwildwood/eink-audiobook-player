@@ -10,7 +10,6 @@ import voice.core.ui.formatTime
 data class BookOverviewItemViewState(
   val name: String,
   val author: String?,
-  val cover: String?,
   val progress: Float,
   val id: BookId,
   val remainingTime: String,
@@ -19,7 +18,6 @@ data class BookOverviewItemViewState(
 internal fun Book.toItemViewState() = BookOverviewItemViewState(
   name = content.name,
   author = content.author,
-  cover = content.coverUrl,
   id = id,
   progress = progress(),
   remainingTime = formatTime(duration - position),

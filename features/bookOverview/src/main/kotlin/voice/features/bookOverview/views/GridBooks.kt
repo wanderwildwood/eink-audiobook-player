@@ -31,7 +31,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import voice.core.data.BookId
 import voice.core.ui.sharedCoverElementModifier
 import voice.features.bookOverview.overview.BookOverviewItemViewState
@@ -125,26 +124,6 @@ internal fun GridBook(
     Column(
       modifier = Modifier.padding(start = 12.dp, end = 12.dp, top = 12.dp),
     ) {
-      Box(
-        modifier = Modifier
-          .fillMaxWidth()
-          .aspectRatio(4f / 3f)
-          .sharedCoverElementModifier(book.id)
-          .clip(MaterialTheme.shapes.large)
-          .background(MaterialTheme.colorScheme.surfaceVariant),
-        contentAlignment = Alignment.Center,
-      ) {
-        AsyncImage(
-          modifier = Modifier.fillMaxSize(),
-          contentScale = ContentScale.Crop,
-          model = book.cover,
-          placeholder = painterResource(id = UiR.drawable.album_art),
-          error = painterResource(id = UiR.drawable.album_art),
-          contentDescription = null,
-        )
-      }
-
-      Spacer(Modifier.height(4.dp))
 
       Text(
         text = book.name,

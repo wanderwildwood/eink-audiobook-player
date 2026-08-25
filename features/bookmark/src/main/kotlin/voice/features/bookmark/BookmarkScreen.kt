@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -46,6 +45,7 @@ import dev.zacsweers.metro.Provides
 import voice.core.common.rootGraphAs
 import voice.core.data.BookId
 import voice.core.data.Bookmark
+import voice.core.ui.NoAnimationDropdownMenu
 import voice.core.ui.icons.VoiceIcons
 import voice.features.bookmark.dialogs.AddBookmarkDialog
 import voice.features.bookmark.dialogs.EditBookmarkDialog
@@ -250,7 +250,7 @@ internal fun BookmarkItem(
                 )
               },
             )
-            DropdownMenu(
+            NoAnimationDropdownMenu(
               expanded = expanded,
               onDismissRequest = { expanded = false },
             ) {

@@ -155,7 +155,6 @@ dependencies {
   implementation(projects.features.folderPicker)
   implementation(projects.features.bookOverview)
   implementation(projects.core.search)
-  implementation(projects.features.cover)
   implementation(projects.core.documentfile)
   implementation(projects.features.onboarding)
   implementation(projects.features.bookmark)
@@ -169,7 +168,6 @@ dependencies {
 
   implementation(libs.serialization.json)
 
-  implementation(libs.coil)
 
   add("freeImplementation", projects.features.review.noop)
   add("freeImplementation", projects.features.support.free)

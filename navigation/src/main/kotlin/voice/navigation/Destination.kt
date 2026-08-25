@@ -19,22 +19,7 @@ sealed interface Destination {
     override val trackingName: String get() = "Bookmarks"
   }
 
-  @Serializable
-  data class CoverFromInternet(val bookId: BookId) : Compose {
-    override val trackingName: String get() = "CoverFromInternet"
-  }
-
   data class Website(val url: String) : Destination
-
-  @Serializable
-  data class EditCover(
-    val bookId: BookId,
-    val cover:
-    @Serializable(with = UriSerializer::class)
-    Uri,
-  ) : Compose {
-    override val trackingName: String get() = "EditCover"
-  }
 
   data class Activity(val intent: Intent) : Destination
 

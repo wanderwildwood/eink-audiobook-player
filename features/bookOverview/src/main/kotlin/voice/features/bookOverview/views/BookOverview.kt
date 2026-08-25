@@ -1,7 +1,5 @@
 package voice.features.bookOverview.views
 
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -76,21 +74,12 @@ fun BookOverviewScreen(modifier: Modifier = Modifier) {
   val editBookTitleViewModel = bookGraph.editBookTitleViewModel
   val bottomSheetViewModel = bookGraph.bottomSheetViewModel
   val deleteBookViewModel = bookGraph.deleteBookViewModel
-  val fileCoverViewModel = bookGraph.fileCoverViewModel
 
   LaunchedEffect(Unit) {
     bookOverviewViewModel.attach()
   }
   val viewState = bookOverviewViewModel.state()
 
-  val getContentLauncher = rememberLauncherForActivityResult(
-    contract = ActivityResultContracts.GetContent(),
-    onResult = { uri ->
-      if (uri != null) {
-        fileCoverViewModel.onImagePicked(uri)
-      }
-    },
-  )
 
   var showBottomSheet by remember { mutableStateOf(false) }
   BookOverview(
@@ -140,9 +129,6 @@ fun BookOverviewScreen(modifier: Modifier = Modifier) {
       BottomSheetContent(
         state = bottomSheetViewModel.state.value,
         onItemClick = { item ->
-          if (item == BottomSheetItem.FileCover) {
-            getContentLauncher.launch("image/*")
-          }
           bottomSheetViewModel.onItemClick(item)
           showBottomSheet = false
         },
@@ -304,7 +290,6 @@ internal class BookOverviewPreviewParameterProvider : PreviewParameterProvider<B
     return BookOverviewItemViewState(
       name = "Book",
       author = "Author",
-      cover = null,
       progress = 0.8F,
       id = BookId(Uuid.random().toString()),
       remainingTime = "01:04",

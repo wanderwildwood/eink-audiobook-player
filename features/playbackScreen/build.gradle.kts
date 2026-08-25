@@ -14,7 +14,6 @@ dependencies {
   implementation(projects.core.ui)
   implementation(projects.core.sleeptimer.api)
 
-  implementation(libs.coil)
   implementation(libs.androidxCore)
   implementation(libs.navigation3.ui)
 

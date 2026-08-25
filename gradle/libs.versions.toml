@@ -109,7 +109,6 @@ compose = [
   "androidxCore",
   "compose-material3",
   "compose-activity",
-  "coil",
 ]
 
 testing-jvm = [

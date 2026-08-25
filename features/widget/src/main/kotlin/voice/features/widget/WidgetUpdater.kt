@@ -9,8 +9,6 @@ import android.view.View
 import android.widget.RemoteViews
 import androidx.core.graphics.drawable.toBitmap
 import androidx.datastore.core.DataStore
-import coil.imageLoader
-import coil.request.ImageRequest
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
@@ -78,7 +76,7 @@ class WidgetUpdater(
     val useHeight = widgetHeight(opts)
 
     val remoteViews = RemoteViews(context.packageName, R.layout.widget)
-    initElements(remoteViews = remoteViews, book = book, coverSize = useHeight)
+    initElements(remoteViews = remoteViews, book = book)
 
     if (useWidth > 0 && useHeight > 0) {
       setVisibilities(remoteViews, useWidth, useHeight, book.content.chapters.size == 1)
@@ -109,7 +107,6 @@ class WidgetUpdater(
   private fun initWidgetForAbsentBook(widgetId: Int) {
     val remoteViews = RemoteViews(context.packageName, R.layout.widget)
     val wholeWidgetClickPI = mainActivityIntentProvider.toCurrentBook()
-    remoteViews.setImageViewResource(R.id.imageView, UiR.drawable.album_art)
     remoteViews.setOnClickPendingIntent(R.id.wholeWidget, wholeWidgetClickPI)
     appWidgetManager.updateAppWidget(widgetId, remoteViews)
   }
@@ -123,7 +120,6 @@ class WidgetUpdater(
   private suspend fun initElements(
     remoteViews: RemoteViews,
     book: Book,
-    coverSize: Int,
   ) {
     val playPausePI = WidgetButtonReceiver.pendingIntent(context, WidgetButtonReceiver.Action.PlayPause)
     remoteViews.setOnClickPendingIntent(R.id.playPause, playPausePI)
@@ -150,23 +146,6 @@ class WidgetUpdater(
 
     val wholeWidgetClickPI = mainActivityIntentProvider.toCurrentBook()
 
-    val coverFile = book.content.cover
-    if (coverFile != null && coverSize > 0) {
-      val bitmap = context.imageLoader
-        .execute(
-          ImageRequest.Builder(context)
-            .data(coverFile)
-            .size(coverSize, coverSize)
-            .fallback(UiR.drawable.album_art)
-            .error(UiR.drawable.album_art)
-            .allowHardware(false)
-            .build(),
-        )
-        .drawable!!.toBitmap()
-      remoteViews.setImageViewBitmap(R.id.imageView, bitmap)
-    } else {
-      remoteViews.setImageViewResource(R.id.imageView, UiR.drawable.album_art)
-    }
 
     remoteViews.setOnClickPendingIntent(R.id.wholeWidget, wholeWidgetClickPI)
   }
@@ -177,29 +156,20 @@ class WidgetUpdater(
     height: Int,
     singleChapter: Boolean,
   ) {
-    setHorizontalVisibility(remoteViews, width, height)
+    setHorizontalVisibility(remoteViews, width)
     setVerticalVisibility(remoteViews, height, singleChapter)
   }
 
   private fun setHorizontalVisibility(
     remoteViews: RemoteViews,
     widgetWidth: Int,
-    coverSize: Int,
   ) {
     val singleButtonSize = context.dpToPxRounded(8F + 36F + 8F)
-    // widget height because cover is square
-    var summarizedItemWidth = 3 * singleButtonSize + coverSize
+    var summarizedItemWidth = 3 * singleButtonSize
 
     // set all views visible
-    remoteViews.setViewVisibility(R.id.imageView, View.VISIBLE)
     remoteViews.setViewVisibility(R.id.rewind, View.VISIBLE)
     remoteViews.setViewVisibility(R.id.fastForward, View.VISIBLE)
-
-    // hide cover if we need space
-    if (summarizedItemWidth > widgetWidth) {
-      remoteViews.setViewVisibility(R.id.imageView, View.GONE)
-      summarizedItemWidth -= coverSize
-    }
 
     // hide fast forward if we need space
     if (summarizedItemWidth > widgetWidth) {

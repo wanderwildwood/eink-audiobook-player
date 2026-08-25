@@ -17,7 +17,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import voice.core.data.BookId
 import voice.core.ui.PlayButton
 import voice.features.bookOverview.overview.BookOverviewItemViewState
@@ -41,20 +40,12 @@ internal fun NowPlayingBar(
         .padding(8.dp),
       verticalAlignment = Alignment.CenterVertically,
     ) {
-      AsyncImage(
-        modifier = Modifier
-          .size(48.dp)
-          .clip(RoundedCornerShape(8.dp)),
-        model = book.cover,
-        placeholder = painterResource(id = UiR.drawable.album_art),
-        error = painterResource(id = UiR.drawable.album_art),
-        contentScale = ContentScale.Crop,
-        contentDescription = null,
-      )
       Row(
         modifier = Modifier
           .weight(1f)
-          .padding(horizontal = 12.dp),
+          // Was 12.dp against the thumbnail. With nothing to its left the title needs a real
+          // inset from the bar's edge.
+          .padding(start = 8.dp, end = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
       ) {
         Text(

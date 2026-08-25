@@ -3,8 +3,6 @@ package voice.core.ui
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.DataStore
-import coil.Coil
-import coil.ImageLoader
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoSet
 import kotlinx.coroutines.CoroutineScope
@@ -23,11 +21,6 @@ class UIAppStartInitializer(
 ) : AppInitializer {
 
   override fun onAppStart(application: Application) {
-    Coil.setImageLoader(
-      ImageLoader.Builder(application)
-        .addLastModifiedToFileCacheKey(false)
-        .build(),
-    )
     themeModeStore.data
       .distinctUntilChanged()
       .onEach { themeMode ->

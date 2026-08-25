@@ -28,7 +28,6 @@ import androidx.compose.ui.text.intl.LocaleList
 import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import voice.core.data.BookId
 import voice.core.ui.sharedCoverElementModifier
 import voice.features.bookOverview.overview.BookOverviewItemViewState
@@ -116,11 +115,11 @@ internal fun ListBookRow(
   ) {
     Column(Modifier.padding()) {
       Row(verticalAlignment = Alignment.CenterVertically) {
-        CoverImage(book.id, book.cover)
-
         Column(
           Modifier
-            .padding(start = 12.dp)
+            // The cover used to set this row's height and its left inset. Without one the text
+            // needs its own padding, or it sits against the card edge and the rows read cramped.
+            .padding(start = 16.dp, top = 12.dp, bottom = 12.dp)
             .weight(1f),
         ) {
           if (book.author != null) {
@@ -166,26 +165,6 @@ internal fun ListBookRow(
   }
 }
 
-@Composable
-private fun CoverImage(
-  bookId: BookId,
-  cover: String?,
-) {
-  val startPadding = 16.dp
-  val endPadding = 16.dp
-  AsyncImage(
-    modifier = Modifier
-      .padding(top = 8.dp, start = 8.dp, bottom = 8.dp)
-      .size(76.dp)
-      .sharedCoverElementModifier(bookId)
-      .clip(RoundedCornerShape(topStart = startPadding, bottomStart = startPadding, topEnd = endPadding, bottomEnd = endPadding)),
-    model = cover,
-    placeholder = painterResource(id = UiR.drawable.album_art),
-    error = painterResource(id = UiR.drawable.album_art),
-    contentScale = ContentScale.Crop,
-    contentDescription = null,
-  )
-}
 
 @Composable
 @Preview
