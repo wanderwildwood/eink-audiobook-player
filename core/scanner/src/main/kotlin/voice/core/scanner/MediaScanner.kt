@@ -89,11 +89,10 @@ internal class MediaScanner(
     val currentChapter = if (currentChapterGone) chapterIds.first() else content.currentChapter
     val positionInChapter = if (currentChapterGone) 0 else content.positionInChapter
     // Books are parsed once and then left alone, so a tag written to the files after a book was
-    // first scanned would never reach it. Genre is filled in from the file when the book has none
-    // - and only then, so a genre set by hand in the app is never overwritten by whatever a
-    // ripper happened to stamp on the file.
-    val genre = content.genre
-      ?: parseResult.firstChapterMetadata?.genre?.trim()?.takeIf(String::isNotEmpty)
+    // first scanned would never reach it. Genre is taken from the file when the book does not
+    // already hold a real one - so a genre set by hand in the app survives, while the junk most
+    // rippers leave behind does not stand in the way of a real one arriving.
+    val genre = content.genre.asRealGenre() ?: parseResult.firstChapterMetadata?.genre.asRealGenre()
 
     val updated = content.copy(
       chapters = chapterIds,
@@ -109,3 +108,46 @@ internal class MediaScanner(
     }
   }
 }
+
+/**
+ * The genre tag as something worth shelving a book under, or null.
+ *
+ * Most audiobook files carry a genre that says nothing about the book: a bare ID3v1 code left as
+ * "(101)", or the format itself - "Audiobook", "Spoken Word", "Speech". Treating those as a real
+ * value would mean a library filed under one useless heading, and would block a proper genre from
+ * ever replacing them.
+ */
+private fun String?.asRealGenre(): String? {
+  val trimmed = this?.trim().orEmpty()
+  if (trimmed.isEmpty()) return null
+  if (ID3_NUMERIC_GENRE.matches(trimmed)) return null
+  if (trimmed.lowercase() in NON_GENRES) return null
+  // A list is not a shelf. "Fiction/Literature/Science Fiction" and "Electronic, Folk, Modern
+  // Classical, Ambient" are what a ripper wrote across a whole batch, not somewhere to file one
+  // book - and a genre chosen here or in the app never contains either separator.
+  if (trimmed.any { it == ',' || it == '/' }) return null
+  // "Non Fiction Audio Book" and friends: the format again, just spelled out.
+  if (trimmed.lowercase().let { "audiobook" in it || "audio book" in it }) return null
+  return trimmed
+}
+
+private val ID3_NUMERIC_GENRE = Regex("""^\(?\d{1,3}\)?$""")
+
+private val NON_GENRES = setOf(
+  "audiobook",
+  "audio book",
+  "audiobooks",
+  "books & spoken",
+  "spoken word",
+  "spoken",
+  "speech",
+  "other",
+  "unknown",
+  "netlibrary audiobook",
+
+  // How it was recorded, not what it is about. If one of these ever wants to be a real shelf,
+  // take it off this list - a genre typed in the app is checked against it too.
+  "interview",
+  "lecture",
+  "fiction & literature",
+)
