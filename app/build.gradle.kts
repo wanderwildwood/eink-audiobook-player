@@ -22,8 +22,18 @@ android {
 
   defaultConfig {
     applicationId = "com.wanderwildwood.einkaudiobookplayer"
-    versionName = providers.gradleProperty("voice.versionName").orNull ?: "1.0.0"
-    versionCode = providers.gradleProperty("voice.versionCode").orNull?.toInt() ?: Int.MAX_VALUE
+
+    // CI passes both of these from the tag it is building. Without them, this is a local build.
+    versionName = providers.gradleProperty("voice.versionName").orNull ?: localVersionName()
+
+    // Deliberately 1, and deliberately not Int.MAX_VALUE. A local build used to install as the
+    // highest version code there is, which then outranked every real release forever: the next
+    // install of a published APK failed with INSTALL_FAILED_VERSION_DOWNGRADE, and the ways past
+    // it were `-d` or an uninstall that would take the reading positions and bookmarks with it.
+    // At 1, a local build can never block a release. Installing a local build *over* a release is
+    // what now needs `adb install -r -d`, which is the direction worth being inconvenienced in -
+    // that is a developer at a terminal, not someone trying to update their audiobook player.
+    versionCode = providers.gradleProperty("voice.versionCode").orNull?.toInt() ?: 1
 
     testInstrumentationRunner = "voice.app.VoiceJUnitRunner"
   }
@@ -199,4 +209,18 @@ dependencies {
   androidTestImplementation(libs.compose.ui.testJunit)
   androidTestImplementation(libs.coroutines.test)
   androidTestUtil(libs.androidX.test.orchestrator)
+}
+
+/**
+ * What the working tree actually is, for builds CI did not stamp. Beats reporting "1.0.0", which
+ * looked like a real version in the app's own About row and told you nothing about what was
+ * installed. Falls back to a plain marker if git cannot answer.
+ */
+fun localVersionName(): String {
+  val described = runCatching {
+    providers.exec {
+      commandLine("git", "describe", "--tags", "--always", "--dirty")
+    }.standardOutput.asText.get().trim()
+  }.getOrNull()
+  return if (described.isNullOrBlank()) "local" else "$described-local"
 }
