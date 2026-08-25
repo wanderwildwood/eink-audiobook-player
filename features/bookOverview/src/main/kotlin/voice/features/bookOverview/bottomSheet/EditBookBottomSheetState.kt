@@ -12,6 +12,7 @@ enum class BottomSheetItem(
   val icon: ImageVector,
 ) {
   Title(StringsR.string.book_edit_name_label, VoiceIcons.Title),
+  Genre(StringsR.string.book_edit_genre_label, VoiceIcons.Tag),
   DeleteBook(StringsR.string.book_delete_bottom_sheet_title, VoiceIcons.Delete),
   BookCategoryMarkAsNotStarted(StringsR.string.book_category_action_mark_not_started, VoiceIcons.HourglassEmpty),
   BookCategoryMarkAsCurrent(StringsR.string.book_category_action_mark_current, VoiceIcons.NotStarted),

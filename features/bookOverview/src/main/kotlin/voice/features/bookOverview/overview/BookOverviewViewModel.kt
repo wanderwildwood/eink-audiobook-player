@@ -157,10 +157,7 @@ class BookOverviewViewModel(
 
     val sections = when (libraryOrganization) {
       LibraryOrganization.AUTHOR_FOLDERS -> listOf(LibrarySection.Folders(folders))
-      // FLAT_LIST is retired; a setting left on it falls through to the same listing with headings.
-      LibraryOrganization.FLAT_LIST,
-      LibraryOrganization.BY_STATUS,
-      -> BookOverviewCategory.entries.mapNotNull { category ->
+      LibraryOrganization.BY_STATUS -> BookOverviewCategory.entries.mapNotNull { category ->
         val categoryBooks = books.filter { it.category == category }
         categoryBooks.takeIf { it.isNotEmpty() }?.let {
           LibrarySection.Books(

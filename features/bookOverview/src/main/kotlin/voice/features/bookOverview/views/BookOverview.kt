@@ -40,6 +40,7 @@ import voice.features.bookOverview.bottomSheet.BottomSheetContent
 import voice.features.bookOverview.bottomSheet.BottomSheetItem
 import voice.features.bookOverview.deleteBook.DeleteBookDialog
 import voice.features.bookOverview.di.BookOverviewGraph
+import voice.features.bookOverview.editGenre.EditBookGenreDialog
 import voice.features.bookOverview.editTitle.EditBookTitleDialog
 import voice.features.bookOverview.overview.BookOverviewCategory
 import voice.features.bookOverview.overview.BookOverviewItemViewState
@@ -72,6 +73,7 @@ fun BookOverviewScreen(modifier: Modifier = Modifier) {
   }
   val bookOverviewViewModel = bookGraph.bookOverviewViewModel
   val editBookTitleViewModel = bookGraph.editBookTitleViewModel
+  val editBookGenreViewModel = bookGraph.editBookGenreViewModel
   val bottomSheetViewModel = bookGraph.bottomSheetViewModel
   val deleteBookViewModel = bookGraph.deleteBookViewModel
 
@@ -118,6 +120,16 @@ fun BookOverviewScreen(modifier: Modifier = Modifier) {
       onUpdateEditTitle = editBookTitleViewModel::onUpdateEditTitle,
     )
   }
+  val editBookGenreState = editBookGenreViewModel.state.value
+  if (editBookGenreState != null) {
+    EditBookGenreDialog(
+      onDismissEditGenreClick = editBookGenreViewModel::onDismissEditGenre,
+      onConfirmEditGenre = editBookGenreViewModel::onConfirmEditGenre,
+      viewState = editBookGenreState,
+      onUpdateEditGenre = editBookGenreViewModel::onUpdateEditGenre,
+    )
+  }
+
 
   if (showBottomSheet) {
     StaticBottomSheet(

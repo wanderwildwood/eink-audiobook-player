@@ -5,6 +5,7 @@ import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.GraphExtension
 import voice.features.bookOverview.bottomSheet.BottomSheetViewModel
 import voice.features.bookOverview.deleteBook.DeleteBookViewModel
+import voice.features.bookOverview.editGenre.EditBookGenreViewModel
 import voice.features.bookOverview.editTitle.EditBookTitleViewModel
 import voice.features.bookOverview.overview.BookOverviewViewModel
 
@@ -14,6 +15,7 @@ abstract class BookOverviewScope private constructor()
 interface BookOverviewGraph {
   val bookOverviewViewModel: BookOverviewViewModel
   val editBookTitleViewModel: EditBookTitleViewModel
+  val editBookGenreViewModel: EditBookGenreViewModel
   val bottomSheetViewModel: BottomSheetViewModel
   val deleteBookViewModel: DeleteBookViewModel
 

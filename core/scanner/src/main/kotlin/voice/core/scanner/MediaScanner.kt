@@ -88,12 +88,20 @@ internal class MediaScanner(
     val currentChapterGone = content.currentChapter !in chapterIds
     val currentChapter = if (currentChapterGone) chapterIds.first() else content.currentChapter
     val positionInChapter = if (currentChapterGone) 0 else content.positionInChapter
+    // Books are parsed once and then left alone, so a tag written to the files after a book was
+    // first scanned would never reach it. Genre is filled in from the file when the book has none
+    // - and only then, so a genre set by hand in the app is never overwritten by whatever a
+    // ripper happened to stamp on the file.
+    val genre = content.genre
+      ?: parseResult.firstChapterMetadata?.genre?.trim()?.takeIf(String::isNotEmpty)
+
     val updated = content.copy(
       chapters = chapterIds,
       currentChapter = currentChapter,
       positionInChapter = positionInChapter,
       isActive = true,
       folderName = folderName ?: content.folderName,
+      genre = genre,
     )
     if (content != updated) {
       validateIntegrity(updated, chapters)

@@ -18,7 +18,6 @@ import voice.core.strings.R as StringsR
 
 private fun LibraryOrganization.labelRes(): Int = when (this) {
   LibraryOrganization.AUTHOR_FOLDERS -> StringsR.string.library_organization_author_folders
-  LibraryOrganization.FLAT_LIST -> StringsR.string.library_organization_flat_list
   LibraryOrganization.BY_STATUS -> StringsR.string.library_organization_by_status
 }
 
@@ -59,9 +58,7 @@ internal fun LibraryOrganizationDialog(
     },
     text = {
       Column {
-        LibraryOrganization.entries
-          .filter { it != LibraryOrganization.FLAT_LIST }
-          .forEach { organization ->
+        LibraryOrganization.entries.forEach { organization ->
           ListItem(
             modifier = Modifier.clickable { onSelect(organization) },
             leadingContent = {
