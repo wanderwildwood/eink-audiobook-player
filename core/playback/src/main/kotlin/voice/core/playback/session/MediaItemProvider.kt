@@ -30,7 +30,6 @@ class MediaItemProvider(
   private val application: Application,
   private val chapterRepo: ChapterRepo,
   private val contentRepo: BookContentRepo,
-  private val imageFileProvider: ImageFileProvider,
   @CurrentBookStore
   private val currentBookStoreId: DataStore<BookId?>,
 ) {
@@ -137,7 +136,6 @@ class MediaItemProvider(
     mediaId = MediaId.Book(book.id),
     browsable = false,
     isPlayable = true,
-    imageUri = book.content.cover?.toProvidedUri(),
     mediaType = MediaType.AudioBook,
   )
 
@@ -150,7 +148,6 @@ class MediaItemProvider(
     browsable = false,
     isPlayable = true,
     sourceUri = chapter.id.toUri(),
-    imageUri = content.cover?.toProvidedUri(),
     artist = content.author,
     mediaType = MediaType.AudioBookChapter,
   )
@@ -166,7 +163,6 @@ class MediaItemProvider(
     browsable = false,
     isPlayable = true,
     sourceUri = playbackItem.chapter.id.toUri(),
-    imageUri = content.cover?.toProvidedUri(),
     artist = content.author,
     durationMs = playbackItem.mark.durationMs,
     clippingConfiguration = ClippingConfiguration.Builder()
@@ -176,5 +172,4 @@ class MediaItemProvider(
     mediaType = MediaType.AudioBookChapter,
   )
 
-  private fun File.toProvidedUri(): Uri = imageFileProvider.uri(this)
 }

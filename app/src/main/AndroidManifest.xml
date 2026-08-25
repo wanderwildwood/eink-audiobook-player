@@ -2,6 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools">
 
+  <!--
+    Contributed by media3-exoplayer and media3-common, which use it to adapt streaming
+    bitrate to the connection. This app plays local files and, since the covers went, makes
+    no network request at all - there is no INTERNET permission for it to pair with. Taken
+    back out so the app asks for nothing it cannot use.
+  -->
+  <uses-permission
+    android:name="android.permission.ACCESS_NETWORK_STATE"
+    tools:node="remove" />
+
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
