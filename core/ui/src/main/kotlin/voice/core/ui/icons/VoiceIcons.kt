@@ -1254,8 +1254,9 @@ object VoiceIcons {
       .build()
 
   /*
-   * Source: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/fast_rewind.kt?var=opsz,wght,FILL,GRAD,ROND@24,400,0,0,50
+   * Source: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/fast_rewind.kt?var=opsz,wght,FILL,GRAD,ROND@24,400,0,1,50
    * Generated: 2026-06-20T11:13:08Z
+   * Hand-edited to FILL 1 so it matches the solid play and chapter-skip glyphs beside it.
    */
   val FastRewind: ImageVector =
     ImageVector.Builder(
@@ -1277,29 +1278,16 @@ object VoiceIcons {
           strokeLineMiter = 1f,
           pathFillType = PathFillType.NonZero,
         ) {
-          moveTo(21.5f, 18f)
-          lineToRelative(-9f, -6f)
-          lineToRelative(9f, -6f)
-          verticalLineTo(18f)
+          // The FILL 1 variant. The outlined one drew each triangle and then carved its middle
+          // back out, which read as hollow next to the solid play and chapter-skip glyphs.
+          moveTo(11f, 18f)
+          verticalLineTo(6f)
+          lineToRelative(-8.5f, 6f)
+          lineToRelative(8.5f, 6f)
           close()
-          moveToRelative(-10f, 0f)
-          lineToRelative(-9f, -6f)
-          lineToRelative(9f, -6f)
-          verticalLineTo(18f)
-          close()
-          moveToRelative(-2f, -6f)
-          close()
-          moveToRelative(10f, 0f)
-          close()
-          moveToRelative(-10f, 2.25f)
-          verticalLineTo(9.75f)
-          lineTo(6.1f, 12f)
-          lineToRelative(3.4f, 2.25f)
-          close()
-          moveToRelative(10f, 0f)
-          verticalLineTo(9.75f)
-          lineTo(16.1f, 12f)
-          lineToRelative(3.4f, 2.25f)
+          moveTo(11.5f, 12f)
+          lineToRelative(8.5f, 6f)
+          verticalLineTo(6f)
           close()
         }
       }
