@@ -138,6 +138,7 @@ internal class MediaAnalyzer(
       key == "ARTIST" -> builder.artist = value
       key == "ALBUM" -> builder.album = value
       key == "TITLE" -> builder.title = value
+      key == "GENRE" -> builder.genre = value
       key.startsWith("CHAPTER") -> {
         val withoutPrefix = key.removePrefix("CHAPTER")
         val isName = withoutPrefix.endsWith("NAME")

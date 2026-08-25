@@ -143,6 +143,7 @@ private val NON_GENRES = setOf(
   "speech",
   "other",
   "unknown",
+  "user defined",
   "netlibrary audiobook",
 
   // How it was recorded, not what it is about. If one of these ever wants to be a real shelf,

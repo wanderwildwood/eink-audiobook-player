@@ -96,6 +96,7 @@ internal class MediaAnalyzerTest {
     assertEquals(expected = "Auphonic Chapter Marks Demo", actual = metadata.title)
     assertEquals(expected = "Auphonic", actual = metadata.artist)
     assertEquals(expected = "Auphonic Examples", actual = metadata.album)
+    assertEquals(expected = "Podcast", actual = metadata.genre)
     assertEquals(expected = auphonicChapters, actual = metadata.chapters)
   }
 
@@ -149,6 +150,7 @@ internal class MediaAnalyzerTest {
     assertEquals(expected = "Auphonic Chapter Marks Demo", actual = metadata.title)
     assertEquals(expected = "Auphonic", actual = metadata.artist)
     assertEquals(expected = "Auphonic Examples", actual = metadata.album)
+    assertEquals(expected = "Podcast", actual = metadata.genre)
     assertEquals(expected = auphonicChapters, actual = metadata.chapters)
   }
 

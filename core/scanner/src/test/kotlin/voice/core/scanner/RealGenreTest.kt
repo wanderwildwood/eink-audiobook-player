@@ -30,6 +30,7 @@ class RealGenreTest {
     assertEquals(expected = null, actual = "Audiobook".asRealGenre())
     assertEquals(expected = null, actual = "SPOKEN WORD".asRealGenre())
     assertEquals(expected = null, actual = "Unknown".asRealGenre())
+    assertEquals(expected = null, actual = "user defined".asRealGenre())
     // The format wins even when a genre is spelled out in front of it.
     assertEquals(expected = null, actual = "Non Fiction Audio Book".asRealGenre())
   }
