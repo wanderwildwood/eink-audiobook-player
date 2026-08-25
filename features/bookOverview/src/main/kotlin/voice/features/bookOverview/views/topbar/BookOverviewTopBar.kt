@@ -59,7 +59,6 @@ private fun BookOverviewTopBarPreview() {
     BookOverviewTopBar(
       viewState = BookOverviewViewState(
         books = emptyMap(),
-        layoutMode = BookOverviewLayoutMode.List,
         playButtonState = BookOverviewViewState.PlayButtonState.Paused,
         showAddBookHint = true,
         showSearchIcon = true,

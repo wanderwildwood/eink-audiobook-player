@@ -33,19 +33,9 @@ class AuthorBooksViewModel(
   fun state(): AuthorBooksViewState {
     val books = remember { repo.flow() }.collectAsState(initial = emptyList()).value
     val gridMode = remember { gridModeStore.data }.collectAsState(initial = null).value
-    val layoutMode = when (gridMode) {
-      GridMode.LIST -> BookOverviewLayoutMode.List
-      GridMode.GRID -> BookOverviewLayoutMode.Grid
-      GridMode.FOLLOW_DEVICE, null -> if (gridCount.useGridAsDefault()) {
-        BookOverviewLayoutMode.Grid
-      } else {
-        BookOverviewLayoutMode.List
-      }
-    }
 
     return AuthorBooksViewState(
       folderName = folderName,
-      layoutMode = layoutMode,
       books = books
         .filter { it.content.folderName == folderName }
         .sortedWith(BookComparator.ByName)

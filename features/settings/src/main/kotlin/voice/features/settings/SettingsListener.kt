@@ -6,7 +6,6 @@ import java.time.LocalTime
 
 interface SettingsListener {
   fun close()
-  fun toggleGrid()
   fun onLibraryOrganizationRowClick()
   fun setLibraryOrganization(organization: LibraryOrganization)
   fun seekAmountChanged(seconds: Int)
@@ -32,7 +31,6 @@ interface SettingsListener {
   companion object {
     fun noop() = object : SettingsListener {
       override fun close() {}
-      override fun toggleGrid() {}
       override fun onLibraryOrganizationRowClick() {}
       override fun setLibraryOrganization(organization: LibraryOrganization) {}
       override fun seekAmountChanged(seconds: Int) {}

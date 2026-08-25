@@ -113,32 +113,6 @@ private fun Settings(
         }
       }
       item {
-        ListItem(
-          modifier = Modifier.clickable { listener.toggleGrid() },
-          leadingContent = {
-            val icon = if (viewState.useGrid) {
-              VoiceIcons.GridView
-            } else {
-              VoiceIcons.ViewList
-            }
-            Icon(
-              imageVector = icon,
-              contentDescription = stringResource(StringsR.string.settings_library_use_grid_title),
-            )
-          },
-          headlineContent = { Text(stringResource(StringsR.string.settings_library_use_grid_title)) },
-          trailingContent = {
-            Switch(
-              checked = viewState.useGrid,
-              onCheckedChange = {
-                listener.toggleGrid()
-              },
-            )
-          },
-        )
-      }
-
-      item {
         LibraryOrganizationRow(
           organization = viewState.libraryOrganization,
           onClick = listener::onLibraryOrganizationRowClick,

@@ -67,7 +67,6 @@ class SettingsViewModel(
   fun viewState(): SettingsViewState {
     val autoRewindAmount by remember { autoRewindAmountStore.data }.collectAsState(initial = 0)
     val seekTime by remember { seekTimeStore.data }.collectAsState(initial = 0)
-    val gridMode by remember { gridModeStore.data }.collectAsState(initial = GridMode.GRID)
     val libraryOrganization by remember { libraryOrganizationStore.data }.collectAsState(
       initial = LibraryOrganization.AUTHOR_FOLDERS,
     )
@@ -84,11 +83,6 @@ class SettingsViewModel(
       autoRewindInSeconds = autoRewindAmount,
       dialog = dialog.value,
       appVersion = appInfoProvider.versionName,
-      useGrid = when (gridMode) {
-        GridMode.LIST -> false
-        GridMode.GRID -> true
-        GridMode.FOLLOW_DEVICE -> gridCount.useGridAsDefault()
-      },
       libraryOrganization = libraryOrganization,
       autoSleepTimer = SettingsViewState.AutoSleepTimerViewState(
         enabled = autoSleepTimer.autoSleepTimerEnabled,
@@ -109,21 +103,6 @@ class SettingsViewModel(
     navigator.goBack()
   }
 
-  override fun toggleGrid() {
-    mainScope.launch {
-      gridModeStore.updateData { currentMode ->
-        when (currentMode) {
-          GridMode.LIST -> GridMode.GRID
-          GridMode.GRID -> GridMode.LIST
-          GridMode.FOLLOW_DEVICE -> if (gridCount.useGridAsDefault()) {
-            GridMode.LIST
-          } else {
-            GridMode.GRID
-          }
-        }
-      }
-    }
-  }
 
   override fun onLibraryOrganizationRowClick() {
     dialog.value = SettingsViewState.Dialog.LibraryOrganization

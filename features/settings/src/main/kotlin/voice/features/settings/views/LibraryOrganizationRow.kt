@@ -59,7 +59,9 @@ internal fun LibraryOrganizationDialog(
     },
     text = {
       Column {
-        LibraryOrganization.entries.forEach { organization ->
+        LibraryOrganization.entries
+          .filter { it != LibraryOrganization.FLAT_LIST }
+          .forEach { organization ->
           ListItem(
             modifier = Modifier.clickable { onSelect(organization) },
             leadingContent = {

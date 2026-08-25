@@ -8,5 +8,4 @@ import voice.features.bookOverview.overview.BookOverviewLayoutMode
 data class AuthorBooksViewState(
   val folderName: String?,
   val books: List<BookOverviewItemViewState>,
-  val layoutMode: BookOverviewLayoutMode = BookOverviewLayoutMode.List,
 )

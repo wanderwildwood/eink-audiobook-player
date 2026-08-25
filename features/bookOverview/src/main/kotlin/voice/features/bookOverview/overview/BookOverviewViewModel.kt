@@ -25,7 +25,6 @@ import voice.core.common.MainScope
 import voice.core.common.comparator.NaturalOrderComparator
 import voice.core.common.comparator.sortedNaturally
 import voice.core.data.Book
-import voice.core.data.BookComparator
 import voice.core.data.BookId
 import voice.core.data.GridMode
 import voice.core.data.KioskModeDemoData
@@ -129,17 +128,8 @@ class BookOverviewViewModel(
 
     val noBooks = !scannerActive && books.isEmpty()
 
-    val layoutMode = when (gridMode) {
-      GridMode.LIST -> BookOverviewLayoutMode.List
-      GridMode.GRID -> BookOverviewLayoutMode.Grid
-      GridMode.FOLLOW_DEVICE -> if (gridCount.useGridAsDefault()) {
-        BookOverviewLayoutMode.Grid
-      } else {
-        BookOverviewLayoutMode.List
-      }
-    }
 
-    val bookSearchViewState = bookSearchViewState(layoutMode)
+    val bookSearchViewState = bookSearchViewState()
     val experimentalPlaybackPersistence = experimentalPlaybackPersistenceFeatureFlag.get()
     val livePlaybackState: State<LivePlaybackState?> = if (experimentalPlaybackPersistence && currentBookId != null) {
       remember(currentBookId) {
@@ -167,13 +157,10 @@ class BookOverviewViewModel(
 
     val sections = when (libraryOrganization) {
       LibraryOrganization.AUTHOR_FOLDERS -> listOf(LibrarySection.Folders(folders))
-      LibraryOrganization.FLAT_LIST -> listOf(
-        LibrarySection.Books(
-          headerRes = null,
-          books = books.sortedWith(BookComparator.ByName).map { it.toItemViewState() },
-        ),
-      )
-      LibraryOrganization.BY_STATUS -> BookOverviewCategory.entries.mapNotNull { category ->
+      // FLAT_LIST is retired; a setting left on it falls through to the same listing with headings.
+      LibraryOrganization.FLAT_LIST,
+      LibraryOrganization.BY_STATUS,
+      -> BookOverviewCategory.entries.mapNotNull { category ->
         val categoryBooks = books.filter { it.category == category }
         categoryBooks.takeIf { it.isNotEmpty() }?.let {
           LibrarySection.Books(
@@ -185,7 +172,6 @@ class BookOverviewViewModel(
     }
 
     return BookOverviewViewState(
-      layoutMode = layoutMode,
       isRefreshing = scannerActive,
       nowPlaying = nowPlaying,
       libraryOrganization = libraryOrganization,
@@ -230,7 +216,7 @@ class BookOverviewViewModel(
   }
 
   @Composable
-  private fun bookSearchViewState(layoutMode: BookOverviewLayoutMode): BookSearchViewState {
+  private fun bookSearchViewState(): BookSearchViewState {
     return if (searchActive) {
       val recentBookSearch = remember {
         recentBookSearchDao.recentBookSearches()
@@ -253,7 +239,6 @@ class BookOverviewViewModel(
         BookSearchViewState.SearchResults(
           query = query,
           books = searchBooks,
-          layoutMode = layoutMode,
         )
       } else {
         BookSearchViewState.EmptySearch(
@@ -283,7 +268,6 @@ class BookOverviewViewModel(
       )
     }
     return BookOverviewViewState(
-      layoutMode = BookOverviewLayoutMode.List,
       sections = listOf(LibrarySection.Books(headerRes = null, books = demoItems)),
       books = mapOf(
         BookOverviewCategory.CURRENT to demoItems.associate { item ->

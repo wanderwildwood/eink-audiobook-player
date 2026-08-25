@@ -195,28 +195,14 @@ internal fun BookOverview(
         .padding(contentPadding)
         .consumeWindowInsets(contentPadding),
     ) {
-      when (viewState.layoutMode) {
-        BookOverviewLayoutMode.List -> {
-          ListBooks(
-            sections = viewState.sections,
-            onBookClick = onBookClick,
-            onBookLongClick = onBookLongClick,
-            onFolderClick = onFolderClick,
-            showPermissionBugCard = viewState.showStoragePermissionBugCard,
-            onPermissionBugCardClick = onPermissionBugCardClick,
-          )
-        }
-        BookOverviewLayoutMode.Grid -> {
-          GridBooks(
-            sections = viewState.sections,
-            onBookClick = onBookClick,
-            onBookLongClick = onBookLongClick,
-            onFolderClick = onFolderClick,
-            showPermissionBugCard = viewState.showStoragePermissionBugCard,
-            onPermissionBugCardClick = onPermissionBugCardClick,
-          )
-        }
-      }
+      ListBooks(
+        sections = viewState.sections,
+        onBookClick = onBookClick,
+        onBookLongClick = onBookLongClick,
+        onFolderClick = onFolderClick,
+        showPermissionBugCard = viewState.showStoragePermissionBugCard,
+        onPermissionBugCardClick = onPermissionBugCardClick,
+      )
     }
   }
   Dialog(
@@ -316,7 +302,6 @@ internal class BookOverviewPreviewParameterProvider : PreviewParameterProvider<B
           }
         },
       ),
-      layoutMode = BookOverviewLayoutMode.List,
       playButtonState = BookOverviewViewState.PlayButtonState.Paused,
       showAddBookHint = false,
       showSearchIcon = true,

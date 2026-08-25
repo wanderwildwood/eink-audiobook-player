@@ -9,7 +9,6 @@ import voice.features.bookOverview.search.BookSearchViewState
 @Immutable
 data class BookOverviewViewState(
   val books: Map<BookOverviewCategory, Map<BookId, State<BookOverviewItemViewState>>>,
-  val layoutMode: BookOverviewLayoutMode,
   val playButtonState: PlayButtonState?,
   val showAddBookHint: Boolean,
   val showSearchIcon: Boolean,
@@ -30,7 +29,6 @@ data class BookOverviewViewState(
   companion object {
     val Loading = BookOverviewViewState(
       books = mapOf(),
-      layoutMode = BookOverviewLayoutMode.List,
       playButtonState = null,
       showAddBookHint = false,
       showSearchIcon = false,

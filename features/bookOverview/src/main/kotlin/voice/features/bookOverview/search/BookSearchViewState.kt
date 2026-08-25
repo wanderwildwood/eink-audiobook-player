@@ -10,7 +10,6 @@ sealed interface BookSearchViewState {
 
   data class SearchResults(
     val books: List<BookOverviewItemViewState>,
-    val layoutMode: BookOverviewLayoutMode,
     override val query: String,
   ) : BookSearchViewState
 
