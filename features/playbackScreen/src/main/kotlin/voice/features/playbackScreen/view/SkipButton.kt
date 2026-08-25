@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -67,6 +68,11 @@ internal fun TransportButton(
     }
     if (label != null) {
       Text(
+        // Pulled back up under the glyph. The slot is taller than the icon so that every
+        // glyph sits on one line, which leaves dead space beneath this one - enough that the
+        // label read as floating loose rather than belonging to the arrow above it. Offset
+        // rather than a shorter slot, so the glyphs stay aligned and the row keeps its height.
+        modifier = Modifier.offset(y = LABEL_OFFSET),
         text = label,
         // Small on purpose. It is a footnote on the glyph, not a thing to read - the arrows
         // carry the meaning and this only settles how far.
@@ -77,6 +83,12 @@ internal fun TransportButton(
 }
 
 private val ICON_SLOT = 56.dp
+
+/**
+ * Pulls the label up under its glyph. Past the slot's own spare height (10.dp below a 36.dp icon)
+ * and into the line's leading, or the text still reads as floating loose beneath the arrow.
+ */
+private val LABEL_OFFSET = (-14).dp
 
 /** Jumps [seconds] within the chapter. Double triangles, the traditional scan glyph. */
 @Composable

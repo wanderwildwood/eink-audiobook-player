@@ -178,20 +178,6 @@ private fun Settings(
 
       item {
         ListItem(
-          modifier = Modifier.clickable { listener.openFaq() },
-          leadingContent = {
-            Icon(
-              imageVector = VoiceIcons.Help,
-              contentDescription = stringResource(StringsR.string.settings_support_faq_title),
-            )
-          },
-          headlineContent = {
-            Text(stringResource(StringsR.string.settings_support_faq_title))
-          },
-        )
-      }
-      item {
-        ListItem(
           modifier = Modifier.clickable { listener.openSourceCode() },
           leadingContent = {
             Icon(

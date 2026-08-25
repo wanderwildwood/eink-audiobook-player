@@ -160,9 +160,6 @@ class SettingsViewModel(
     dialog.value = null
   }
 
-  override fun openFaq() {
-    navigator.goTo(Destination.Website("https://voice.woitaschek.de/faq/"))
-  }
 
   override fun openSourceCode() {
     navigator.goTo(Destination.Website("https://github.com/wanderwildwood/eink-audiobook-player"))

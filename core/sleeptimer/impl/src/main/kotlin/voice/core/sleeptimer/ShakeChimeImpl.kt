@@ -113,7 +113,8 @@ class ShakeChimeImpl(dispatcherProvider: DispatcherProvider) : ShakeChime {
     const val FIFTH_HZ = 987.77
     const val FIFTH_GAIN = 0.18
 
-    // Deliberately quiet. This is a confirmation, not an alert.
-    const val PEAK_AMPLITUDE = 0.085
+    // Deliberately quiet. This is a confirmation, not an alert - but 0.085 turned out to be too
+    // far under the book it plays over, so this is up ~3.7dB and still well short of an alert.
+    const val PEAK_AMPLITUDE = 0.13
   }
 }

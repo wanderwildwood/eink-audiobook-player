@@ -120,7 +120,7 @@ class SleepTimerImpl internal constructor(
     }
 
     if (countdownEnd != CountdownEnd.Expired) {
-      Logger.i("Shake detected, resetting timer")
+      Logger.i("Restarting the countdown after $countdownEnd")
       // Only while the volume is on its way down. A shake resets the timer at any point in the
       // countdown, and most of those are just someone moving in bed with the book still playing
       // normally - chiming for each one turns a confirmation into a nuisance. Once the fade has
@@ -177,7 +177,19 @@ class SleepTimerImpl internal constructor(
     val fadeOutDuration = fadeOutStore.data.first()
 
     while (left > Duration.ZERO) {
-      suspendUntilPlaying()
+      // Stopping the book is the same intent as a shake: you are still awake and still listening.
+      // Carrying on from where the countdown had got to meant coming back from a pause to a timer
+      // with a minute left on it, which then faded out almost immediately.
+      if (playStateManager.playState != Playing) {
+        Logger.i("Paused, resetting the timer to $duration")
+        playerController.setVolume(1F)
+        // Put the full duration up straight away rather than leaving the old remainder on screen
+        // until playback returns - paused, it should already read as a fresh timer.
+        state.value = SleepTimerState.Enabled.WithDuration(duration)
+        playStateManager.playStateFlow.first { it == Playing }
+        Logger.i("Playback resumed.")
+        return CountdownEnd.Paused
+      }
       val fading = left < fadeOutDuration
       val interval = if (fading) 200.milliseconds else 500.milliseconds
       if (fading) {
@@ -202,6 +214,9 @@ class SleepTimerImpl internal constructor(
     Expired,
     ShookWhileCounting,
     ShookWhileFading,
+
+    /** Playback stopped, so the countdown restarts from the top when it comes back. */
+    Paused,
   }
 
   /**
@@ -212,7 +227,7 @@ class SleepTimerImpl internal constructor(
    * quarter of the fade and then fell off, passing -13dB by the halfway point and being
    * inaudible for the last third. That made the fade feel abrupt, and left most of its length
    * as silence you could not hear well enough to react to. Same duration, spread evenly, is
-   * about 1.5dB per second across a 30 second fade.
+   * about 0.75dB per second across a 60 second fade.
    */
   private fun updateVolume(
     left: Duration,
@@ -225,14 +240,6 @@ class SleepTimerImpl internal constructor(
       10.0.pow(-FADE_OUT_RANGE_DB * (1f - remaining) / 20.0).toFloat()
     }
     playerController.setVolume(volume)
-  }
-
-  private suspend fun suspendUntilPlaying() {
-    if (playStateManager.playState != Playing) {
-      Logger.i("Not playing. Waiting for playback to continue.")
-      playStateManager.playStateFlow.first { it == Playing }
-      Logger.i("Playback resumed.")
-    }
   }
 
   internal companion object {

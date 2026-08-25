@@ -85,7 +85,9 @@ public interface StoreModule {
   private fun fadeOut(factory: VoiceDataStoreFactory): DataStore<Duration> {
     return factory.create(
       fileName = "fadeOut",
-      defaultValue = 30.seconds,
+      // A minute. At 30s the wind-down arrived too abruptly in practice - by the time you notice
+      // the book getting quiet there is barely time to shake it back.
+      defaultValue = 60.seconds,
       serializer = Duration.serializer(),
     )
   }

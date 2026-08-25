@@ -12,6 +12,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import voice.core.data.BookId
@@ -46,15 +48,17 @@ internal fun BookPlayContent(
       .padding(contentPadding)
       .padding(horizontal = 16.dp),
   ) {
-    // Slack above and below, so the whole block sits high on the page rather than pressed to
-    // the bottom edge. Weighted rather than a fixed height: the two spacers keep their ratio
-    // whatever the screen, and whether or not there is an author line and a chapter line.
+    // Takes all the slack, so the block below is pushed down to the bottom of the page. The top
+    // icons are in the app bar and are not affected.
     Spacer(modifier = Modifier.weight(1f))
 
     viewState.author?.let { author ->
       Text(
         text = author,
         style = MaterialTheme.typography.titleLarge,
+        // Bold against the italic title beneath it, so the block reads as a name over a work
+        // rather than three lines of the same weight.
+        fontWeight = FontWeight.Bold,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
       )
@@ -63,6 +67,8 @@ internal fun BookPlayContent(
     Text(
       text = viewState.title,
       style = MaterialTheme.typography.headlineLarge,
+      // Italic, the way a book title is set in print.
+      fontStyle = FontStyle.Italic,
       maxLines = 3,
       overflow = TextOverflow.Ellipsis,
     )
@@ -98,8 +104,9 @@ internal fun BookPlayContent(
       onSkipToNext = onSkipToNext,
     )
 
-    // Roughly a third of the leftover space, against a whole one above: enough to lift the
-    // controls off the bottom edge without moving them out of thumb reach.
-    Spacer(modifier = Modifier.weight(0.5f))
+    // Fixed, not weighted, so every bit of leftover space falls to the spacer above and the
+    // whole block - author down to the transport row - sits at the foot of the page. Just enough
+    // to keep the buttons off the bottom edge.
+    Spacer(modifier = Modifier.size(24.dp))
   }
 }

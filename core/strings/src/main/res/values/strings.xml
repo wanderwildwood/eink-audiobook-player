@@ -202,6 +202,8 @@
     <string name="playback.speed.title">Playback speed</string>
     <!-- Content description for the button that lowers the playback speed. -->
     <string name="playback.speed.slower">Slower</string>
+    <string name="common.dialog.shorter">Shorter</string>
+    <string name="common.dialog.longer">Longer</string>
     <!-- Content description for the button that raises the playback speed. -->
     <string name="playback.speed.faster">Faster</string>
     <!-- Negative button for cancelling feedback. -->

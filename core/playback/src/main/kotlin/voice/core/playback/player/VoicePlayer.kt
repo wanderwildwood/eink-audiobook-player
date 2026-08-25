@@ -46,7 +46,12 @@ class VoicePlayer(
   private val scope: CoroutineScope,
   private val volumeGain: VolumeGain,
   private val analytics: Analytics,
+  private val callResumeGuard: CallResumeGuard,
 ) : ForwardingPlayer(player) {
+
+  init {
+    callResumeGuard.pauseOnIncomingCall { pause() }
+  }
 
   fun forceSeekToNext() {
     scope.launch {
@@ -179,6 +184,14 @@ class VoicePlayer(
   }
 
   override fun setPlayWhenReady(playWhenReady: Boolean) {
+    // Every route into playback lands here - the notification, a media button, the session, the
+    // widget - so this is the one place that can turn away a play the user did not ask for.
+    if (playWhenReady && callResumeGuard.shouldSuppressResume()) {
+      Logger.i("Ignoring play: it arrived with a call, and the book was paused before it")
+      return
+    }
+    callResumeGuard.notePlayWhenReady(playWhenReady)
+
     Logger.d("setPlayWhenReady=$playWhenReady")
     analytics.event(if (playWhenReady) "play" else "pause")
 
