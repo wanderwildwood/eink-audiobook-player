@@ -31,7 +31,7 @@ class NewFeatureModule : CliktCommand() {
 
     val packageName = components.joinToString(separator = ".")
     listOf("main", "test").forEach { sourceSet ->
-      val srcFolder = File(moduleRoot, "src/$sourceSet/kotlin/voice/${packageName.replace(".", "/")}")
+      val srcFolder = File(moduleRoot, "src/$sourceSet/kotlin/audiobook/${packageName.replace(".", "/")}")
       srcFolder.mkdirs()
     }
 

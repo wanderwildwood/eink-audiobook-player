@@ -1,100 +1,87 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-readonly PACKAGE="voice.core.ui.icons"
-readonly OUT_DIR="core/ui/src/main/kotlin/voice/core/ui/icons"
+# Adds one Material Symbol to the app's Icons object.
+#
+# This used to rewrite the whole file from a list of 48 symbols, which stopped being true of
+# this repository twice over: icons are pruned when the screen that used them is deleted, and
+# some are edited by hand afterwards (the skip arrows were filled in that way). Regenerating
+# everything would have undone both - deleting seven icons that are in use, among them the
+# volume and skip-silence ones, and restoring fifteen belonging to screens that no longer
+# exist. It also still wrote to voice/ and VoiceIcons, neither of which has existed since the
+# packages were renamed, so it would have produced a second icons file in a package nothing
+# imports.
+#
+# So it appends one icon and leaves everything else alone.
+#
+# Usage: scripts/generate_material_symbols.sh volume_down VolumeDown
+#        scripts/generate_material_symbols.sh <material symbol name> <Kotlin property name>
+
 readonly BASE_URL="https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp"
 readonly VARIANT="opsz,wght,FILL,GRAD,ROND@24,400,0,0,50"
-readonly GENERATED_AT="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+ICONS_FILE="${ICONS_FILE:-core/ui/src/main/kotlin/audiobook/core/ui/icons/Icons.kt}"
+readonly ICONS_FILE
 
-mkdir -p "${OUT_DIR}"
-find "${OUT_DIR}" -maxdepth 1 -type f -name '*.kt' -delete
+if [ "$#" -ne 2 ]; then
+  echo "usage: $0 <material_symbol_name> <PropertyName>" >&2
+  echo "example: $0 volume_down VolumeDown" >&2
+  exit 2
+fi
 
-cat > "${OUT_DIR}/VoiceIcons.kt" <<EOF
-package ${PACKAGE}
+readonly ICON_NAME="$1"
+readonly PROPERTY_NAME="$2"
+readonly SOURCE_URL="${BASE_URL}/${ICON_NAME}.kt?var=${VARIANT}"
 
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PathFillType
-import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.StrokeJoin
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.graphics.vector.path
-import androidx.compose.ui.unit.dp
+if [ ! -f "${ICONS_FILE}" ]; then
+  echo "::error::${ICONS_FILE} not found - run this from the repository root." >&2
+  exit 1
+fi
 
-public object VoiceIcons {
-EOF
+if grep -qE "^  val ${PROPERTY_NAME}: ImageVector" "${ICONS_FILE}"; then
+  echo "${PROPERTY_NAME} is already in ${ICONS_FILE}; nothing to do." >&2
+  exit 1
+fi
 
-generate_icon() {
-  local icon_name="$1"
-  local property_name="$2"
-  local source_url="${BASE_URL}/${icon_name}.kt?var=${VARIANT}"
+generated_at="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 
-  {
-    printf '\n'
-    printf '/*\n'
-    printf ' * Source: %s\n' "${source_url}"
-    printf ' * Generated: %s\n' "${GENERATED_AT}"
-    printf ' */\n'
-    curl --compressed --fail --silent --show-error --location "${source_url}" |
-      perl -0pe '
-        s/^package com\.example\.test\n\n(?:import [^\n]+\n)+\n//;
-        s/\@Suppress\("CheckReturnValue"\)\npublic val '"${icon_name}"': ImageVector\n  get\(\) \{\n    if \(_'"${icon_name}"' != null\) \{\n      return _'"${icon_name}"'!!\n    \}\n    _'"${icon_name}"' =/internal val '"${property_name}"'Icon: ImageVector =/;
-        s/internal val '"${property_name}"'Icon: ImageVector =/  public val '"${property_name}"': ImageVector =/;
-        s/name = "'"${icon_name}"'"/name = "'"${property_name}"'"/g;
-        s/PathFillType\.Companion\./PathFillType./g;
-        s/\n    return _'"${icon_name}"'!!\n  \}\n\nprivate var _'"${icon_name}"': ImageVector\? = null\n?/\n/s;
-      '
-  } >> "${OUT_DIR}/VoiceIcons.kt"
-}
+# Written beside the file and moved into place at the end, so a failed download cannot leave
+# the icons file half-appended.
+work="$(mktemp)"
+trap 'rm -f "${work}"' EXIT
 
-generate_icon add Add
-generate_icon analytics Analytics
-generate_icon arrow_back ArrowBack
-generate_icon arrow_forward ArrowForward
-generate_icon audio_file AudioFile
-generate_icon auto_awesome AutoAwesome
-generate_icon bedtime Bedtime
-generate_icon bedtime_off BedtimeOff
-generate_icon book Book
-generate_icon bug_report BugReport
-generate_icon check Check
-generate_icon chevron_left ChevronLeft
-generate_icon chevron_right ChevronRight
-generate_icon close Close
-generate_icon coffee Coffee
-generate_icon collections_bookmark CollectionsBookmark
-generate_icon construction Construction
-generate_icon delete Delete
-generate_icon done Done
-generate_icon download Download
-generate_icon expand_more ExpandMore
-generate_icon fast_rewind FastRewind
-generate_icon favorite Favorite
-generate_icon folder Folder
-generate_icon grid_view GridView
-generate_icon help Help
-generate_icon history History
-generate_icon hourglass_empty HourglassEmpty
-generate_icon image Image
-generate_icon language Language
-generate_icon laptop_mac Laptop
-generate_icon library_books LibraryBooks
-generate_icon lightbulb Lightbulb
-generate_icon lock_open LockOpen
-generate_icon more_vert MoreVert
-generate_icon not_started NotStarted
-generate_icon person Person
-generate_icon remove Remove
-generate_icon search Search
-generate_icon sentiment_satisfied SentimentSatisfied
-generate_icon settings Settings
-generate_icon speed Speed
-generate_icon tag Tag
-generate_icon timelapse Timelapse
-generate_icon timer Timer
-generate_icon title Title
-generate_icon undo Undo
-generate_icon view_list ViewList
+{
+  printf '\n'
+  printf '  /*\n'
+  printf '   * Source: %s\n' "${SOURCE_URL}"
+  printf '   * Generated: %s\n' "${generated_at}"
+  printf '   */\n'
+  curl --compressed --fail --silent --show-error --location "${SOURCE_URL}" |
+    perl -0pe '
+      s/^package com\.example\.test\n\n(?:import [^\n]+\n)+\n//;
+      s/\@Suppress\("CheckReturnValue"\)\npublic val '"${ICON_NAME}"': ImageVector\n  get\(\) \{\n    if \(_'"${ICON_NAME}"' != null\) \{\n      return _'"${ICON_NAME}"'!!\n    \}\n    _'"${ICON_NAME}"' =/internal val '"${PROPERTY_NAME}"'Icon: ImageVector =/;
+      s/internal val '"${PROPERTY_NAME}"'Icon: ImageVector =/  val '"${PROPERTY_NAME}"': ImageVector =/;
+      s/name = "'"${ICON_NAME}"'"/name = "'"${PROPERTY_NAME}"'"/g;
+      s/PathFillType\.Companion\./PathFillType./g;
+      s/\n    return _'"${ICON_NAME}"'!!\n  \}\n\nprivate var _'"${ICON_NAME}"': ImageVector\? = null\n?/\n/s;
+    '
+} > "${work}"
 
-printf '}\n' >> "${OUT_DIR}/VoiceIcons.kt"
+if ! grep -qE "^  val ${PROPERTY_NAME}: ImageVector" "${work}"; then
+  echo "::error::the download did not contain '${ICON_NAME}' in the expected shape - nothing was written." >&2
+  exit 1
+fi
+
+# The object's closing brace is the last line; the icon goes above it.
+python3 - "${ICONS_FILE}" "${work}" <<'PY'
+import sys
+
+icons_path, addition_path = sys.argv[1], sys.argv[2]
+lines = open(icons_path, encoding="utf-8").read().rstrip("\n").split("\n")
+if lines[-1] != "}":
+    raise SystemExit(f"::error::{icons_path} does not end with the object's closing brace")
+addition = open(addition_path, encoding="utf-8").read().rstrip("\n").split("\n")
+open(icons_path, "w", encoding="utf-8").write("\n".join(lines[:-1] + addition + ["}"]) + "\n")
+PY
+
+echo "Added ${PROPERTY_NAME} to ${ICONS_FILE}."
+echo "Run ./gradlew formatKotlin lintKotlin before committing."

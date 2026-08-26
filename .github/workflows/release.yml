@@ -4,6 +4,11 @@ on:
   push:
     tags:
       - 'v*'
+  # Also startable by hand. A tag push can take a long time to produce a run - on 2026-08-26 the
+  # other three forks' releases took 15 to 25 minutes to appear, long enough to look like the push
+  # had done nothing - and this gives a way to start a release without deleting and re-pushing a
+  # tag, or to retry one that failed halfway.
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -66,10 +71,14 @@ jobs:
           cp app/build/outputs/apk/free/release/app-free-release.apk "$apk_name"
           sha256sum "$apk_name" > "${apk_name}.sha256"
 
+      # The generated notes are a list of commits; they cannot say what someone has to do
+      # before installing. This goes above them, and can be emptied once nobody is still
+      # upgrading from a build signed with the old key.
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
             eink-audiobook-player-*.apk
             eink-audiobook-player-*.apk.sha256
+          body_path: .github/release-body.md
           generate_release_notes: true

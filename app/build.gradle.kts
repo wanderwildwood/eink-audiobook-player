@@ -63,15 +63,13 @@ android {
   }
 
   // A fixed debug keystore checked into the repo, so debug builds are signed identically on
-  // every machine and CI run - lets a downloaded debug APK be upgraded in place by a later one,
-  // instead of each environment's own auto-generated ~/.android/debug.keystore producing a
-  // different signature every time.
-  // A fixed keystore checked into the repo (no real security value - not Play Store
-  // distributed), reused for BOTH debug and release build types. Every prior published release
-  // (v1.0.0 through v1.1.2) was signed with this same keystore via the debug build type, so
-  // release must keep using it too - a different keystore would force everyone who's already
-  // installed the app to uninstall (and lose their library data) before they could take a new
-  // update.
+  // every machine and CI run, instead of each environment's own auto-generated
+  // ~/.android/debug.keystore producing a different signature every time.
+  //
+  // Releases up to v1.5.1 went out signed with this keystore too, through the fallback below.
+  // Its private half is in the repo, so anyone could sign an APK that Android would accept as
+  // an update to this app. v1.6.0 onwards is signed with a real key held outside the tree,
+  // which is why it cannot be installed over one of those older builds.
   signingConfigs.getByName("debug") {
     storeFile = layout.projectDirectory.file("debug.keystore").asFile
     storePassword = "android"
@@ -83,12 +81,19 @@ android {
     getByName("release") {
       isMinifyEnabled = true
       isShrinkResources = true
+      // Only reached when signing/ is absent, which on CI is a failed build rather than a
+      // release: the workflow stops if the keystore secret is unset, and checks the finished
+      // APK's certificate is not this one before publishing.
       signingConfig = signingConfigs.getByName("debug")
     }
     getByName("debug") {
       isMinifyEnabled = false
     }
     all {
+      // Both build types, not just release - so a debug build on a machine that has the real
+      // keystore installs in place over a release, and the two do not have to be uninstalled
+      // around each other during development. It also means a local debug APK is not a
+      // rehearsal for what someone upgrading from a published build will hit.
       if (appSigningConfig != null) {
         signingConfig = appSigningConfig
       }
