@@ -8,10 +8,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -116,24 +114,17 @@ private fun Content(
   viewState: SelectFolderTypeViewState,
   onFolderModeSelect: (FolderMode) -> Unit,
 ) {
-  LazyVerticalGrid(
-    columns = GridCells.Adaptive(150.dp),
+  LazyColumn(
     contentPadding = contentPadding,
     modifier = Modifier.fillMaxSize(),
   ) {
-    item(
-      key = "header",
-      span = { GridItemSpan(maxLineSpan) },
-    ) {
+    item(key = "header") {
       FolderModeSelectionCard(
         onFolderModeSelect = onFolderModeSelect,
         selectedFolderMode = viewState.selectedFolderMode,
       )
     }
-    item(
-      key = "folderStructureExplanation",
-      span = { GridItemSpan(maxLineSpan) },
-    ) {
+    item(key = "folderStructureExplanation") {
       Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         Text(
           modifier = Modifier.padding(top = 24.dp),
@@ -143,10 +134,7 @@ private fun Content(
       }
     }
     if (viewState.loading) {
-      item(
-        key = "loading",
-        span = { GridItemSpan(maxLineSpan) },
-      ) {
+      item(key = "loading") {
         Box(Modifier.padding(top = 24.dp)) {
           CircularProgressIndicator(
             Modifier
@@ -157,21 +145,13 @@ private fun Content(
       }
     } else {
       if (viewState.noBooksDetected) {
-        item(
-          key = "noBooksDetected",
-          span = { GridItemSpan(maxLineSpan) },
-        ) {
+        item(key = "noBooksDetected") {
           Text(text = stringResource(id = StringsR.string.folder_type_book_example_empty))
         }
       } else {
-        item(span = { GridItemSpan(maxLineSpan) }) {
-          Spacer(modifier = Modifier.size(16.dp))
-        }
+        item { Spacer(modifier = Modifier.size(16.dp)) }
         items(viewState.books) { book ->
-          FolderModeBook(
-            modifier = Modifier.padding(top = 8.dp, bottom = 8.dp, end = 8.dp, start = 8.dp),
-            book = book,
-          )
+          FolderModeBook(book = book)
         }
         item { Spacer(modifier = Modifier.size(24.dp)) }
       }
