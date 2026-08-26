@@ -1,6 +1,7 @@
 package audiobook.features.folderPicker.addcontent
 
 import android.net.Uri
+import android.provider.DocumentsContract
 import androidx.datastore.core.DataStore
 import audiobook.core.common.DispatcherProvider
 import audiobook.core.data.folders.AudiobookFolders
@@ -44,7 +45,15 @@ class AddContentViewModel(
         // main thread. Asking instead was a whole screen that only ever restated what the files
         // already say.
         FileTypeSelection.Folder -> withContext(dispatcherProvider.io) {
-          documentFileFactory.create(uri).detectFolderType()
+          // The picker hands back a tree uri, which cannot be queried as a document: asking for
+          // its contents returns nothing rather than failing, so the folder reads as empty and
+          // every library was detected as a single book. Everything else that walks a stored
+          // folder converts it the same way first - see AudiobookFoldersImpl.toDocumentFile.
+          val documentUri = DocumentsContract.buildDocumentUriUsingTree(
+            uri,
+            DocumentsContract.getTreeDocumentId(uri),
+          )
+          documentFileFactory.create(documentUri).detectFolderType()
         }
       }
       audiobookFolders.add(uri, folderType)
