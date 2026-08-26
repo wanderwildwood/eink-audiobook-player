@@ -8,10 +8,10 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -82,7 +82,6 @@ fun BookOverviewScreen(modifier: Modifier = Modifier) {
   }
   val viewState = bookOverviewViewModel.state()
 
-
   var showBottomSheet by remember { mutableStateOf(false) }
   BookOverview(
     viewState = viewState,
@@ -129,7 +128,6 @@ fun BookOverviewScreen(modifier: Modifier = Modifier) {
       onUpdateEditGenre = editBookGenreViewModel::onUpdateEditGenre,
     )
   }
-
 
   if (showBottomSheet) {
     StaticBottomSheet(

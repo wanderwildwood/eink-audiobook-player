@@ -359,9 +359,7 @@ class BookOverviewViewModelTest {
    * The stored organization only reaches the state on a later recomposition - the first one runs
    * with the data store's initial value.
    */
-  private suspend fun ReceiveTurbine<BookOverviewViewState>.awaitOrganization(
-    organization: LibraryOrganization,
-  ): BookOverviewViewState {
+  private suspend fun ReceiveTurbine<BookOverviewViewState>.awaitOrganization(organization: LibraryOrganization): BookOverviewViewState {
     while (true) {
       val item = awaitItem()
       if (item.libraryOrganization == organization) return item

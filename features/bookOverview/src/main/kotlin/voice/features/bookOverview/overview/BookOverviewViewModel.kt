@@ -29,10 +29,10 @@ import voice.core.data.Book
 import voice.core.data.BookId
 import voice.core.data.GridMode
 import voice.core.data.LibraryOrganization
-import voice.core.data.shelfAuthor
 import voice.core.data.repo.BookContentRepo
 import voice.core.data.repo.BookRepository
 import voice.core.data.repo.internals.dao.RecentBookSearchDao
+import voice.core.data.shelfAuthor
 import voice.core.data.store.CurrentBookStore
 import voice.core.data.store.FolderPickerMovedDialogShownStore
 import voice.core.data.store.GridModeStore
@@ -122,7 +122,6 @@ class BookOverviewViewModel(
       .collectAsState(initial = LibraryOrganization.AUTHOR_FOLDERS).value
 
     val noBooks = !scannerActive && books.isEmpty()
-
 
     val bookSearchViewState = bookSearchViewState()
     val experimentalPlaybackPersistence = experimentalPlaybackPersistenceFeatureFlag.get()

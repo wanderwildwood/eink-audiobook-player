@@ -49,13 +49,14 @@ fun NoAnimationDropdownMenu(
     properties = PopupProperties(focusable = true),
   ) {
     Surface(
+      modifier = modifier,
       shape = MaterialTheme.shapes.extraSmall,
       color = MaterialTheme.colorScheme.surfaceContainer,
       tonalElevation = 3.dp,
       shadowElevation = 3.dp,
     ) {
       Column(
-        modifier = modifier
+        modifier = Modifier
           .padding(vertical = 8.dp)
           .width(IntrinsicSize.Max)
           .verticalScroll(rememberScrollState()),

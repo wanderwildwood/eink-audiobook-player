@@ -165,7 +165,6 @@ internal fun ListBookRow(
   }
 }
 
-
 @Composable
 @Preview
 private fun ListBookRowPreviewWithProgress() {

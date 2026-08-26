@@ -171,5 +171,4 @@ class MediaItemProvider(
       .build(),
     mediaType = MediaType.AudioBookChapter,
   )
-
 }

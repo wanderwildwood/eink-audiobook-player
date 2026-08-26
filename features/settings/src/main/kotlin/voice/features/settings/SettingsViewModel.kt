@@ -84,7 +84,6 @@ class SettingsViewModel(
     navigator.goBack()
   }
 
-
   override fun onLibraryOrganizationRowClick() {
     dialog.value = SettingsViewState.Dialog.LibraryOrganization
   }
@@ -119,7 +118,6 @@ class SettingsViewModel(
   override fun dismissDialog() {
     dialog.value = null
   }
-
 
   override fun openSourceCode() {
     navigator.goTo(Destination.Website("https://github.com/wanderwildwood/eink-audiobook-player"))

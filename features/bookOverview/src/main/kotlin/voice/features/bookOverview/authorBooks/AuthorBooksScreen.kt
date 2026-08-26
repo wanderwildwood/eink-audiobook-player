@@ -63,7 +63,10 @@ interface AuthorBooksProvider {
 }
 
 @Composable
-fun AuthorBooksScreen(name: String?, shelf: Destination.AuthorBooks.Shelf) {
+fun AuthorBooksScreen(
+  name: String?,
+  shelf: Destination.AuthorBooks.Shelf,
+) {
   val viewModel = retain(name, shelf) {
     rootGraphAs<AuthorBooksGraph>().authorBooksViewModelFactory.create(name, shelf)
   }
@@ -79,7 +82,6 @@ fun AuthorBooksScreen(name: String?, shelf: Destination.AuthorBooks.Shelf) {
 
   val viewState = viewModel.state()
   val bookOverviewViewState = bookOverviewViewModel.state()
-
 
   var showBottomSheet by remember { mutableStateOf(false) }
 
@@ -124,7 +126,6 @@ fun AuthorBooksScreen(name: String?, shelf: Destination.AuthorBooks.Shelf) {
       onUpdateEditGenre = editBookGenreViewModel::onUpdateEditGenre,
     )
   }
-
 
   if (showBottomSheet) {
     StaticBottomSheet(

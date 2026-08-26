@@ -2,14 +2,14 @@ package voice.features.playbackScreen.view
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.Scaffold
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.input.pointer.PointerEventPass
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -79,19 +79,19 @@ internal fun BookPlayView(
           Modifier
         },
       ) {
-      BookPlayContent(
-        contentPadding = it,
-        viewState = viewState,
-        bookId = bookId,
-        onPlayClick = onPlayClick,
-        onRewindClick = onRewindClick,
-        onFastForwardClick = onFastForwardClick,
-        onSeek = onSeek,
-        onSkipToNext = onSkipToNext,
-        onSkipToPrevious = onSkipToPrevious,
-        onCurrentChapterClick = onCurrentChapterClick,
-        useLandscapeLayout = useLandscapeLayout,
-      )
+        BookPlayContent(
+          contentPadding = it,
+          viewState = viewState,
+          bookId = bookId,
+          onPlayClick = onPlayClick,
+          onRewindClick = onRewindClick,
+          onFastForwardClick = onFastForwardClick,
+          onSeek = onSeek,
+          onSkipToNext = onSkipToNext,
+          onSkipToPrevious = onSkipToPrevious,
+          onCurrentChapterClick = onCurrentChapterClick,
+          useLandscapeLayout = useLandscapeLayout,
+        )
       }
     },
   )

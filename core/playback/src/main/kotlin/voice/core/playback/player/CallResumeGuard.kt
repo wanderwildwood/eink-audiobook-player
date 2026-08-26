@@ -44,7 +44,9 @@ class CallResumeGuard(private val application: Application) {
   private var pauseForCall: (() -> Unit)? = null
 
   @Volatile private var inCall = false
+
   @Volatile private var playingWhenCallStarted = false
+
   @Volatile private var callEndedAtElapsed = Long.MIN_VALUE
 
   init {

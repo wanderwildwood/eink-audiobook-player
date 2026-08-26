@@ -61,6 +61,9 @@ class AuthorBooksViewModel(
 
   @AssistedFactory
   interface Factory {
-    fun create(name: String?, shelf: Destination.AuthorBooks.Shelf): AuthorBooksViewModel
+    fun create(
+      name: String?,
+      shelf: Destination.AuthorBooks.Shelf,
+    ): AuthorBooksViewModel
   }
 }

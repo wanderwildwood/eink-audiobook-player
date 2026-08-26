@@ -146,7 +146,6 @@ class WidgetUpdater(
 
     val wholeWidgetClickPI = mainActivityIntentProvider.toCurrentBook()
 
-
     remoteViews.setOnClickPendingIntent(R.id.wholeWidget, wholeWidgetClickPI)
   }
 

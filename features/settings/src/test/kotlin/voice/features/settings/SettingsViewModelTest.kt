@@ -103,7 +103,6 @@ class SettingsViewModelTest {
       navigator.goTo(Destination.FolderPicker)
     }
   }
-
 }
 
 private class MemoryDataStore<T>(initial: T) : DataStore<T> {
