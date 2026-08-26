@@ -45,7 +45,7 @@
     <string name="library.folders.moved.dialog.message">اکنون می‌توانید پوشه‌های کتاب صوتی را در تنظیمات مدیریت کنید.</string>
     <string name="library.search.hint">دنبال چه چیزی میگردید؟</string>
     <string name="library.storage_permission_bug.action">اعطا مجوز</string>
-    <string name="library.storage_permission_bug.message">در برخی از دستگاه‌ها، یک برنامه سیستم مجوز لازم برای دسترسی به کارت حافظه خارجی را ندارد. این دسترسی برای Voice برای خواندن کتاب‌های صوتی شما ضروری است.</string>
+    <string name="library.storage_permission_bug.message">در برخی از دستگاه‌ها، یک برنامه سیستم مجوز لازم برای دسترسی به کارت حافظه خارجی را ندارد. این دسترسی برای eInk Audiobook Player برای خواندن کتاب‌های صوتی شما ضروری است.</string>
     <string name="library.storage_permission_bug.title">مجوز لازم است</string>
     <string name="media_session.library.recent">به تازگی</string>
     <string name="media_session.library.root">همه کتاب های صوتی</string>

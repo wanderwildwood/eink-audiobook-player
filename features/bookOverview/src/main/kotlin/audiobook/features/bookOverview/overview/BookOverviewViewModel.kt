@@ -1,0 +1,347 @@
+package audiobook.features.bookOverview.overview
+
+import android.content.Intent
+import android.os.Build
+import android.provider.Settings
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
+import androidx.core.net.toUri
+import androidx.datastore.core.DataStore
+import audiobook.core.common.AppInfoProvider
+import audiobook.core.common.DispatcherProvider
+import audiobook.core.common.MainScope
+import audiobook.core.common.comparator.NaturalOrderComparator
+import audiobook.core.common.comparator.sortedNaturally
+import audiobook.core.data.Book
+import audiobook.core.data.BookId
+import audiobook.core.data.GridMode
+import audiobook.core.data.LibraryOrganization
+import audiobook.core.data.repo.BookContentRepo
+import audiobook.core.data.repo.BookRepository
+import audiobook.core.data.repo.internals.dao.RecentBookSearchDao
+import audiobook.core.data.shelfAuthor
+import audiobook.core.data.store.CurrentBookStore
+import audiobook.core.data.store.FolderPickerMovedDialogShownStore
+import audiobook.core.data.store.GridModeStore
+import audiobook.core.data.store.LibraryOrganizationStore
+import audiobook.core.featureflag.ExperimentalPlaybackPersistenceQualifier
+import audiobook.core.featureflag.FeatureFlag
+import audiobook.core.featureflag.FolderPickerInSettingsFeatureFlagQualifier
+import audiobook.core.playback.LivePlaybackState
+import audiobook.core.playback.PlayerController
+import audiobook.core.playback.overlay
+import audiobook.core.playback.playstate.PlayStateManager
+import audiobook.core.scanner.DeviceHasStoragePermissionBug
+import audiobook.core.scanner.MediaScanTrigger
+import audiobook.core.search.BookSearch
+import audiobook.core.ui.GridCount
+import audiobook.features.bookOverview.di.BookOverviewScope
+import audiobook.features.bookOverview.search.BookSearchViewState
+import audiobook.navigation.Destination
+import audiobook.navigation.Navigator
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.SingleIn
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import kotlin.time.Instant
+
+@SingleIn(BookOverviewScope::class)
+@Inject
+class BookOverviewViewModel(
+  private val repo: BookRepository,
+  private val mediaScanner: MediaScanTrigger,
+  private val playStateManager: PlayStateManager,
+  private val playerController: PlayerController,
+  @CurrentBookStore
+  private val currentBookStoreDataStore: DataStore<BookId?>,
+  @FolderPickerMovedDialogShownStore
+  private val folderPickerMovedDialogShownStore: DataStore<Boolean>,
+  @GridModeStore
+  private val gridModeStore: DataStore<GridMode>,
+  @LibraryOrganizationStore
+  private val libraryOrganizationStore: DataStore<LibraryOrganization>,
+  private val gridCount: GridCount,
+  private val navigator: Navigator,
+  private val appInfoProvider: AppInfoProvider,
+  private val recentBookSearchDao: RecentBookSearchDao,
+  private val search: BookSearch,
+  private val contentRepo: BookContentRepo,
+  private val deviceHasStoragePermissionBug: DeviceHasStoragePermissionBug,
+  @FolderPickerInSettingsFeatureFlagQualifier
+  private val folderPickerInSettingsFeatureFlag: FeatureFlag<Boolean>,
+  @ExperimentalPlaybackPersistenceQualifier
+  private val experimentalPlaybackPersistenceFeatureFlag: FeatureFlag<Boolean>,
+  dispatcherProvider: DispatcherProvider,
+) {
+
+  private val scope = MainScope(dispatcherProvider)
+  private var searchActive by mutableStateOf(false)
+  private var query by mutableStateOf("")
+  private var dialog by mutableStateOf<BookOverviewViewState.Dialog?>(null)
+
+  fun attach() {
+    mediaScanner.scan()
+  }
+
+  /**
+   * Manual rescan, from pull-to-refresh on the library or the button in the folder
+   * settings. Uses restartIfScanning so a second pull actually restarts the scan
+   * rather than silently doing nothing while one is already in flight.
+   */
+  fun onRefresh() {
+    mediaScanner.scan(restartIfScanning = true)
+  }
+
+  @Composable
+  internal fun state(): BookOverviewViewState {
+    val playState = remember { playStateManager.playStateFlow }
+      .collectAsState(initial = PlayStateManager.PlayState.Paused).value
+    val hasStoragePermissionBug = remember { deviceHasStoragePermissionBug.hasBug }
+      .collectAsState().value
+    val books = remember { repo.flow() }
+      .collectAsState(initial = emptyList()).value
+    val currentBookId = remember { currentBookStoreDataStore.data }
+      .collectAsState(initial = null).value
+    val scannerActive = remember { mediaScanner.scannerActive }
+      .collectAsState(initial = false).value
+    val folderPickerMovedDialogShown = remember { folderPickerMovedDialogShownStore.data }
+      .collectAsState(initial = false).value
+    val gridMode = remember { gridModeStore.data }
+      .collectAsState(initial = null).value
+      ?: return BookOverviewViewState.Loading
+    val libraryOrganization = remember { libraryOrganizationStore.data }
+      .collectAsState(initial = LibraryOrganization.AUTHOR_FOLDERS).value
+
+    val noBooks = !scannerActive && books.isEmpty()
+
+    val bookSearchViewState = bookSearchViewState()
+    val experimentalPlaybackPersistence = experimentalPlaybackPersistenceFeatureFlag.get()
+    val livePlaybackState: State<LivePlaybackState?> = if (experimentalPlaybackPersistence && currentBookId != null) {
+      remember(currentBookId) {
+        playerController.livePlaybackStateFlow(currentBookId)
+      }.collectAsState(null)
+    } else {
+      remember { mutableStateOf(null) }
+    }
+
+    val nowPlaying = books.find { it.id == currentBookId }?.itemViewState(
+      currentBookId = currentBookId,
+      livePlaybackState = { livePlaybackState.value },
+    )
+
+    // A shelf per distinct name, in natural order, with the unnamed books last.
+    fun shelves(shelfOf: (Book) -> String?): List<AuthorFolderViewState> = books
+      .groupBy(shelfOf)
+      .entries
+      .sortedWith(compareBy(nullsLast(NaturalOrderComparator.stringComparator)) { it.key })
+      .map { (name, shelfBooks) ->
+        AuthorFolderViewState(
+          folderName = name,
+          bookCount = shelfBooks.size,
+        )
+      }
+
+    val folders = shelves { it.content.shelfAuthor }
+
+    val sections = when (libraryOrganization) {
+      LibraryOrganization.AUTHOR_FOLDERS -> listOf(LibrarySection.Folders(folders))
+      // Same shelf-then-open shape as the author folders. Books with no genre gather under the
+      // same "Unsorted" heading an unnamed author folder gets.
+      LibraryOrganization.GENRE -> listOf(LibrarySection.Folders(shelves { it.content.genre }))
+      LibraryOrganization.BY_STATUS -> BookOverviewCategory.entries.mapNotNull { category ->
+        val categoryBooks = books.filter { it.category == category }
+        categoryBooks.takeIf { it.isNotEmpty() }?.let {
+          LibrarySection.Books(
+            headerRes = category.nameRes,
+            books = it.sortedWith(category.comparator).map { book -> book.toItemViewState() },
+          )
+        }
+      }
+    }
+
+    return BookOverviewViewState(
+      isRefreshing = scannerActive,
+      nowPlaying = nowPlaying,
+      libraryOrganization = libraryOrganization,
+      sections = sections,
+      books = books
+        .filter { it.category == BookOverviewCategory.CURRENT }
+        .groupBy {
+          it.category
+        }
+        .mapValues { (category, books) ->
+          books
+            .sortedWith(category.comparator)
+            .associate { book ->
+              book.id to book.itemViewState(
+                currentBookId = currentBookId,
+                livePlaybackState = { livePlaybackState.value },
+              )
+            }
+        }
+        .toSortedMap(),
+      folders = folders,
+      playButtonState = if (playState == PlayStateManager.PlayState.Playing) {
+        BookOverviewViewState.PlayButtonState.Playing
+      } else {
+        BookOverviewViewState.PlayButtonState.Paused
+      }.takeIf { currentBookId != null },
+      showAddBookHint = if (hasStoragePermissionBug) {
+        false
+      } else {
+        noBooks
+      },
+      showSearchIcon = books.isNotEmpty(),
+      isLoading = scannerActive,
+      searchActive = searchActive,
+      searchViewState = bookSearchViewState,
+      showStoragePermissionBugCard = hasStoragePermissionBug,
+      showFolderPickerIcon = !folderPickerInSettingsFeatureFlag.get() &&
+        !folderPickerMovedDialogShown &&
+        appInfoProvider.installTime < FolderPickerMigrationInstallTimeCutoff,
+      dialog = dialog,
+    )
+  }
+
+  @Composable
+  private fun bookSearchViewState(): BookSearchViewState {
+    return if (searchActive) {
+      val recentBookSearch = remember {
+        recentBookSearchDao.recentBookSearches()
+      }.collectAsState(initial = emptyList()).value.reversed()
+      var searchBooks by remember {
+        mutableStateOf(emptyList<BookOverviewItemViewState>())
+      }
+      LaunchedEffect(query) {
+        searchBooks = search.search(query).map { it.toItemViewState() }
+      }
+      val suggestedAuthors: List<String> by produceState(initialValue = emptyList()) {
+        value = contentRepo.all()
+          .filter { it.isActive }
+          .mapNotNull { it.author }
+          .toSet()
+          .sortedNaturally()
+      }
+
+      val bookSearchViewState = if (query.isNotBlank()) {
+        BookSearchViewState.SearchResults(
+          query = query,
+          books = searchBooks,
+        )
+      } else {
+        BookSearchViewState.EmptySearch(
+          recentQueries = recentBookSearch,
+          suggestedAuthors = suggestedAuthors,
+          query = query,
+        )
+      }
+      bookSearchViewState
+    } else {
+      BookSearchViewState.EmptySearch(
+        recentQueries = emptyList(),
+        suggestedAuthors = emptyList(),
+        query = query,
+      )
+    }
+  }
+  fun onSettingsClick() {
+    navigator.goTo(Destination.Settings)
+  }
+
+  fun onBookClick(id: BookId) {
+    navigator.goTo(Destination.Playback(id))
+  }
+
+  fun onFolderClick(name: String?) {
+    // The shelves look the same either way; what they mean depends on the view that built them.
+    scope.launch {
+      val shelf = when (libraryOrganizationStore.data.first()) {
+        LibraryOrganization.GENRE -> Destination.AuthorBooks.Shelf.GENRE
+        LibraryOrganization.AUTHOR_FOLDERS,
+        LibraryOrganization.BY_STATUS,
+        -> Destination.AuthorBooks.Shelf.AUTHOR_FOLDER
+      }
+      navigator.goTo(Destination.AuthorBooks(name = name, shelf = shelf))
+    }
+  }
+
+  fun onBookFolderClick() {
+    dialog = BookOverviewViewState.Dialog.FolderPickerMovedToSettings
+  }
+
+  fun onFolderPickerMovedDialogDismiss() {
+    dialog = null
+    scope.launch {
+      folderPickerMovedDialogShownStore.updateData { true }
+    }
+  }
+
+  fun onSearchActiveChange(active: Boolean) {
+    if (active && !searchActive) {
+      query = ""
+    }
+    this.searchActive = active
+  }
+
+  fun onSearchQueryChange(query: String) {
+    this.query = query
+  }
+
+  fun onSearchBookClick(id: BookId) {
+    val query = query.trim()
+    if (query.isNotBlank()) {
+      scope.launch {
+        recentBookSearchDao.add(query)
+      }
+    }
+    searchActive = false
+    navigator.goTo(Destination.Playback(id))
+  }
+
+  fun playPause() {
+    playerController.playPause()
+  }
+
+  fun onPermissionBugCardClick() {
+    if (Build.VERSION.SDK_INT >= 30) {
+      navigator.goTo(
+        Destination.Activity(
+          Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+            .setData("package:com.android.externalstorage".toUri()),
+        ),
+      )
+    }
+  }
+}
+
+private val FolderPickerMigrationInstallTimeCutoff = Instant.parse("2026-06-17T00:00:00Z")
+
+@Composable
+private fun Book.itemViewState(
+  currentBookId: BookId?,
+  livePlaybackState: () -> LivePlaybackState?,
+): State<BookOverviewItemViewState> {
+  if (id != currentBookId) {
+    return rememberUpdatedState(toItemViewState())
+  }
+  val currentPlaybackState by rememberUpdatedState(livePlaybackState)
+  return remember(this, currentBookId) {
+    derivedStateOf {
+      val livePlayback = currentPlaybackState()
+      if (livePlayback != null) {
+        overlay(livePlayback)
+      } else {
+        this
+      }.toItemViewState()
+    }
+  }
+}

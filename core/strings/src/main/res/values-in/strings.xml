@@ -44,7 +44,7 @@
     <string name="library.folders.moved.dialog.message">Sekarang Anda dapat mengelola folder buku audio di Preferensi.</string>
     <string name="library.search.hint">Apa yang Anda cari?</string>
     <string name="library.storage_permission_bug.action">Berikan izin</string>
-    <string name="library.storage_permission_bug.message">Untuk perangkat tertentu, aplikasi sistem tidak memiliki izin yang diperlukan untuk mengakses penyimpanan eksternal. Akses ini penting agar Voice dapat membaca buku audio Anda.</string>
+    <string name="library.storage_permission_bug.message">Untuk perangkat tertentu, aplikasi sistem tidak memiliki izin yang diperlukan untuk mengakses penyimpanan eksternal. Akses ini penting agar eInk Audiobook Player dapat membaca buku audio Anda.</string>
     <string name="library.storage_permission_bug.title">Izin diperlukan</string>
     <string name="media_session.library.recent">Terbaru</string>
     <string name="media_session.library.root">Semua buku audio</string>

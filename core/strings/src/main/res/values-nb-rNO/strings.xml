@@ -45,7 +45,7 @@
     <string name="library.folders.moved.dialog.message">Du kan nå administrere lydbokmapper i Innstillinger.</string>
     <string name="library.search.hint">Hva leter du etter?</string>
     <string name="library.storage_permission_bug.action">Innvilg tillatelse</string>
-    <string name="library.storage_permission_bug.message">På enkelte enheter mangler en systemapp den nødvendige tillatelsen for å få tilgang til det eksterne lagringsmediet. Denne tilgangen er avgjørende for at Voice skal kunne lese lydbøkene dine.</string>
+    <string name="library.storage_permission_bug.message">På enkelte enheter mangler en systemapp den nødvendige tillatelsen for å få tilgang til det eksterne lagringsmediet. Denne tilgangen er avgjørende for at eInk Audiobook Player skal kunne lese lydbøkene dine.</string>
     <string name="library.storage_permission_bug.title">Tillatelse kreves</string>
     <string name="media_session.library.recent">Nylig</string>
     <string name="media_session.library.root">Alle lydbøker</string>

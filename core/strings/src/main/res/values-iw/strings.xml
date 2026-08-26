@@ -46,7 +46,7 @@
     <string name="library.folders.moved.dialog.message">כעת ניתן לנהל תיקיות ספרי שמע בהעדפות.</string>
     <string name="library.search.hint">מה את.ה מחפש.ת?</string>
     <string name="library.storage_permission_bug.action">הענקת הרשאה</string>
-    <string name="library.storage_permission_bug.message">עבור מכשירים מסוימים, לאפליקציית מערכת חסרה את ההרשאה הנדרשת לגישה לאחסון החיצוני. גישה זו חיונית כדי ש-Voice יוכל לקרוא את ספרי האודיו שלך.</string>
+    <string name="library.storage_permission_bug.message">עבור מכשירים מסוימים, לאפליקציית מערכת חסרה את ההרשאה הנדרשת לגישה לאחסון החיצוני. גישה זו חיונית כדי ש-eInk Audiobook Player יוכל לקרוא את ספרי האודיו שלך.</string>
     <string name="library.storage_permission_bug.title">נדרש אישור</string>
     <string name="media_session.library.recent">אחרונים</string>
     <string name="media_session.library.root">כל הקולספרים</string>

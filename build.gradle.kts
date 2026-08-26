@@ -1,6 +1,6 @@
 plugins {
   alias(libs.plugins.compose.compiler) apply false
-  id("voice.ktlint")
+  id("audiobook.ktlint")
 }
 
 tasks.wrapper {

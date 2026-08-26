@@ -41,7 +41,7 @@
     <string name="library.folders.title">有声书文件夹</string>
     <string name="library.search.hint">您在找什么？</string>
     <string name="library.storage_permission_bug.action">给予权限</string>
-    <string name="library.storage_permission_bug.message">对于某些设备，系统应用程序缺少访问外部存储的必要权限。此访问对于Voice阅读您的有声读物至关重要。</string>
+    <string name="library.storage_permission_bug.message">对于某些设备，系统应用程序缺少访问外部存储的必要权限。此访问对于eInk Audiobook Player阅读您的有声读物至关重要。</string>
     <string name="library.storage_permission_bug.title">需要权限</string>
     <string name="media_session.library.recent">最近</string>
     <string name="media_session.library.root">所有有声书</string>

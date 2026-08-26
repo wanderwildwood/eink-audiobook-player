@@ -45,7 +45,7 @@
     <string name="library.folders.moved.dialog.message">Sesli kitap klasörlerini artık Tercihler\'de yönetebilirsiniz.</string>
     <string name="library.search.hint">Ne arıyorsunuz?</string>
     <string name="library.storage_permission_bug.action">İzin ver</string>
-    <string name="library.storage_permission_bug.message">Belirli aygıtlarda, bir sistem uygulamasının harici depolamaya erişim için gerekli izni yoktur. Bu erişim, Voice\'un sesli kitaplarınızı okuyabilmesi için gereklidir.</string>
+    <string name="library.storage_permission_bug.message">Belirli aygıtlarda, bir sistem uygulamasının harici depolamaya erişim için gerekli izni yoktur. Bu erişim, eInk Audiobook Player\'un sesli kitaplarınızı okuyabilmesi için gereklidir.</string>
     <string name="library.storage_permission_bug.title">İzin gerekli</string>
     <string name="media_session.library.recent">Son açılanlar</string>
     <string name="media_session.library.root">Tüm sesli kitaplar</string>

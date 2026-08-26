@@ -47,7 +47,7 @@
     <string name="library.folders.moved.dialog.message">Folderami audiobooków możesz teraz zarządzać w Preferencjach.</string>
     <string name="library.search.hint">Czego szukasz?</string>
     <string name="library.storage_permission_bug.action">Przyznaj uprawnienie</string>
-    <string name="library.storage_permission_bug.message">W przypadku niektórych urządzeń aplikacja systemowa nie ma uprawnień niezbędnych do uzyskania dostępu do pamięci zewnętrznej. Dostęp ten jest niezbędny, aby aplikacja Voice mogła odczytywać książki audio.</string>
+    <string name="library.storage_permission_bug.message">W przypadku niektórych urządzeń aplikacja systemowa nie ma uprawnień niezbędnych do uzyskania dostępu do pamięci zewnętrznej. Dostęp ten jest niezbędny, aby aplikacja eInk Audiobook Player mogła odczytywać książki audio.</string>
     <string name="library.storage_permission_bug.title">Wymagany dostęp</string>
     <string name="media_session.library.recent">Ostatnie</string>
     <string name="media_session.library.root">Wszystkie audiobooki</string>

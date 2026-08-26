@@ -1,0 +1,42 @@
+package audiobook.app.features.widget
+
+import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetProvider
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import audiobook.core.common.rootGraph
+import audiobook.features.widget.WidgetGraph
+import audiobook.features.widget.WidgetUpdater
+import dev.zacsweers.metro.Inject
+
+class BaseWidgetProvider : AppWidgetProvider() {
+
+  @Inject
+  lateinit var widgetUpdater: WidgetUpdater
+
+  override fun onReceive(
+    context: Context,
+    intent: Intent?,
+  ) {
+    (rootGraph as WidgetGraph).inject(this)
+    super.onReceive(context, intent)
+  }
+
+  override fun onUpdate(
+    context: Context,
+    appWidgetManager: AppWidgetManager,
+    appWidgetIds: IntArray,
+  ) {
+    widgetUpdater.update()
+  }
+
+  override fun onAppWidgetOptionsChanged(
+    context: Context,
+    appWidgetManager: AppWidgetManager,
+    appWidgetId: Int,
+    newOptions: Bundle,
+  ) {
+    widgetUpdater.update()
+  }
+}

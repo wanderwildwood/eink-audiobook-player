@@ -50,7 +50,7 @@ class NewFeatureModule : CliktCommand() {
 
   private fun gradleContent(): String {
     val plugins = buildList {
-      add("voice.library")
+      add("audiobook.library")
     }
 
     return buildString {

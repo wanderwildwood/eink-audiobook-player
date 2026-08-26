@@ -1,0 +1,47 @@
+package audiobook.features.bookOverview.editTitle
+
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import audiobook.core.ui.NoAnimationAlertDialog
+import audiobook.core.strings.R as StringsR
+
+@Composable
+internal fun EditBookTitleDialog(
+  onDismissEditTitleClick: () -> Unit,
+  onConfirmEditTitle: () -> Unit,
+  viewState: EditBookTitleState,
+  onUpdateEditTitle: (String) -> Unit,
+) {
+  NoAnimationAlertDialog(
+    onDismissRequest = onDismissEditTitleClick,
+    title = {
+      Text(text = stringResource(StringsR.string.book_edit_title))
+    },
+    confirmButton = {
+      Button(
+        onClick = onConfirmEditTitle,
+        enabled = viewState.confirmButtonEnabled,
+      ) {
+        Text(stringResource(id = StringsR.string.common_dialog_confirm))
+      }
+    },
+    dismissButton = {
+      TextButton(onClick = onDismissEditTitleClick) {
+        Text(stringResource(id = StringsR.string.common_dialog_cancel))
+      }
+    },
+    text = {
+      TextField(
+        value = viewState.title,
+        onValueChange = onUpdateEditTitle,
+        label = {
+          Text(stringResource(StringsR.string.book_edit_name_label))
+        },
+      )
+    },
+  )
+}

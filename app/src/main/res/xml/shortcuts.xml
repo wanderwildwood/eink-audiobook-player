@@ -5,7 +5,7 @@
     android:shortcutShortLabel="@string/shortcut.play_current.short_label">
     <intent
       android:action="playCurrent"
-      android:targetClass="voice.app.MainActivity"
+      android:targetClass="audiobook.app.MainActivity"
       android:targetPackage="com.wanderwildwood.einkaudiobookplayer" />
   </shortcut>
 </shortcuts>

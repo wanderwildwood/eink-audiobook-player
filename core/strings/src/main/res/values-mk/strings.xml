@@ -45,7 +45,7 @@
     <string name="library.folders.moved.dialog.message">Сега можете да управувате со папките со аудиокниги во Поставки.</string>
     <string name="library.search.hint">Што пребарувате?</string>
     <string name="library.storage_permission_bug.action">Дај пермисија</string>
-    <string name="library.storage_permission_bug.message">Кај некои уреди, системска апликација нема доволно пермисии да го пристапи надворешното складиште за податоци. Овој пристап е клучен за Voice да може да ги вчита вашите аудио книги.</string>
+    <string name="library.storage_permission_bug.message">Кај некои уреди, системска апликација нема доволно пермисии да го пристапи надворешното складиште за податоци. Овој пристап е клучен за eInk Audiobook Player да може да ги вчита вашите аудио книги.</string>
     <string name="library.storage_permission_bug.title">Потребна е пермисија</string>
     <string name="media_session.library.recent">Скорешни</string>
     <string name="media_session.library.root">Сите аудио книги</string>

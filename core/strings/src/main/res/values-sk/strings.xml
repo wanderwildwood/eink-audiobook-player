@@ -47,7 +47,7 @@
     <string name="library.folders.moved.dialog.message">Priečinky audiokníh teraz môžete spravovať v nastaveniach.</string>
     <string name="library.search.hint">Čo hľadáte?</string>
     <string name="library.storage_permission_bug.action">Udeliť oprávnenie</string>
-    <string name="library.storage_permission_bug.message">Systémová aplikácia na niektorých zariadeniach nemá udelené potrebné povolenie pristupovať k externému úložisku. Tento prístup je nevyhnutný, aby mohla aplikácia Voice čítať vaše zvukové knihy.</string>
+    <string name="library.storage_permission_bug.message">Systémová aplikácia na niektorých zariadeniach nemá udelené potrebné povolenie pristupovať k externému úložisku. Tento prístup je nevyhnutný, aby mohla aplikácia eInk Audiobook Player čítať vaše zvukové knihy.</string>
     <string name="library.storage_permission_bug.title">Vyžaduje sa povolenie</string>
     <string name="media_session.library.recent">Nedávne</string>
     <string name="media_session.library.root">Všetky zvukové knihy</string>

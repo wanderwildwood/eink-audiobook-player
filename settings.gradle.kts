@@ -2,7 +2,7 @@
 
 import org.gradle.api.internal.FeaturePreviews
 
-rootProject.name = "voice"
+rootProject.name = "audiobook"
 
 FeaturePreviews.Feature.entries.forEach { feature ->
   val enable = when (feature) {

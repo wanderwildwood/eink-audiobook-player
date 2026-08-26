@@ -30,7 +30,7 @@ class ComposePlugin : Plugin<Project> {
     target.dependencies.add("debugImplementation", libs.findLibrary("compose-ui-tooling-core").get())
     target.plugins.apply("org.jetbrains.kotlin.plugin.compose")
     target.extensions.configure<ComposeCompilerGradlePluginExtension> {
-      if (target.providers.gradleProperty("voice.composeCompilerReports").orNull?.toBooleanStrictOrNull() == true) {
+      if (target.providers.gradleProperty("audiobook.composeCompilerReports").orNull?.toBooleanStrictOrNull() == true) {
         reportsDestination.set(target.layout.buildDirectory.dir("compose_compiler"))
       }
       stabilityConfigurationFiles.add(target.layout.settingsDirectory.file("compose_stability.conf"))

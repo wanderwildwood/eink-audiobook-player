@@ -5,11 +5,11 @@ class AppPlugin : Plugin<Project> {
 
   override fun apply(target: Project) {
     target.pluginManager.run {
-      apply("voice.ktlint")
+      apply("audiobook.ktlint")
       apply("com.android.application")
       withPlugin("com.android.application") {
         target.baseSetup()
-        target.tasks.register("voiceUnitTest") {
+        target.tasks.register("audiobookUnitTest") {
           dependsOn("testFreeDebugUnitTest")
         }
       }

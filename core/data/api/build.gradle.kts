@@ -1,5 +1,5 @@
 plugins {
-  id("voice.library")
+  id("audiobook.library")
   alias(libs.plugins.compose.compiler)
   alias(libs.plugins.kotlin.serialization)
 }

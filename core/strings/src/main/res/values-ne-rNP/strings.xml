@@ -42,7 +42,7 @@
     <string name="library.folders.title">अडियोबूक फोल्डरहरू</string>
     <string name="library.search.hint">तपाईं के खोज्दै हुनुन्छ?</string>
     <string name="library.storage_permission_bug.action">अनुमति दिनुहोस्</string>
-    <string name="library.storage_permission_bug.message">केहि यन्त्रहरूको लागि, प्रणाली एपले बाह्य भण्डारण पहुँच गर्न आवश्यक अनुमति गुमाएको छ। तपाईंको अडियोबूकहरू पढ्नको लागि Voice को लागि यो पहुँच आवश्यक छ।</string>
+    <string name="library.storage_permission_bug.message">केहि यन्त्रहरूको लागि, प्रणाली एपले बाह्य भण्डारण पहुँच गर्न आवश्यक अनुमति गुमाएको छ। तपाईंको अडियोबूकहरू पढ्नको लागि eInk Audiobook Player को लागि यो पहुँच आवश्यक छ।</string>
     <string name="library.storage_permission_bug.title">अनुमति आवश्यक छ</string>
     <string name="media_session.library.recent">हालैको</string>
     <string name="media_session.library.root">सबै अडियोबूक</string>

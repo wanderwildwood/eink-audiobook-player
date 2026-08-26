@@ -13,19 +13,19 @@ dependencies {
 gradlePlugin {
   plugins {
     create("library") {
-      id = "voice.library"
+      id = "audiobook.library"
       implementationClass = "LibraryPlugin"
     }
     create("app") {
-      id = "voice.app"
+      id = "audiobook.app"
       implementationClass = "AppPlugin"
     }
     create("compose") {
-      id = "voice.compose"
+      id = "audiobook.compose"
       implementationClass = "ComposePlugin"
     }
     create("ktlint") {
-      id = "voice.ktlint"
+      id = "audiobook.ktlint"
       implementationClass = "KtlintPlugin"
     }
   }

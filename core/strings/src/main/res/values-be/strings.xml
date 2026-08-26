@@ -47,7 +47,7 @@
     <string name="library.folders.moved.dialog.message">Цяпер вы можаце кіраваць папкамі аўдыякніг у наладах.</string>
     <string name="library.search.hint">Што вы шукаеце?</string>
     <string name="library.storage_permission_bug.action">Даць дазвол</string>
-    <string name="library.storage_permission_bug.message">На асобных прыладах сістэма не мае дазволу на доступ да знешняга сховішча. Гэты доступ патрэбны Voice, каб чытаць вашы кнігі.</string>
+    <string name="library.storage_permission_bug.message">На асобных прыладах сістэма не мае дазволу на доступ да знешняга сховішча. Гэты доступ патрэбны eInk Audiobook Player, каб чытаць вашы кнігі.</string>
     <string name="library.storage_permission_bug.title">Патрабуецца дазвол</string>
     <string name="media_session.library.recent">Нядаўняе</string>
     <string name="media_session.library.root">Усе аўдыякнігі</string>

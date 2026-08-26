@@ -4,15 +4,15 @@ import com.android.build.api.dsl.ManagedVirtualDevice
 import java.util.Properties
 
 plugins {
-  id("voice.app")
-  id("voice.compose")
+  id("audiobook.app")
+  id("audiobook.compose")
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.metro)
 }
 
 android {
 
-  namespace = "voice.app"
+  namespace = "audiobook.app"
 
   dependenciesInfo {
     // disable the dependencies info in apks to allow reproducible builds
@@ -24,7 +24,7 @@ android {
     applicationId = "com.wanderwildwood.einkaudiobookplayer"
 
     // CI passes both of these from the tag it is building. Without them, this is a local build.
-    versionName = providers.gradleProperty("voice.versionName").orNull ?: localVersionName()
+    versionName = providers.gradleProperty("audiobook.versionName").orNull ?: localVersionName()
 
     // Deliberately 1, and deliberately not Int.MAX_VALUE. A local build used to install as the
     // highest version code there is, which then outranked every real release forever: the next
@@ -33,9 +33,9 @@ android {
     // At 1, a local build can never block a release. Installing a local build *over* a release is
     // what now needs `adb install -r -d`, which is the direction worth being inconvenienced in -
     // that is a developer at a terminal, not someone trying to update their audiobook player.
-    versionCode = providers.gradleProperty("voice.versionCode").orNull?.toInt() ?: 1
+    versionCode = providers.gradleProperty("audiobook.versionCode").orNull?.toInt() ?: 1
 
-    testInstrumentationRunner = "voice.app.VoiceJUnitRunner"
+    testInstrumentationRunner = "audiobook.app.AppJUnitRunner"
   }
 
   val distributionFlavor = "distribution"
@@ -109,7 +109,7 @@ android {
     animationsDisabled = true
     execution = "ANDROIDX_TEST_ORCHESTRATOR"
     managedDevices {
-      allDevices.create("voiceDevice", ManagedVirtualDevice::class.java) {
+      allDevices.create("audiobookDevice", ManagedVirtualDevice::class.java) {
         device = "Pixel 9"
         apiLevel = 33
       }
@@ -120,7 +120,7 @@ android {
     checkDependencies = true
     ignoreTestSources = true
     checkReleaseBuilds = false
-    warningsAsErrors = providers.gradleProperty("voice.warningsAsErrors").get().toBooleanStrict()
+    warningsAsErrors = providers.gradleProperty("audiobook.warningsAsErrors").get().toBooleanStrict()
   }
 
   packaging {

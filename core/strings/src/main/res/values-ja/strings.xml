@@ -44,7 +44,7 @@
     <string name="library.folders.moved.dialog.message">オーディオブックフォルダーは設定で管理できるようになりました。</string>
     <string name="library.search.hint">何をお探しですか？</string>
     <string name="library.storage_permission_bug.action">権限を付与</string>
-    <string name="library.storage_permission_bug.message">一部のデバイスでは、システムアプリに外部ストレージへアクセスするために必要な権限がありません。このアクセスは、Voice がオーディオブックを読み取るために必要です。</string>
+    <string name="library.storage_permission_bug.message">一部のデバイスでは、システムアプリに外部ストレージへアクセスするために必要な権限がありません。このアクセスは、eInk Audiobook Player がオーディオブックを読み取るために必要です。</string>
     <string name="library.storage_permission_bug.title">権限が必要です</string>
     <string name="media_session.library.recent">最近</string>
     <string name="media_session.library.root">すべてのオーディオブック</string>

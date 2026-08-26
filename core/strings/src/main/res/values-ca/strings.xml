@@ -43,7 +43,7 @@
     <string name="library.folders.title">Carpetes de l\'audiollibre</string>
     <string name="library.search.hint">Què busqueu?</string>
     <string name="library.storage_permission_bug.action">Autoritzeu el permís</string>
-    <string name="library.storage_permission_bug.message">Per a determinats dispositius, a una aplicació del sistema li falta el permís necessari per accedir a l\'emmagatzematge extern. Aquest accés és essencial perquè el Voice llegeixi els audiollibres.</string>
+    <string name="library.storage_permission_bug.message">Per a determinats dispositius, a una aplicació del sistema li falta el permís necessari per accedir a l\'emmagatzematge extern. Aquest accés és essencial perquè el eInk Audiobook Player llegeixi els audiollibres.</string>
     <string name="library.storage_permission_bug.title">Es requereix el permís</string>
     <string name="media_session.library.recent">Recent</string>
     <string name="media_session.library.root">Tots els audiollibres</string>

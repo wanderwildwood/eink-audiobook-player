@@ -1,5 +1,5 @@
 plugins {
-  id("voice.library")
+  id("audiobook.library")
   alias(libs.plugins.metro)
 }
 

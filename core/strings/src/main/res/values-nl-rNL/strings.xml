@@ -45,7 +45,7 @@
     <string name="library.folders.moved.dialog.message">Je kunt audioboekmappen nu beheren in Voorkeuren.</string>
     <string name="library.search.hint">Waar ben je naar op zoek?</string>
     <string name="library.storage_permission_bug.action">Toegang geven</string>
-    <string name="library.storage_permission_bug.message">Voor sommige toestellen mist een systeem applicatie toegang tot de externe opslag. Deze toegang is essentieel voor Voice om de je luisterboeken te kunnen lezen.</string>
+    <string name="library.storage_permission_bug.message">Voor sommige toestellen mist een systeem applicatie toegang tot de externe opslag. Deze toegang is essentieel voor eInk Audiobook Player om de je luisterboeken te kunnen lezen.</string>
     <string name="library.storage_permission_bug.title">Toegang vereist</string>
     <string name="media_session.library.recent">Recent</string>
     <string name="media_session.library.root">Alle luisterboeken</string>

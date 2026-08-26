@@ -40,7 +40,7 @@ fun Project.baseSetup() {
           "kotlinx.coroutines.FlowPreview",
         ),
       )
-      allWarningsAsErrors.set(providers.gradleProperty("voice.warningsAsErrors").map(String::toBooleanStrict))
+      allWarningsAsErrors.set(providers.gradleProperty("audiobook.warningsAsErrors").map(String::toBooleanStrict))
     }
   }
   tasks.withType(Test::class.java).configureEach {
@@ -54,7 +54,7 @@ fun Project.baseSetup() {
   }
   configureRobolectricSdk(this)
   extensions.configure<CommonExtension> {
-    namespace = "voice." + path.removePrefix(":").replace(':', '.')
+    namespace = "audiobook." + path.removePrefix(":").replace(':', '.')
     compileOptions.apply {
       sourceCompatibility = JavaVersion.toVersion(jvmBytecodeVersion)
       targetCompatibility = JavaVersion.toVersion(jvmBytecodeVersion)

@@ -46,7 +46,7 @@
     <string name="library.folders.moved.dialog.message">Ora puoi gestire le cartelle degli audiolibri nelle Preferenze.</string>
     <string name="library.search.hint">Cosa stai cercando?</string>
     <string name="library.storage_permission_bug.action">Concedere l\'autorizzazione</string>
-    <string name="library.storage_permission_bug.message">Per alcuni dispositivi, un\'app di sistema non dispone dell\'autorizzazione necessaria per accedere alla memoria esterna. Questo accesso è essenziale per consentire a Voice di leggere i tuoi audiolibri.</string>
+    <string name="library.storage_permission_bug.message">Per alcuni dispositivi, un\'app di sistema non dispone dell\'autorizzazione necessaria per accedere alla memoria esterna. Questo accesso è essenziale per consentire a eInk Audiobook Player di leggere i tuoi audiolibri.</string>
     <string name="library.storage_permission_bug.title">Autorizzazione richiesta</string>
     <string name="media_session.library.recent">Recente</string>
     <string name="media_session.library.root">Tutti gli audiolibri</string>

@@ -48,7 +48,7 @@
     <string name="library.folders.moved.dialog.message">Is féidir leat fillteáin closleabhar a bhainistiú anois sna Sainroghanna.</string>
     <string name="library.search.hint">Cad atá tú ag féachaint faoi?</string>
     <string name="library.storage_permission_bug.action">Cead a dheonú</string>
-    <string name="library.storage_permission_bug.message">I gcás feistí áirithe, tá an cead riachtanach chun rochtain a fháil ar an stóras seachtrach in easnamh ar aip córais. Tá an rochtain seo riachtanach do Voice chun do chlosleabhair a léamh.</string>
+    <string name="library.storage_permission_bug.message">I gcás feistí áirithe, tá an cead riachtanach chun rochtain a fháil ar an stóras seachtrach in easnamh ar aip córais. Tá an rochtain seo riachtanach do eInk Audiobook Player chun do chlosleabhair a léamh.</string>
     <string name="library.storage_permission_bug.title">Cead ag teastáil</string>
     <string name="media_session.library.recent">le déanaí</string>
     <string name="media_session.library.root">Gach closleabhair</string>

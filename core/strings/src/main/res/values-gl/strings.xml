@@ -45,7 +45,7 @@
     <string name="library.folders.moved.dialog.message">Agora podes xestionar os cartafoles de audiolibros nas Preferencias.</string>
     <string name="library.search.hint">Que estás a buscar?</string>
     <string name="library.storage_permission_bug.action">Conceder permiso</string>
-    <string name="library.storage_permission_bug.message">En certos dispositivos, a unha app do sistema fáltanlle o permiso necesario para acceder á almacenaxe externa. Este acceso é esencial para que Voice poida ler os teus audiolibros.</string>
+    <string name="library.storage_permission_bug.message">En certos dispositivos, a unha app do sistema fáltanlle o permiso necesario para acceder á almacenaxe externa. Este acceso é esencial para que eInk Audiobook Player poida ler os teus audiolibros.</string>
     <string name="library.storage_permission_bug.title">Requírese o permiso</string>
     <string name="media_session.library.recent">Recentes</string>
     <string name="media_session.library.root">Todos os audiolibros</string>

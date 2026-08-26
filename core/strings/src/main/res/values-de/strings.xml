@@ -45,7 +45,7 @@
     <string name="library.folders.moved.dialog.message">Du kannst Hörbuch-Ordner jetzt in den Einstellungen verwalten.</string>
     <string name="library.search.hint">Wonach suchst Du?</string>
     <string name="library.storage_permission_bug.action">Berechtigung erteilen</string>
-    <string name="library.storage_permission_bug.message">Für bestimmte Geräte fehlt einer System-App die notwendige Berechtigung, auf den externen Speicher zuzugreifen. Dieser Zugriff ist jedoch für Voice essentiell, um Deine Hörbücher lesen zu können.</string>
+    <string name="library.storage_permission_bug.message">Für bestimmte Geräte fehlt einer System-App die notwendige Berechtigung, auf den externen Speicher zuzugreifen. Dieser Zugriff ist jedoch für eInk Audiobook Player essentiell, um Deine Hörbücher lesen zu können.</string>
     <string name="library.storage_permission_bug.title">Berechtigung benötigt</string>
     <string name="media_session.library.recent">Kürzlich</string>
     <string name="media_session.library.root">Alle Hörbücher</string>

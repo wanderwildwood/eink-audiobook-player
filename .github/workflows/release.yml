@@ -45,8 +45,8 @@ jobs:
         run: |
           version_name="${GITHUB_REF_NAME#v}"
           ./gradlew :app:assembleFreeRelease \
-            -Pvoice.versionName="$version_name" \
-            -Pvoice.versionCode="$GITHUB_RUN_NUMBER"
+            -Paudiobook.versionName="$version_name" \
+            -Paudiobook.versionCode="$GITHUB_RUN_NUMBER"
 
       # A release signed with the wrong key cannot be taken back once people have installed it.
       - name: Verify the APK is not debug signed

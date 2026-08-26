@@ -45,7 +45,7 @@
     <string name="library.folders.moved.dialog.message">Tu pote ora gerer le dossieres de audiolibros in Preferentias.</string>
     <string name="library.search.hint">Que cerca tu?</string>
     <string name="library.storage_permission_bug.action">Conceder le permission</string>
-    <string name="library.storage_permission_bug.message">In certe apparatos, un application de systema manca le permissiones necessari pro acceder al immagazinage externe. Iste accesso es essential pro que Voice pote leger tu audiolibros.</string>
+    <string name="library.storage_permission_bug.message">In certe apparatos, un application de systema manca le permissiones necessari pro acceder al immagazinage externe. Iste accesso es essential pro que eInk Audiobook Player pote leger tu audiolibros.</string>
     <string name="library.storage_permission_bug.title">Permission requirite</string>
     <string name="media_session.library.recent">Recente</string>
     <string name="media_session.library.root">Tote le audiolibros</string>

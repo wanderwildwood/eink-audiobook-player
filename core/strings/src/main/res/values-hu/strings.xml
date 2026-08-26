@@ -42,7 +42,7 @@
     <string name="library.folders.title">Hangoskönyv mappák</string>
     <string name="library.search.hint">Mit keres?</string>
     <string name="library.storage_permission_bug.action">Hozzáférés engedélyezése</string>
-    <string name="library.storage_permission_bug.message">Egyes eszközökön, egy rendszerapplikációnak hiányzanak bizonyos hozzáférések a külső tárolóhoz. Ezek a hozzáférések lényegesek ahhoz hogy Voice sikeresen tudja felolvasni az ön könyvjeit.</string>
+    <string name="library.storage_permission_bug.message">Egyes eszközökön, egy rendszerapplikációnak hiányzanak bizonyos hozzáférések a külső tárolóhoz. Ezek a hozzáférések lényegesek ahhoz hogy eInk Audiobook Player sikeresen tudja felolvasni az ön könyvjeit.</string>
     <string name="library.storage_permission_bug.title">Hozzáférés szükséges</string>
     <string name="media_session.library.recent">Legutóbbiak</string>
     <string name="media_session.library.root">Összes hangoskönyv</string>

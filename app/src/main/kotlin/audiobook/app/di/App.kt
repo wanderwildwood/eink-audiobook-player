@@ -1,0 +1,32 @@
+package audiobook.app.di
+
+import android.app.Application
+import audiobook.core.common.rootGraph
+import audiobook.core.initializer.AppInitializer
+import dev.zacsweers.metro.HasMemberInjections
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.createGraphFactory
+
+@HasMemberInjections
+open class App : Application() {
+
+  @Inject
+  lateinit var appInitializers: Set<AppInitializer>
+
+  override fun onCreate() {
+    super.onCreate()
+
+    rootGraph = createGraph()
+      .also { graph ->
+        graph.inject(this)
+      }
+
+    appInitializers.forEach {
+      it.onAppStart(this)
+    }
+  }
+
+  open fun createGraph(): AppGraph {
+    return createGraphFactory<ProductionAppGraph.Factory>().create(this)
+  }
+}

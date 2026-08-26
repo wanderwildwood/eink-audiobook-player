@@ -18,7 +18,7 @@
 ## Commands
 
 - Assemble the free debug app: `./gradlew :app:assembleFreeDebug`.
-- Run all unit tests: `./gradlew voiceUnitTest`.
+- Run all unit tests: `./gradlew audiobookUnitTest`.
 - Run unit tests for a library module: `./gradlew :<moduleName>:testDebugUnitTest`.
 - Run app unit tests: `./gradlew :app:testFreeDebugUnitTest`.
 - Create and register a new module: `./scripts/new_module.main.kts :features:<name>`.
@@ -57,7 +57,7 @@
   }
   ```
 
-- Run the narrowest meaningful test first. Broaden to `./gradlew voiceUnitTest` when touching shared behavior, cross-module contracts, or
+- Run the narrowest meaningful test first. Broaden to `./gradlew audiobookUnitTest` when touching shared behavior, cross-module contracts, or
   risky refactors.
 - If tests cannot be run, state the concrete reason and the command that should be run.
 

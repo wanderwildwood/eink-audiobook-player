@@ -45,7 +45,7 @@
     <string name="library.folders.moved.dialog.message">Du kan nu hantera ljudboksmappar i Inställningar.</string>
     <string name="library.search.hint">Vad letar du efter?</string>
     <string name="library.storage_permission_bug.action">Ge behörighet</string>
-    <string name="library.storage_permission_bug.message">På vissa enheter saknar en systemapp den behörighet som krävs för att komma åt den externa lagringen. Den åtkomsten är nödvändig för att Voice ska kunna läsa dina ljudböcker.</string>
+    <string name="library.storage_permission_bug.message">På vissa enheter saknar en systemapp den behörighet som krävs för att komma åt den externa lagringen. Den åtkomsten är nödvändig för att eInk Audiobook Player ska kunna läsa dina ljudböcker.</string>
     <string name="library.storage_permission_bug.title">Behörighet krävs</string>
     <string name="media_session.library.recent">Senast spelade</string>
     <string name="media_session.library.root">Alla ljudböcker</string>

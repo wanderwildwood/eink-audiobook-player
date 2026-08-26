@@ -1,0 +1,83 @@
+package audiobook.features.bookOverview.views.topbar
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import audiobook.core.data.BookId
+import audiobook.core.ui.Theme
+import audiobook.features.bookOverview.overview.BookOverviewLayoutMode
+import audiobook.features.bookOverview.overview.BookOverviewViewState
+import audiobook.features.bookOverview.search.BookSearchViewState
+import audiobook.core.strings.R as StringsR
+
+@Composable
+internal fun BookOverviewTopBar(
+  viewState: BookOverviewViewState,
+  onBookFolderClick: () -> Unit,
+  onSettingsClick: () -> Unit,
+  onActiveChange: (Boolean) -> Unit,
+  onQueryChange: (String) -> Unit,
+  onSearchBookClick: (BookId) -> Unit,
+) {
+  Column {
+    val horizontalPadding = if (viewState.searchActive) 0.dp else 16.dp
+    BookOverviewSearchBar(
+      horizontalPadding = horizontalPadding,
+      onQueryChange = onQueryChange,
+      onActiveChange = onActiveChange,
+      onBookFolderClick = onBookFolderClick,
+      onSettingsClick = onSettingsClick,
+      onSearchBookClick = onSearchBookClick,
+      searchActive = viewState.searchActive,
+      showAddBookHint = viewState.showAddBookHint,
+      showFolderPickerIcon = viewState.showFolderPickerIcon,
+      searchViewState = viewState.searchViewState,
+    )
+    // Shown as soon as a scan starts, with no settling delay: this label is the only
+    // feedback a pull-to-refresh gets now that the spinner is gone.
+    if (viewState.isLoading) {
+      Text(
+        text = stringResource(id = StringsR.string.library_scanning_label),
+        style = MaterialTheme.typography.labelMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier = Modifier.padding(top = 12.dp, start = 16.dp),
+      )
+    }
+  }
+}
+
+@Composable
+@Preview
+private fun BookOverviewTopBarPreview() {
+  Theme {
+    BookOverviewTopBar(
+      viewState = BookOverviewViewState(
+        books = emptyMap(),
+        playButtonState = BookOverviewViewState.PlayButtonState.Paused,
+        showAddBookHint = true,
+        showSearchIcon = true,
+        isLoading = true,
+        searchActive = true,
+        searchViewState = BookSearchViewState.EmptySearch(
+          suggestedAuthors = listOf(),
+          recentQueries = listOf(),
+          query = "",
+        ),
+        showStoragePermissionBugCard = false,
+        showFolderPickerIcon = true,
+        dialog = null,
+      ),
+      onBookFolderClick = {},
+      onSettingsClick = {},
+      onActiveChange = {},
+      onQueryChange = {},
+      onSearchBookClick = {},
+    )
+  }
+}

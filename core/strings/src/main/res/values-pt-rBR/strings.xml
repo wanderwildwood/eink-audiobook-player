@@ -46,7 +46,7 @@
     <string name="library.folders.moved.dialog.message">Agora você pode gerenciar as pastas de audiolivros nas Preferências.</string>
     <string name="library.search.hint">O que procura?</string>
     <string name="library.storage_permission_bug.action">Conceder permissão</string>
-    <string name="library.storage_permission_bug.message">Em certos dispositivos, o aplicativo pode exigir permissões para acessar o armazenamento externo. Esse acesso é essencial para Voice ler os seus audiobooks.</string>
+    <string name="library.storage_permission_bug.message">Em certos dispositivos, o aplicativo pode exigir permissões para acessar o armazenamento externo. Esse acesso é essencial para eInk Audiobook Player ler os seus audiobooks.</string>
     <string name="library.storage_permission_bug.title">Permissão necessária</string>
     <string name="media_session.library.recent">Recente</string>
     <string name="media_session.library.root">Audiolivros</string>

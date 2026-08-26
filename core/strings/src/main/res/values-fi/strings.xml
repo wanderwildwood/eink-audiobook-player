@@ -45,7 +45,7 @@
     <string name="library.folders.moved.dialog.message">Voit nyt hallita äänikirjakansioita asetuksissa.</string>
     <string name="library.search.hint">Mitä etsit?</string>
     <string name="library.storage_permission_bug.action">Anna käyttöoikeus</string>
-    <string name="library.storage_permission_bug.message">Eräillä laitteilla joltakin järjestelmän sovellukselta puuttuu tarvittava käyttöoikeus ulkoiseen tallennustilaan. Tämä oikeus on välttämätön jotta Voice voi lukea äänikirjojasi.</string>
+    <string name="library.storage_permission_bug.message">Eräillä laitteilla joltakin järjestelmän sovellukselta puuttuu tarvittava käyttöoikeus ulkoiseen tallennustilaan. Tämä oikeus on välttämätön jotta eInk Audiobook Player voi lukea äänikirjojasi.</string>
     <string name="library.storage_permission_bug.title">Käyttöoikeus tarvitaan</string>
     <string name="media_session.library.recent">Viimeisin</string>
     <string name="media_session.library.root">Kaikki äänikirjat</string>
