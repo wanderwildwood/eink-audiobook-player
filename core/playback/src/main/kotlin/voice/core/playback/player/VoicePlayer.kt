@@ -1,9 +1,11 @@
 package voice.core.playback.player
 
+import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.media3.common.C
 import androidx.media3.common.ForwardingPlayer
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import dev.zacsweers.metro.Inject
@@ -23,6 +25,7 @@ import voice.core.playback.misc.Decibel
 import voice.core.playback.misc.VolumeGain
 import voice.core.playback.session.MediaId
 import voice.core.playback.session.MediaItemProvider
+import voice.core.playback.session.appIconArtwork
 import voice.core.playback.session.playbackItemForPosition
 import voice.core.playback.session.positionInMediaItem
 import voice.core.playback.session.toMediaIdOrNull
@@ -47,10 +50,26 @@ class VoicePlayer(
   private val volumeGain: VolumeGain,
   private val analytics: Analytics,
   private val callResumeGuard: CallResumeGuard,
+  private val context: Context,
 ) : ForwardingPlayer(player) {
+
+  private val artwork: ByteArray? by lazy { appIconArtwork(context) }
 
   init {
     callResumeGuard.pauseOnIncomingCall { pause() }
+  }
+
+  /**
+   * Covers were taken out of this app, but the player still merges whatever picture the file's own
+   * tags carry into its metadata, and that reaches every media control on the device. Replace it
+   * with the app icon so one book cannot show art while the rest show none.
+   */
+  override fun getMediaMetadata(): MediaMetadata {
+    return super.getMediaMetadata()
+      .buildUpon()
+      .setArtworkUri(null)
+      .setArtworkData(artwork, MediaMetadata.PICTURE_TYPE_FRONT_COVER)
+      .build()
   }
 
   fun forceSeekToNext() {
