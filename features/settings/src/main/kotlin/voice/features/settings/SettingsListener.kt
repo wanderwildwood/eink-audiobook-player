@@ -13,6 +13,7 @@ interface SettingsListener {
   fun onAutoRewindRowClick()
   fun dismissDialog()
   fun openSourceCode()
+  fun onAboutClick()
   fun onSleepTimerDurationRowClick()
   fun setSleepTimerDurationMinutes(minutes: Int)
   fun setSleepTimerEndOfChapter()
@@ -35,6 +36,7 @@ interface SettingsListener {
       override fun onAutoRewindRowClick() {}
       override fun dismissDialog() {}
       override fun openSourceCode() {}
+      override fun onAboutClick() {}
       override fun onSleepTimerDurationRowClick() {}
       override fun setSleepTimerDurationMinutes(minutes: Int) {}
       override fun setSleepTimerEndOfChapter() {}

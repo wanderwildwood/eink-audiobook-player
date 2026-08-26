@@ -224,6 +224,8 @@
     <!-- Title for the dialog asking happy users to rate the app. -->
     <string name="review.request.title" tools:ignore="UnusedResources">Enjoying Voice?</string>
     <!-- Settings about row showing the app version. -->
+    <!-- Title of the row that opens the About dialog, and of the dialog itself. -->
+    <string name="settings.about.title">About</string>
     <string name="settings.about.app_version.title">App version</string>
     <!-- Title and content description for opening settings. -->
     <string name="settings.action.open">Preferences</string>

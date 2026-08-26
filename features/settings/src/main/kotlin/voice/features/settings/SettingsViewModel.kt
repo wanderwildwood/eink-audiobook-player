@@ -138,6 +138,10 @@ class SettingsViewModel(
     navigator.goTo(Destination.Website("https://github.com/wanderwildwood/eink-audiobook-player"))
   }
 
+  override fun onAboutClick() {
+    dialog.value = SettingsViewState.Dialog.About
+  }
+
   override fun openFolderPicker() {
     navigator.goTo(Destination.FolderPicker)
   }

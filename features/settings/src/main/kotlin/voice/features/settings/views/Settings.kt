@@ -150,22 +150,16 @@ private fun Settings(
 
       item {
         ListItem(
-          modifier = Modifier.clickable { listener.openSourceCode() },
+          modifier = Modifier.clickable { listener.onAboutClick() },
           leadingContent = {
             Icon(
-              imageVector = VoiceIcons.Code,
-              contentDescription = stringResource(StringsR.string.settings_support_source_code_title),
+              imageVector = VoiceIcons.Help,
+              contentDescription = null,
             )
           },
           headlineContent = {
-            Text(stringResource(StringsR.string.settings_support_source_code_title))
+            Text(stringResource(StringsR.string.settings_about_title))
           },
-        )
-      }
-      item {
-        AppVersion(
-          appVersion = viewState.appVersion,
-          onClick = listener::onAppVersionClick,
         )
       }
       if (viewState.kioskMode) {
@@ -257,6 +251,14 @@ private fun Dialog(
 ) {
   val dialog = viewState.dialog ?: return
   when (dialog) {
+    SettingsViewState.Dialog.About -> {
+      AboutDialog(
+        appVersion = viewState.appVersion,
+        onSourceCodeClick = listener::openSourceCode,
+        onAppVersionClick = listener::onAppVersionClick,
+        onDismiss = listener::dismissDialog,
+      )
+    }
     SettingsViewState.Dialog.AutoRewindAmount -> {
       AutoRewindAmountDialog(
         currentSeconds = viewState.autoRewindInSeconds,
