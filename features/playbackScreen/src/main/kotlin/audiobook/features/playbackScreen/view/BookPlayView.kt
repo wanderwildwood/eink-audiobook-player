@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import audiobook.core.data.BookId
+import audiobook.core.playback.misc.Decibel
 import audiobook.core.ui.Theme
 import audiobook.features.playbackScreen.BookPlayViewState
 import kotlin.time.Duration
@@ -142,6 +143,7 @@ private class BookPlayViewStatePreviewProvider : PreviewParameterProvider<BookPl
       seekTimeSeconds = 20,
       playbackSpeed = 1.5F,
       locked = false,
+      volumeGain = Decibel.Zero,
     )
     yield(initial)
     yield(

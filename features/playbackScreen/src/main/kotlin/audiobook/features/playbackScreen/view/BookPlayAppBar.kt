@@ -6,6 +6,9 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
@@ -15,18 +18,26 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import audiobook.core.playback.misc.Decibel
 import audiobook.core.strings.R
 import audiobook.core.ui.formatTime
 import audiobook.core.ui.icons.Icons
 import audiobook.features.playbackScreen.BookPlayViewState
+import kotlinx.coroutines.delay
 import java.text.DecimalFormat
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 
 @Composable
@@ -50,6 +61,28 @@ internal fun BookPlayAppBar(
       SleepTimerButton(viewState.sleepTimerState, onSleepTimerClick.takeUnless { locked } ?: {})
     }
     LockableAction(locked) {
+      IconButton(enabled = !locked, onClick = onVolumeBoostClick) {
+        Icon(
+          // One arc of sound coming off the speaker, two once the boost is on.
+          imageVector = if (viewState.volumeGain > Decibel.Zero) Icons.VolumeUp else Icons.VolumeDown,
+          contentDescription = stringResource(id = R.string.playback_option_volume_boost),
+        )
+      }
+    }
+    LockableAction(locked) {
+      SpeedButton(viewState.playbackSpeed, onSpeedChangeClick.takeUnless { locked } ?: {})
+    }
+    LockableAction(locked) {
+      IconButton(enabled = !locked, onClick = onSkipSilenceClick) {
+        Icon(
+          // Arrows squeezing together while silence is being taken out, apart while it is left
+          // in - the same on/off-by-shape the lock and the sleep timer next to it already use.
+          imageVector = if (viewState.skipSilence) Icons.Compress else Icons.Expand,
+          contentDescription = stringResource(id = R.string.playback_option_skip_silence),
+        )
+      }
+    }
+    LockableAction(locked) {
       Box(
         modifier = Modifier
           .size(40.dp)
@@ -68,29 +101,105 @@ internal fun BookPlayAppBar(
         )
       }
     }
-    LockableAction(locked) {
-      SpeedButton(viewState.playbackSpeed, onSpeedChangeClick.takeUnless { locked } ?: {})
-    }
     LockButton(locked = locked, onClick = onLockClick)
-    LockableAction(locked) {
-      OverflowMenu(
-        skipSilence = viewState.skipSilence,
-        onSkipSilenceClick = onSkipSilenceClick,
-        onVolumeBoostClick = onVolumeBoostClick,
-        enabled = !locked,
-      )
-    }
   }
   // No title here any more: the book is named in the content, in the size it deserves, and a
   // LargeTopAppBar repeating it cost a fifth of the page to say the same thing twice.
-  TopAppBar(
-    navigationIcon = {
-      CloseIcon(onCloseClick)
-    },
-    actions = appBarActions,
-    title = {},
-  )
+  Column {
+    TopAppBar(
+      navigationIcon = {
+        CloseIcon(onCloseClick)
+      },
+      actions = appBarActions,
+      title = {},
+    )
+    Announcement(viewState)
+  }
 }
+
+/**
+ * A line under the toolbar naming what a toggle just did, for the few seconds after it does it.
+ *
+ * The sleep timer counts down on its own icon and the speed button carries its multiplier, so
+ * those say what they are doing without help. Lock, skip silence and volume boost have only a
+ * shape, and a shape does not say which way it was just flipped.
+ *
+ * It reads the state rather than the tap, so it cannot disagree with what actually happened - a
+ * tap that changed nothing says nothing. The row keeps its height while empty, because a line
+ * appearing and vanishing would otherwise shove the whole page up and down; and it appears and
+ * clears outright rather than fading, since a fade on this panel is a series of full redraws
+ * that each leave a ghost of the one before.
+ */
+@Composable
+private fun Announcement(viewState: BookPlayViewState) {
+  val skipSilence = viewState.skipSilence
+  val locked = viewState.locked
+  val gain = viewState.volumeGain
+  // Only whether it is running, not how long is left - the countdown changes every second and
+  // would otherwise re-announce itself all the way down.
+  val sleepTimerOn = viewState.sleepTimerState !is BookPlayViewState.SleepTimerViewState.Disabled
+
+  val skipSilenceOn = stringResource(R.string.playback_announce_skip_silence_on)
+  val skipSilenceOff = stringResource(R.string.playback_announce_skip_silence_off)
+  val lockOn = stringResource(R.string.playback_announce_lock_on)
+  val lockOff = stringResource(R.string.playback_announce_lock_off)
+  val boostOff = stringResource(R.string.playback_announce_volume_boost_off)
+  val boostOn = stringResource(R.string.playback_announce_volume_boost_on)
+  val sleepOn = stringResource(R.string.playback_announce_sleep_timer_on)
+  val sleepOff = stringResource(R.string.playback_announce_sleep_timer_off)
+
+  var message by remember { mutableStateOf<String?>(null) }
+
+  // One tracker per value, so only the one that changed speaks.
+  TrackChange(skipSilence) { message = if (it) skipSilenceOn else skipSilenceOff }
+  TrackChange(locked) { message = if (it) lockOn else lockOff }
+  TrackChange(gain.value) { message = if (it > 0f) boostOn else boostOff }
+  TrackChange(sleepTimerOn) { message = if (it) sleepOn else sleepOff }
+
+  LaunchedEffect(message) {
+    if (message != null) {
+      delay(AnnouncementDuration)
+      message = null
+    }
+  }
+
+  Box(
+    modifier = Modifier
+      .fillMaxWidth()
+      .height(24.dp)
+      .padding(horizontal = 20.dp),
+    contentAlignment = Alignment.Center,
+  ) {
+    val text = message
+    if (text != null) {
+      Text(
+        text = text,
+        style = MaterialTheme.typography.labelSmall,
+        textAlign = TextAlign.Center,
+      )
+    }
+  }
+}
+
+/** Runs [onChange] when [value] changes, but not for the value it started at. */
+@Composable
+private fun <T> TrackChange(
+  value: T,
+  onChange: (T) -> Unit,
+) {
+  val previous = remember { mutableStateOf(value) }
+  // The effect restarts on value alone, so it would otherwise hold whichever lambda was passed
+  // the first time round and keep calling that one.
+  val currentOnChange by rememberUpdatedState(onChange)
+  LaunchedEffect(value) {
+    if (previous.value != value) {
+      previous.value = value
+      currentOnChange(value)
+    }
+  }
+}
+
+private val AnnouncementDuration = 2500.milliseconds
 
 // The sleep timer defaults to 10 minutes everywhere it's started - passing it as the reference
 // duration keeps the countdown's minute digit count stable (e.g. "09:45", not "9:45") as it ticks.

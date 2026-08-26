@@ -102,7 +102,6 @@ class BookPlayViewModelTest {
         title = null,
       )
     },
-    volumeGainFormatter = mockk(),
     batteryOptimization = mockk(),
     bookId = book.id,
     dispatcherProvider = DispatcherProvider(scope.coroutineContext, scope.coroutineContext, scope.coroutineContext),
@@ -310,7 +309,6 @@ class BookPlayViewModelTest {
       sleepTimerPreferenceStore = MemoryDataStore(SleepTimerPreference.Default),
       navigator = mockk(),
       bookmarkRepository = mockk(),
-      volumeGainFormatter = mockk(),
       batteryOptimization = mockk(),
       bookId = book.id,
       dispatcherProvider = DispatcherProvider(scope.coroutineContext, scope.coroutineContext, scope.coroutineContext),

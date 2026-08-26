@@ -2158,4 +2158,240 @@ object Icons {
         }
       }
       .build()
+
+  /*
+   * Source: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/compress.kt?var=opsz,wght,FILL,GRAD,ROND@24,400,0,0,50
+   * Generated: 2026-08-26T12:58:00Z
+   */
+  val Compress: ImageVector =
+    ImageVector.Builder(
+      name = "Compress",
+      defaultWidth = 24.dp,
+      defaultHeight = 24.dp,
+      viewportWidth = 24f,
+      viewportHeight = 24f,
+    )
+      .apply {
+        path(
+          fill = SolidColor(Color.Black),
+          fillAlpha = 1f,
+          stroke = null,
+          strokeAlpha = 1f,
+          strokeLineWidth = 1f,
+          strokeLineCap = StrokeCap.Butt,
+          strokeLineJoin = StrokeJoin.Bevel,
+          strokeLineMiter = 1f,
+          pathFillType = PathFillType.NonZero,
+        ) {
+          moveTo(4f, 14f)
+          verticalLineTo(12f)
+          horizontalLineTo(20f)
+          verticalLineToRelative(2f)
+          horizontalLineTo(4f)
+          close()
+          moveTo(4f, 11f)
+          verticalLineTo(9f)
+          horizontalLineTo(20f)
+          verticalLineToRelative(2f)
+          horizontalLineTo(4f)
+          close()
+          moveToRelative(7f, 11f)
+          verticalLineTo(18.8f)
+          lineTo(9.4f, 20.4f)
+          lineTo(8f, 19f)
+          lineToRelative(4f, -4f)
+          lineToRelative(4f, 4f)
+          lineToRelative(-1.4f, 1.4f)
+          lineTo(13f, 18.85f)
+          verticalLineTo(22f)
+          horizontalLineTo(11f)
+          close()
+          moveTo(12f, 8f)
+          lineTo(8f, 4f)
+          lineTo(9.4f, 2.6f)
+          lineTo(11f, 4.2f)
+          verticalLineTo(1f)
+          horizontalLineToRelative(2f)
+          verticalLineTo(4.2f)
+          lineTo(14.6f, 2.6f)
+          lineTo(16f, 4f)
+          lineTo(12f, 8f)
+          close()
+        }
+      }
+      .build()
+
+  /*
+   * Source: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/expand.kt?var=opsz,wght,FILL,GRAD,ROND@24,400,0,0,50
+   * Generated: 2026-08-26T12:58:00Z
+   */
+  val Expand: ImageVector =
+    ImageVector.Builder(
+      name = "Expand",
+      defaultWidth = 24.dp,
+      defaultHeight = 24.dp,
+      viewportWidth = 24f,
+      viewportHeight = 24f,
+    )
+      .apply {
+        path(
+          fill = SolidColor(Color.Black),
+          fillAlpha = 1f,
+          stroke = null,
+          strokeAlpha = 1f,
+          strokeLineWidth = 1f,
+          strokeLineCap = StrokeCap.Butt,
+          strokeLineJoin = StrokeJoin.Bevel,
+          strokeLineMiter = 1f,
+          pathFillType = PathFillType.NonZero,
+        ) {
+          moveTo(4f, 22f)
+          verticalLineTo(20f)
+          horizontalLineTo(20f)
+          verticalLineToRelative(2f)
+          horizontalLineTo(4f)
+          close()
+          moveToRelative(8f, -3f)
+          lineTo(8f, 15f)
+          lineTo(9.4f, 13.6f)
+          lineTo(11f, 15.15f)
+          verticalLineTo(8.85f)
+          lineTo(9.4f, 10.4f)
+          lineTo(8f, 9f)
+          lineTo(12f, 5f)
+          lineToRelative(4f, 4f)
+          lineToRelative(-1.4f, 1.4f)
+          lineTo(13f, 8.85f)
+          verticalLineToRelative(6.3f)
+          lineTo(14.6f, 13.6f)
+          lineTo(16f, 15f)
+          lineToRelative(-4f, 4f)
+          close()
+          moveTo(4f, 4f)
+          verticalLineTo(2f)
+          horizontalLineTo(20f)
+          verticalLineTo(4f)
+          horizontalLineTo(4f)
+          close()
+        }
+      }
+      .build()
+
+  /*
+   * Source: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/volume_up.kt?var=opsz,wght,FILL,GRAD,ROND@24,400,0,0,50
+   * Generated: 2026-08-26T12:58:00Z
+   */
+  val VolumeUp: ImageVector =
+    ImageVector.Builder(
+      name = "VolumeUp",
+      defaultWidth = 24.dp,
+      defaultHeight = 24.dp,
+      viewportWidth = 24f,
+      viewportHeight = 24f,
+    )
+      .apply {
+        path(
+          fill = SolidColor(Color.Black),
+          fillAlpha = 1f,
+          stroke = null,
+          strokeAlpha = 1f,
+          strokeLineWidth = 1f,
+          strokeLineCap = StrokeCap.Butt,
+          strokeLineJoin = StrokeJoin.Bevel,
+          strokeLineMiter = 1f,
+          pathFillType = PathFillType.NonZero,
+        ) {
+          moveTo(14f, 20.73f)
+          verticalLineTo(18.68f)
+          quadToRelative(2.25f, -0.65f, 3.63f, -2.5f)
+          reflectiveQuadTo(19f, 11.98f)
+          reflectiveQuadTo(17.63f, 7.77f)
+          quadTo(16.25f, 5.93f, 14f, 5.27f)
+          verticalLineTo(3.22f)
+          quadToRelative(3.1f, 0.7f, 5.05f, 3.14f)
+          reflectiveQuadTo(21f, 11.98f)
+          reflectiveQuadToRelative(-1.95f, 5.61f)
+          reflectiveQuadTo(14f, 20.73f)
+          close()
+          moveTo(3f, 15f)
+          verticalLineTo(9f)
+          horizontalLineTo(7f)
+          lineTo(12f, 4f)
+          verticalLineTo(20f)
+          lineTo(7f, 15f)
+          horizontalLineTo(3f)
+          close()
+          moveToRelative(11f, 1f)
+          verticalLineTo(7.95f)
+          quadTo(15.18f, 8.5f, 15.84f, 9.6f)
+          reflectiveQuadTo(16.5f, 12f)
+          quadToRelative(0f, 1.27f, -0.66f, 2.36f)
+          reflectiveQuadTo(14f, 16f)
+          close()
+          moveTo(10f, 8.85f)
+          lineTo(7.85f, 11f)
+          horizontalLineTo(5f)
+          verticalLineToRelative(2f)
+          horizontalLineTo(7.85f)
+          lineTo(10f, 15.15f)
+          verticalLineTo(8.85f)
+          close()
+          moveTo(7.5f, 12f)
+          close()
+        }
+      }
+      .build()
+
+  /*
+   * Source: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/volume_down.kt?var=opsz,wght,FILL,GRAD,ROND@24,400,0,0,50
+   * Generated: 2026-08-26T13:25:00Z
+   */
+  val VolumeDown: ImageVector =
+    ImageVector.Builder(
+      name = "VolumeDown",
+      defaultWidth = 24.dp,
+      defaultHeight = 24.dp,
+      viewportWidth = 24f,
+      viewportHeight = 24f,
+    )
+      .apply {
+        path(
+          fill = SolidColor(Color.Black),
+          fillAlpha = 1f,
+          stroke = null,
+          strokeAlpha = 1f,
+          strokeLineWidth = 1f,
+          strokeLineCap = StrokeCap.Butt,
+          strokeLineJoin = StrokeJoin.Bevel,
+          strokeLineMiter = 1f,
+          pathFillType = PathFillType.NonZero,
+        ) {
+          moveTo(5f, 15f)
+          verticalLineTo(9f)
+          horizontalLineTo(9f)
+          lineTo(14f, 4f)
+          verticalLineTo(20f)
+          lineTo(9f, 15f)
+          horizontalLineTo(5f)
+          close()
+          moveToRelative(11f, 1f)
+          verticalLineTo(7.95f)
+          quadToRelative(1.13f, 0.53f, 1.81f, 1.63f)
+          reflectiveQuadTo(18.5f, 12f)
+          reflectiveQuadToRelative(-0.69f, 2.4f)
+          quadTo(17.13f, 15.48f, 16f, 16f)
+          close()
+          moveTo(12f, 8.85f)
+          lineTo(9.85f, 11f)
+          horizontalLineTo(7f)
+          verticalLineToRelative(2f)
+          horizontalLineTo(9.85f)
+          lineTo(12f, 15.15f)
+          verticalLineTo(8.85f)
+          close()
+          moveTo(9.5f, 12f)
+          close()
+        }
+      }
+      .build()
 }

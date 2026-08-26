@@ -21,6 +21,8 @@ data class BookPlayViewState(
   val playbackSpeed: Float,
   /** When true every control is inert except the lock itself, so a stray touch cannot seek. */
   val locked: Boolean,
+  /** Volume boost currently applied. Read by the toolbar to say what a change to it did. */
+  val volumeGain: Decibel,
 ) {
 
   sealed interface SleepTimerViewState {
@@ -45,12 +47,6 @@ internal sealed interface BookPlayDialogViewState {
 
     val maxSpeed: Float get() = if (speed < 2F) 2F else 3.5F
   }
-
-  data class VolumeGainDialog(
-    val gain: Decibel,
-    val valueFormatted: String,
-    val maxGain: Decibel,
-  ) : BookPlayDialogViewState
 
   data class SelectChapterDialog(val items: List<ItemViewState>) : BookPlayDialogViewState {
 
