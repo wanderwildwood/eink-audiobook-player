@@ -18,7 +18,7 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
-class AutoEnableSleepTimerTest {
+class ReArmSleepTimerTest {
   private val testDispatcher = StandardTestDispatcher()
   private val testScope = TestScope(testDispatcher)
   private val sleepTimerPreferenceStore = MemoryDataStore(SleepTimerPreference.Default)
@@ -46,7 +46,7 @@ class AutoEnableSleepTimerTest {
     enabledLastSession = enabledLastSession,
   )
 
-  private val sut = AutoEnableSleepTimer(
+  private val sut = ReArmSleepTimer(
     sleepTimerPreferenceStore = sleepTimerPreferenceStore,
     playStateManager = playStateManager,
     sleepTimer = sleepTimer,

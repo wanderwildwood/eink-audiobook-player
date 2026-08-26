@@ -15,8 +15,13 @@ import voice.core.initializer.AppInitializer
 import voice.core.playback.playstate.PlayStateManager
 import voice.core.playback.playstate.PlayStateManager.PlayState.Playing
 
+/**
+ * Brings back a sleep timer that was left switched on. When playback starts and the timer is not
+ * already running, one that was on when the last session ended is armed again - at any time of
+ * day - so it stays on across reading sessions until it is explicitly switched off.
+ */
 @ContributesIntoSet(AppScope::class)
-class AutoEnableSleepTimer(
+class ReArmSleepTimer(
   @SleepTimerPreferenceStore
   private val sleepTimerPreferenceStore: DataStore<SleepTimerPreference>,
   private val playStateManager: PlayStateManager,
