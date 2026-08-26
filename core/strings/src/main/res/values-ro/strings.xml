@@ -27,7 +27,6 @@
     <string name="common.error.generic.message">S-a produs o eroare 😢</string>
     <string name="common.error.generic.retry">Reîncearcă</string>
     <string name="cover.content_description.selectable">Afișează alegere copertă</string>
-    <string name="cover.search.author.content_description">Autor</string>
     <string name="cover.search.query.with_author">Coperta cărții %1$s de %2$s</string>
     <string name="cover.search.query.without_author">Coperta cărții %s</string>
     <string name="cover.search.recent.content_description">Interogarea recentă</string>

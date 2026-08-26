@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">Habeva qualcosa improprie 😢</string>
     <string name="common.error.generic.retry">Retentar</string>
     <string name="cover.content_description.selectable">Monstra le copertura seligite</string>
-    <string name="cover.search.author.content_description">Autor</string>
     <string name="cover.search.query.with_author">Copertura del audiolibro %1$s per %2$s</string>
     <string name="cover.search.query.without_author">Copertura del audiolibro %s</string>
     <string name="cover.search.recent.content_description">Consulta recente</string>

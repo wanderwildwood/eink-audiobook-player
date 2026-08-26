@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">مشکلی پیش آمد 😢</string>
     <string name="common.error.generic.retry">تلاش مجدد</string>
     <string name="cover.content_description.selectable">نمایش کاور برای انتخاب</string>
-    <string name="cover.search.author.content_description">نویسنده</string>
     <string name="cover.search.query.with_author">%1$s توسط %2$s کاور کتاب صوتی</string>
     <string name="cover.search.query.without_author">%s کاور کتاب صوتی</string>
     <string name="cover.search.recent.content_description">لیست اخیر</string>

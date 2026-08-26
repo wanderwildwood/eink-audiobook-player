@@ -54,12 +54,6 @@ internal fun BookSearchContent(
             modifier = Modifier.clickable { onQueryChange(author) },
             headlineContent = { Text(author) },
             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-            leadingContent = {
-              Icon(
-                imageVector = VoiceIcons.SentimentSatisfied,
-                contentDescription = stringResource(id = StringsR.string.cover_search_author_content_description),
-              )
-            },
           )
         }
       }

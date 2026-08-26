@@ -27,7 +27,6 @@
     <string name="common.error.generic.message">Alguna cosa ha anat malament 😢</string>
     <string name="common.error.generic.retry">Torna-ho a provar</string>
     <string name="cover.content_description.selectable">Mostra la portada a escollir</string>
-    <string name="cover.search.author.content_description">Autor</string>
     <string name="cover.search.query.with_author">Portada de l\'audiollibre %1$s per %2$s</string>
     <string name="cover.search.query.without_author">Portada de l\'audiollibre %s</string>
     <string name="cover.search.recent.content_description">Consulta recent</string>

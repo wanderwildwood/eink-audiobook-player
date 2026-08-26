@@ -56,8 +56,6 @@
     <string name="common.error.generic.retry">Retry</string>
     <!-- Content description for a cover preview that can be selected. -->
     <string name="cover.content_description.selectable">Shows cover to choose</string>
-    <!-- Content description for an icon indicating the author in cover search results. -->
-    <string name="cover.search.author.content_description">Author</string>
     <!-- Search query template for cover lookup when title and author are known. -->
     <string name="cover.search.query.with_author">%1$s by %2$s audiobook cover</string>
     <!-- Search query template for cover lookup when only the book title is known. -->

@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">Noe gikk galt 😢</string>
     <string name="common.error.generic.retry">Prøv igjen</string>
     <string name="cover.content_description.selectable">Viser omslag å velge</string>
-    <string name="cover.search.author.content_description">Forfatter</string>
     <string name="cover.search.query.with_author">%1$s av %2$s lydbokomslag</string>
     <string name="cover.search.query.without_author">%s lydbokomslag</string>
     <string name="cover.search.recent.content_description">Siste søk</string>

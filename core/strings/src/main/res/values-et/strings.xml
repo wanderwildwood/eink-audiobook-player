@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">Midagi läks valesti 😢</string>
     <string name="common.error.generic.retry">Proovi uuesti</string>
     <string name="cover.content_description.selectable">Näita kaanepilte, mille vahel valida</string>
-    <string name="cover.search.author.content_description">Autor</string>
     <string name="cover.search.query.with_author">Heliraamatu kaanepilt: %2$s - %1$s</string>
     <string name="cover.search.query.without_author">Heliraamatu kaanepilt: %s</string>
     <string name="cover.search.recent.content_description">Hiljutine päring</string>

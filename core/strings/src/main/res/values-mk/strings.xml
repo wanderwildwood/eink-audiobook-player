@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">Настана грешка 😢</string>
     <string name="common.error.generic.retry">Пробај повторно</string>
     <string name="cover.content_description.selectable">Прикажува избор од корици</string>
-    <string name="cover.search.author.content_description">Автор</string>
     <string name="cover.search.query.with_author">%1$s од %2$s корица на книга</string>
     <string name="cover.search.query.without_author">%s корица на аудио книга</string>
     <string name="cover.search.recent.content_description">Скорешно пребарување</string>

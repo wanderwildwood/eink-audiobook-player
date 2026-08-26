@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">Coś poszło nie tak 😢</string>
     <string name="common.error.generic.retry">Ponów</string>
     <string name="cover.content_description.selectable">Pokazuje okładki do wyboru</string>
-    <string name="cover.search.author.content_description">Autor</string>
     <string name="cover.search.query.with_author">Okładka audiobooka %1$s autorstwa %2$s</string>
     <string name="cover.search.query.without_author">Okładka audiobooka %s</string>
     <string name="cover.search.recent.content_description">Ostatnie wyszukiwanie</string>

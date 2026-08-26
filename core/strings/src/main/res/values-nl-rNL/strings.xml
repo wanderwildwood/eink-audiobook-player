@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">Er is iets fout gegaan 😢</string>
     <string name="common.error.generic.retry">Opnieuw proberen</string>
     <string name="cover.content_description.selectable">Omslag kiezen</string>
-    <string name="cover.search.author.content_description">Auteur</string>
     <string name="cover.search.query.with_author">%1$s door %2$s luisterboekomslag</string>
     <string name="cover.search.query.without_author">%s luisterboekomslag</string>
     <string name="cover.search.recent.content_description">Recente zoekopdracht</string>

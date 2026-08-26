@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">Bir şeyler ters gitti😢</string>
     <string name="common.error.generic.retry">Tekrar dene</string>
     <string name="cover.content_description.selectable">Seçmek için kapak gösterir</string>
-    <string name="cover.search.author.content_description">Yazar</string>
     <string name="cover.search.query.with_author">%2$s taneden %1$s tane sesli kitap kapağı</string>
     <string name="cover.search.query.without_author">%s Sesli kitap kapağı</string>
     <string name="cover.search.recent.content_description">Son aramalar</string>

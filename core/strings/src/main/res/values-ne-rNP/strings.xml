@@ -27,7 +27,6 @@
     <string name="common.error.generic.message">केही गडबड भयो 😢</string>
     <string name="common.error.generic.retry">पुन: प्रयास गर्नुहोस्</string>
     <string name="cover.content_description.selectable">छनोट गर्न कभर देखाउँछ</string>
-    <string name="cover.search.author.content_description">लेखक</string>
     <string name="cover.search.query.with_author">%1$s / %2$s अडियोबूक कभर</string>
     <string name="cover.search.query.without_author">%s अडियोबूक कभर</string>
     <string name="cover.search.recent.content_description">हालको खोजी</string>

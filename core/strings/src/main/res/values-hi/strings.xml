@@ -27,7 +27,6 @@
     <string name="common.error.generic.message">कुछ गलत हो गया 😢</string>
     <string name="common.error.generic.retry">पुन: प्रयास करें</string>
     <string name="cover.content_description.selectable">चुनने के लिए कवर दिखाएँ</string>
-    <string name="cover.search.author.content_description">लेखक</string>
     <string name="cover.search.query.with_author">%1$s द्वारा %2$s ऑडियोबुक कवर</string>
     <string name="cover.search.query.without_author">%s ऑडियोबुक कवर</string>
     <string name="cover.search.recent.content_description">हाल की खोज</string>

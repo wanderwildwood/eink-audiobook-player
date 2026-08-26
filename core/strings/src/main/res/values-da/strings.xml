@@ -27,7 +27,6 @@
     <string name="common.error.generic.message">Noget gik galt😢</string>
     <string name="common.error.generic.retry">Prøv igen</string>
     <string name="cover.content_description.selectable">Viser cover der kan vælges</string>
-    <string name="cover.search.author.content_description">Forfatter</string>
     <string name="cover.search.query.with_author">%1$s af %2$s lydbogscover</string>
     <string name="cover.search.query.without_author">%s lydbogscover</string>
     <string name="cover.search.recent.content_description">Seneste søgninger</string>

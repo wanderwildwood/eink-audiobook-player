@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">ஏதோ தவறு நடந்தது</string>
     <string name="common.error.generic.retry">மீண்டும் முயற்சிக்கவும்</string>
     <string name="cover.content_description.selectable">தேர்வு செய்ய சூ கவர்</string>
-    <string name="cover.search.author.content_description">நூலாசிரியர்</string>
     <string name="cover.search.query.with_author">%1$s ஆல் %2$s ஆடியோபுக் கவர்</string>
     <string name="cover.search.query.without_author">%s ஆடியோபுக் கவர்</string>
     <string name="cover.search.recent.content_description">அண்மைக் கால வினவல்</string>

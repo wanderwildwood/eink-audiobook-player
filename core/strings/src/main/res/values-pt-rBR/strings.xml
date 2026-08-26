@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">Algo deu errado 😢</string>
     <string name="common.error.generic.retry">Tentar novamente</string>
     <string name="cover.content_description.selectable">Mostra capas para escolher</string>
-    <string name="cover.search.author.content_description">Autor</string>
     <string name="cover.search.query.with_author">Capa do audiobook %1$s, feito por %2$s</string>
     <string name="cover.search.query.without_author">Capa do audiobook %s</string>
     <string name="cover.search.recent.content_description">Pesquisa recente</string>

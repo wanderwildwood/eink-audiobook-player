@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">Något gick fel 😢</string>
     <string name="common.error.generic.retry">Försök igen</string>
     <string name="cover.content_description.selectable">Visar omslag att välja mellan</string>
-    <string name="cover.search.author.content_description">Författare</string>
     <string name="cover.search.query.with_author">%1$s av %2$s ljudboksomslag</string>
     <string name="cover.search.query.without_author">%s ljudboksomslag</string>
     <string name="cover.search.recent.content_description">Senaste sökning</string>

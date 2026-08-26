@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">Niečo sa pokazilo 😢</string>
     <string name="common.error.generic.retry">Skúsiť znovu</string>
     <string name="cover.content_description.selectable">Zobrazí výber obálky</string>
-    <string name="cover.search.author.content_description">Autor</string>
     <string name="cover.search.query.with_author">%1$s by %2$s audiobook cover</string>
     <string name="cover.search.query.without_author">%s audiobook cover</string>
     <string name="cover.search.recent.content_description">Posledné hľadanie</string>

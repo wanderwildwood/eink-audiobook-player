@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">Algo salió mal 😢</string>
     <string name="common.error.generic.retry">Reintentar</string>
     <string name="cover.content_description.selectable">Muestra la portada a elegir</string>
-    <string name="cover.search.author.content_description">Autor</string>
     <string name="cover.search.query.with_author">Portada del audiolibro %1$s de %2$s</string>
     <string name="cover.search.query.without_author">%s portada del audiolibro</string>
     <string name="cover.search.recent.content_description">Consulta reciente</string>

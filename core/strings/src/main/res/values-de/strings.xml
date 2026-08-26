@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">Etwas ist schiefgelaufen 😢</string>
     <string name="common.error.generic.retry">Erneut versuchen</string>
     <string name="cover.content_description.selectable">Zeigt Cover zur Auswahl an</string>
-    <string name="cover.search.author.content_description">Autor</string>
     <string name="cover.search.query.with_author">%1$s von %2$s Hörbuch-Cover</string>
     <string name="cover.search.query.without_author">%s Hörbuch-Cover</string>
     <string name="cover.search.recent.content_description">Zuletzt gesucht</string>

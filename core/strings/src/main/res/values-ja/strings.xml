@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">問題が発生しました 😢</string>
     <string name="common.error.generic.retry">再試行</string>
     <string name="cover.content_description.selectable">選択するカバーを表示</string>
-    <string name="cover.search.author.content_description">著者</string>
     <string name="cover.search.query.with_author">%1$s（%2$s 著）オーディオブック カバー</string>
     <string name="cover.search.query.without_author">%s オーディオブック カバー</string>
     <string name="cover.search.recent.content_description">最近の検索</string>

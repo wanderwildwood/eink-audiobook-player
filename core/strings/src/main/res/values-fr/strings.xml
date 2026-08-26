@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">Quelque chose s\'est mal passé 😢</string>
     <string name="common.error.generic.retry">Réessayer</string>
     <string name="cover.content_description.selectable">Montre la couverture à choisir</string>
-    <string name="cover.search.author.content_description">Auteur</string>
     <string name="cover.search.query.with_author">%1$s par %2$s couverture livre audio</string>
     <string name="cover.search.query.without_author">%s couverture livre audio</string>
     <string name="cover.search.recent.content_description">Recherche récente</string>

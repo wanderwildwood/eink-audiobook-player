@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">Jotakin meni pieleen 😢</string>
     <string name="common.error.generic.retry">Yritä uudelleen</string>
     <string name="cover.content_description.selectable">Näyttää kannen jonka valita</string>
-    <string name="cover.search.author.content_description">Tekijä</string>
     <string name="cover.search.query.with_author">Tekijän %2$s äänikirjan kansi %1$s</string>
     <string name="cover.search.query.without_author">%s äänikirjan kansi</string>
     <string name="cover.search.recent.content_description">Viimeisin haku</string>

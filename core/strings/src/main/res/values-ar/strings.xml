@@ -27,7 +27,6 @@
     <string name="common.error.generic.message">حدث خطأ ما 😢</string>
     <string name="common.error.generic.retry">أعد المحاولة</string>
     <string name="cover.content_description.selectable">أظهر الغطاء للاختياره</string>
-    <string name="cover.search.author.content_description">المؤلف</string>
     <string name="cover.search.query.with_author">%1$s بواسطة غلاف الكتاب الصوتي %2$s</string>
     <string name="cover.search.query.without_author">غلاف الكتاب الصوتي %s</string>
     <string name="cover.search.recent.content_description">أخر استعلام</string>

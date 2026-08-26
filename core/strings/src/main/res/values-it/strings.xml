@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">Qualcosa è andato storto 😢</string>
     <string name="common.error.generic.retry">Riprova</string>
     <string name="cover.content_description.selectable">Mostra la copertina da scegliere</string>
-    <string name="cover.search.author.content_description">Autore</string>
     <string name="cover.search.query.with_author">%1$s di %2$s copertina dell\'audiolibro</string>
     <string name="cover.search.query.without_author">%s copertina dell\'audiolibro</string>
     <string name="cover.search.recent.content_description">Interrogazione recente</string>

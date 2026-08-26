@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">Что-то пошло не так 😢</string>
     <string name="common.error.generic.retry">Повторить</string>
     <string name="cover.content_description.selectable">Показать выбранную обложку</string>
-    <string name="cover.search.author.content_description">Автор</string>
     <string name="cover.search.query.with_author">Обложка аудиокниги %1$s автора %2$s</string>
     <string name="cover.search.query.without_author">Обложка аудиокниги %s</string>
     <string name="cover.search.recent.content_description">Недавний запрос</string>

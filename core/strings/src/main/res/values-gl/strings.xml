@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">Algo fallou 😢</string>
     <string name="common.error.generic.retry">Reintentar</string>
     <string name="cover.content_description.selectable">Mostra a portada a elixir</string>
-    <string name="cover.search.author.content_description">Autoría</string>
     <string name="cover.search.query.with_author">Portada do audiolibro %1$s por %2$s</string>
     <string name="cover.search.query.without_author">portada do audiolibro %s</string>
     <string name="cover.search.recent.content_description">Consulta recente</string>

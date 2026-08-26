@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">Chuaigh rud éigin mícheart 😢</string>
     <string name="common.error.generic.retry">Bain triail eile as</string>
     <string name="cover.content_description.selectable">Taispeáin clúdach a roghnú</string>
-    <string name="cover.search.author.content_description">Údar</string>
     <string name="cover.search.query.with_author">%1$s le %2$s clúdach fuaime</string>
     <string name="cover.search.query.without_author">%s clúdach fuaime</string>
     <string name="cover.search.recent.content_description">Ceist le déanaí</string>

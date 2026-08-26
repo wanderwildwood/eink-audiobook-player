@@ -28,7 +28,6 @@
     <string name="common.error.generic.message">Iets het skeef geloop 😢</string>
     <string name="common.error.generic.retry">Probeer weer</string>
     <string name="cover.content_description.selectable">Wys voorblad om te kies</string>
-    <string name="cover.search.author.content_description">Outeur</string>
     <string name="cover.search.query.with_author">%1$s deur %2$s luisterboekomslag</string>
     <string name="cover.search.query.without_author">%s luisterboekomslag</string>
     <string name="cover.search.recent.content_description">Onlangse navraag</string>
