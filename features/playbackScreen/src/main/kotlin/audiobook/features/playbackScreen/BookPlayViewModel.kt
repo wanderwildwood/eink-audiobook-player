@@ -25,7 +25,6 @@ import audiobook.core.logging.api.Logger
 import audiobook.core.playback.CurrentBookResolver
 import audiobook.core.playback.PlayerController
 import audiobook.core.playback.misc.Decibel
-import audiobook.core.playback.misc.VolumeGain
 import audiobook.core.playback.overlay
 import audiobook.core.playback.playstate.PlayStateManager
 import audiobook.core.sleeptimer.SleepTimer
@@ -63,7 +62,6 @@ class BookPlayViewModel(
   private val seekTimeStore: DataStore<Int>,
   private val navigator: Navigator,
   private val bookmarkRepository: BookmarkRepo,
-  private val volumeGainFormatter: VolumeGainFormatter,
   private val batteryOptimization: BatteryOptimization,
   dispatcherProvider: DispatcherProvider,
   @ExperimentalPlaybackPersistenceQualifier
@@ -141,6 +139,7 @@ class BookPlayViewModel(
       seekTimeSeconds = seekTimeSeconds,
       playbackSpeed = book.content.playbackSpeed,
       locked = locked.value,
+      volumeGain = Decibel(book.content.gain),
     )
   }
   fun dismissDialog() {
@@ -155,11 +154,6 @@ class BookPlayViewModel(
   fun onPlaybackSpeedChanged(speed: Float) {
     dialogState.value = BookPlayDialogViewState.SpeedDialog(speed)
     player.setSpeed(speed)
-  }
-
-  fun onVolumeGainChanged(gain: Decibel) {
-    dialogState.value = volumeGainDialogViewState(gain)
-    player.setGain(gain)
   }
 
   fun next() {
@@ -237,19 +231,11 @@ class BookPlayViewModel(
     }
   }
 
-  fun onVolumeGainIconClick() {
+  fun toggleVolumeBoost() {
     scope.launch {
       val content = currentBook()?.content ?: return@launch
-      dialogState.value = volumeGainDialogViewState(Decibel(content.gain))
+      player.setGain(if (content.gain > 0f) Decibel.Zero else VolumeBoost)
     }
-  }
-
-  private fun volumeGainDialogViewState(gain: Decibel): BookPlayDialogViewState.VolumeGainDialog {
-    return BookPlayDialogViewState.VolumeGainDialog(
-      gain = gain,
-      maxGain = VolumeGain.MAX_GAIN,
-      valueFormatted = volumeGainFormatter.format(gain),
-    )
   }
 
   fun onBookmarkClick() {
@@ -335,3 +321,13 @@ private fun SleepTimerState.toViewState(): BookPlayViewState.SleepTimerViewState
   is SleepTimerState.Enabled.WithDuration -> BookPlayViewState.SleepTimerViewState.Enabled.WithDuration(this.leftDuration)
   SleepTimerState.Enabled.UntilChapterEnd -> BookPlayViewState.SleepTimerViewState.Enabled.UntilChapterEnd
 }
+
+/**
+ * How much the volume boost lifts playback when it is on.
+ *
+ * It used to be a slider from 0 to 9 dB, which asked people to tune a number in decibels against
+ * a narrator they were part way through listening to. There is one useful answer for a quiet
+ * recording, so this is it: clearly louder, and short of the 9 dB the slider allowed, because
+ * the limiter doing the lifting starts to pump against a wide dynamic range near the top.
+ */
+private val VolumeBoost = Decibel(6F)

@@ -36,8 +36,6 @@
     <string name="common.action.delete">Delete</string>
     <!-- Generic edit action in popup menus. -->
     <string name="common.action.edit">Edit</string>
-    <!-- Content description for an overflow menu button. -->
-    <string name="common.action.more">More</string>
     <!-- Generic remove action in menus. -->
     <string name="common.action.remove">Remove</string>
     <!-- Generic action for dismissing a dialog without applying changes. -->
@@ -141,6 +139,22 @@
     <string name="playback.chapter.previous">Previous track</string>
     <!-- Menu label for toggling silence skipping during playback. -->
     <string name="playback.option.skip_silence">Skip Silence</string>
+    <!-- Momentary line under the playback toolbar, after a toggle whose icon alone does not say what just happened. -->
+    <string name="playback.announce.skip_silence.on">Skip silence on</string>
+    <!-- Momentary line under the playback toolbar. -->
+    <string name="playback.announce.skip_silence.off">Skip silence off</string>
+    <!-- Momentary line under the playback toolbar. -->
+    <string name="playback.announce.lock.on">Controls locked</string>
+    <!-- Momentary line under the playback toolbar. -->
+    <string name="playback.announce.lock.off">Controls unlocked</string>
+    <!-- Momentary line under the playback toolbar. -->
+    <string name="playback.announce.volume_boost.on">Volume boost on</string>
+    <!-- Momentary line under the playback toolbar. -->
+    <string name="playback.announce.volume_boost.off">Volume boost off</string>
+    <!-- Momentary line under the playback toolbar. -->
+    <string name="playback.announce.sleep_timer.on">Sleep timer on</string>
+    <!-- Momentary line under the playback toolbar. -->
+    <string name="playback.announce.sleep_timer.off">Sleep timer off</string>
     <!-- Menu and dialog title for changing volume gain. -->
     <string name="playback.option.volume_boost">Volume boost</string>
     <!-- Title and content description for playback-speed controls. -->
