@@ -103,10 +103,6 @@
     <string name="settings.action.open">விருப்பத்தேர்வுகள்</string>
     <string name="settings.analytics_consent.description">பயன்பாட்டை மேம்படுத்த உதவ அநாமதேய பயன்பாட்டுத் தரவு சேகரிப்பை அனுமதி</string>
     <string name="settings.analytics_consent.title">பகுப்பாய்வு</string>
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">இறுதி நேரத்தை அமை</string>
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">தொடக்க நேரத்தை அமை</string>
-    <string name="settings.auto_sleep_timer.summary">பிளேபேக் %1$s மற்றும் %2$s க்கு இடையில் தொடங்கும்போது தானாக ஒரு தூக்க நேரத்தைத் தொடங்குங்கள்</string>
-    <string name="settings.auto_sleep_timer.title">தானியங்கி தூக்க நேரங்காட்டி</string>
     <string name="settings.library.folders.summary">ஒலிபுத்தகங்களுக்காக வருடல் செய்யப்பட்ட கோப்புறைகளை நிர்வகி</string>
     <string name="settings.library.use_grid.title">கட்டம் தளவமைப்பைப் பயன்படுத்தவும்</string>
     <string name="settings.playback.auto_rewind.title">ஆட்டோ ரிவைண்ட்</string>

@@ -101,10 +101,6 @@
     <string name="settings.action.open">Preferensi</string>
     <string name="settings.analytics_consent.description">Izinkan pengumpulan data penggunaan anonim untuk membantu meningkatkan aplikasi</string>
     <string name="settings.analytics_consent.title">Analitik</string>
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Atur waktu selesai</string>
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Atur waktu mulai</string>
-    <string name="settings.auto_sleep_timer.summary">Mulai pengatur waktu tidur secara otomatis saat pemutaran dimulai antara %1$s dan %2$s</string>
-    <string name="settings.auto_sleep_timer.title">Pengatur Waktu Tidur Otomatis</string>
     <string name="settings.library.folders.summary">Kelola folder yang dipindai untuk buku audio</string>
     <string name="settings.library.use_grid.title">Gunakan tata letak kisi</string>
     <string name="settings.playback.auto_rewind.title">Mundur otomatis</string>

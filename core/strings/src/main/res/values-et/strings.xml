@@ -103,10 +103,6 @@
     <string name="settings.action.open">Eelistused</string>
     <string name="settings.analytics_consent.description">Parandamaks rakendust luba meil koguda anonüümseid andmeid tema kasutuse kohta</string>
     <string name="settings.analytics_consent.title">Analüütika</string>
-    <string name="settings.auto_sleep_timer.end.label">Seadista lõpuaeg</string>
-    <string name="settings.auto_sleep_timer.start.label">Määra algusaeg</string>
-    <string name="settings.auto_sleep_timer.summary">Käivita unetaimer automaatselt, kui taasesitus on %1$s ja %2$s vahel</string>
-    <string name="settings.auto_sleep_timer.title">Automaatne unetaimer</string>
     <string name="settings.library.folders.summary">Halda kaustu, kust otsitakse heliraamatuid</string>
     <string name="settings.library.use_grid.title">Kasuta paigutust ruudustikuna</string>
     <string name="settings.playback.auto_rewind.title">Keri automaatselt tagasi</string>

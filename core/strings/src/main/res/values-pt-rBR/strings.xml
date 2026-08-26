@@ -105,10 +105,6 @@
     <string name="settings.action.open">Preferências</string>
     <string name="settings.analytics_consent.description">Permitir a coleta de dados de uso anônimos para ajudar a melhorar o app</string>
     <string name="settings.analytics_consent.title">Análises</string>
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Definir final</string>
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Definir início</string>
-    <string name="settings.auto_sleep_timer.summary">Ativa o modo soneca automaticamente quando a reprodução estiver entre %1$s e %2$s</string>
-    <string name="settings.auto_sleep_timer.title">Modo Soneca</string>
     <string name="settings.library.folders.summary">Gerenciar pastas verificadas para audiolivros</string>
     <string name="settings.library.use_grid.title">Utilizar a disposição da grelha</string>
     <string name="settings.playback.auto_rewind.title">Rebobin automaticamente</string>

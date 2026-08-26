@@ -105,10 +105,6 @@
     <string name="settings.action.open">Preferenze</string>
     <string name="settings.analytics_consent.description">Consenti la raccolta anonima dei dati di utilizzo per contribuire a migliorare l\'app</string>
     <string name="settings.analytics_consent.title">Analytics</string>
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Ora di fine</string>
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Ora di inizio</string>
-    <string name="settings.auto_sleep_timer.summary">Avvia automaticamente un timer di spegnimento automatico quando la riproduzione inizia tra %1$s e %2$s</string>
-    <string name="settings.auto_sleep_timer.title">Timer di spegnimento automatico</string>
     <string name="settings.library.folders.summary">Gestisci cartelle audiolibri</string>
     <string name="settings.library.use_grid.title">Usa la disposizione a griglia</string>
     <string name="settings.playback.auto_rewind.title">Riavvolgimento automatico</string>

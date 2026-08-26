@@ -13,16 +13,12 @@ import voice.core.data.sleeptimer.SleepTimerPreference
 import voice.core.playback.playstate.PlayStateManager
 import voice.core.sleeptimer.SleepTimerMode.TimedWithDuration
 import voice.core.sleeptimer.impl.MemoryDataStore
-import java.time.Clock
-import java.time.Instant
-import java.time.LocalTime
-import java.time.ZoneId
 import kotlin.test.Test
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
-class AutoEnableSleepTimerMinimalTest {
+class AutoEnableSleepTimerTest {
   private val testDispatcher = StandardTestDispatcher()
   private val testScope = TestScope(testDispatcher)
   private val sleepTimerPreferenceStore = MemoryDataStore(SleepTimerPreference.Default)
@@ -42,36 +38,24 @@ class AutoEnableSleepTimerMinimalTest {
     }
   }
 
-  private val createBookmarkAtCurrentPosition = mockk<CreateBookmarkAtCurrentPosition>(relaxed = true)
-
   private fun prefs(
-    enabled: Boolean,
-    start: LocalTime = LocalTime.of(22, 0),
-    end: LocalTime = LocalTime.of(6, 0),
     duration: Duration = 30.minutes,
     enabledLastSession: Boolean = false,
   ) = SleepTimerPreference(
-    autoSleepTimerEnabled = enabled,
-    autoSleepStartTime = start,
-    autoSleepEndTime = end,
     duration = duration,
     enabledLastSession = enabledLastSession,
   )
 
-  private fun sut(now: String = "2020-01-01T23:00:00Z") = AutoEnableSleepTimer(
+  private val sut = AutoEnableSleepTimer(
     sleepTimerPreferenceStore = sleepTimerPreferenceStore,
     playStateManager = playStateManager,
     sleepTimer = sleepTimer,
-    clock = Clock.fixed(Instant.parse(now), ZoneId.of("UTC")),
-    createBookmarkAtCurrentPosition = createBookmarkAtCurrentPosition,
     scope = testScope.backgroundScope,
   )
 
-  private val sut = sut()
-
   @Test
-  fun `enables when playing and in time window`() = testScope.runTest {
-    sleepTimerPreferenceStore.updateData { prefs(enabled = true) }
+  fun `re-enables when it was left on last session`() = testScope.runTest {
+    sleepTimerPreferenceStore.updateData { prefs(enabledLastSession = true) }
 
     sut.onAppStart(mockk())
     playStateManager.playState = PlayStateManager.PlayState.Playing
@@ -79,53 +63,30 @@ class AutoEnableSleepTimerMinimalTest {
     yield()
 
     coVerify { sleepTimer.enable(SleepTimerMode.TimedWithDefault) }
-  }
-
-  @Test
-  fun `does nothing when sleeptimer is disabled`() = testScope.runTest {
-    sleepTimerPreferenceStore.updateData { prefs(enabled = false) }
-
-    sut.onAppStart(mockk())
-    playStateManager.playState = PlayStateManager.PlayState.Playing
-    advanceUntilIdle()
-    yield()
-
-    coVerify(exactly = 0) { sleepTimer.enable(any()) }
-  }
-
-  @Test
-  fun `re-enables outside of the time window when it was left on last session`() = testScope.runTest {
-    sleepTimerPreferenceStore.updateData { prefs(enabled = false, enabledLastSession = true) }
-
-    sut(now = "2020-01-01T12:00:00Z").onAppStart(mockk())
-    playStateManager.playState = PlayStateManager.PlayState.Playing
-    advanceUntilIdle()
-    yield()
-
-    coVerify { sleepTimer.enable(SleepTimerMode.TimedWithDefault) }
-  }
-
-  @Test
-  fun `re-enabling from the last session adds no bookmark`() = testScope.runTest {
-    sleepTimerPreferenceStore.updateData { prefs(enabled = false, enabledLastSession = true) }
-
-    sut(now = "2020-01-01T12:00:00Z").onAppStart(mockk())
-    playStateManager.playState = PlayStateManager.PlayState.Playing
-    advanceUntilIdle()
-    yield()
-
-    coVerify(exactly = 0) { createBookmarkAtCurrentPosition.create() }
   }
 
   @Test
   fun `does nothing when it was switched off last session`() = testScope.runTest {
-    sleepTimerPreferenceStore.updateData { prefs(enabled = false, enabledLastSession = false) }
+    sleepTimerPreferenceStore.updateData { prefs(enabledLastSession = false) }
 
-    sut(now = "2020-01-01T12:00:00Z").onAppStart(mockk())
+    sut.onAppStart(mockk())
     playStateManager.playState = PlayStateManager.PlayState.Playing
     advanceUntilIdle()
     yield()
 
     coVerify(exactly = 0) { sleepTimer.enable(any()) }
+  }
+
+  @Test
+  fun `does nothing when the sleep timer is already running`() = testScope.runTest {
+    sleepTimerPreferenceStore.updateData { prefs(enabledLastSession = true) }
+    sleepTimer.enable(SleepTimerMode.TimedWithDefault)
+
+    sut.onAppStart(mockk())
+    playStateManager.playState = PlayStateManager.PlayState.Playing
+    advanceUntilIdle()
+    yield()
+
+    coVerify(exactly = 1) { sleepTimer.enable(any()) }
   }
 }

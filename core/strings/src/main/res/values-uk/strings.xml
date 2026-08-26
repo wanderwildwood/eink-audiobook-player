@@ -107,10 +107,6 @@
     <string name="settings.action.open">Налаштування</string>
     <string name="settings.analytics_consent.description">Дозволити анонімне збирання данних для покращення додатку</string>
     <string name="settings.analytics_consent.title">Аналітика</string>
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Час кінця</string>
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Час початку</string>
-    <string name="settings.auto_sleep_timer.summary">Автоматично запустити таймер сну, коли програш починається між %1$s та %2$s</string>
-    <string name="settings.auto_sleep_timer.title">Автоматичний таймер сну</string>
     <string name="settings.library.folders.summary">Налаштування папок, які скануються для пошуку аудіокних</string>
     <string name="settings.library.use_grid.title">Сіточний макет</string>
     <string name="settings.playback.auto_rewind.title">Інтервал автовідмотування</string>

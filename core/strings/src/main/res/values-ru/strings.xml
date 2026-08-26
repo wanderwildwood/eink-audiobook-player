@@ -107,10 +107,6 @@
     <string name="settings.action.open">Настройки</string>
     <string name="settings.analytics_consent.description">Разрешить анонимный сбор данных об использовании, чтобы улучшить приложение</string>
     <string name="settings.analytics_consent.title">Аналитика</string>
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Время конца</string>
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Время начала</string>
-    <string name="settings.auto_sleep_timer.summary">Запускать таймер сна автоматически когда воспроизведение начинается между %1$s и %2$s</string>
-    <string name="settings.auto_sleep_timer.title">Автоматический таймер сна</string>
     <string name="settings.library.folders.summary">Управление папками, отсканированными на наличие аудиокниг</string>
     <string name="settings.library.use_grid.title">Использовать сетку</string>
     <string name="settings.playback.auto_rewind.title">Автоперемотка назад</string>

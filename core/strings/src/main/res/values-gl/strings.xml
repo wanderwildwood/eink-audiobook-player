@@ -103,10 +103,6 @@
     <string name="settings.action.open">Preferencias</string>
     <string name="settings.analytics_consent.description">Permite recoller datos anónimos de uso para axudar a mellorar a app</string>
     <string name="settings.analytics_consent.title">Análise</string>
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Hora de fin</string>
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Hora de inicio</string>
-    <string name="settings.auto_sleep_timer.summary">Iniciar o temporizador automáticamente cando a escoita comece entre as %1$s e as %2$s</string>
-    <string name="settings.auto_sleep_timer.title">Temporizador automático</string>
     <string name="settings.library.folders.summary">Xestionar cartafoles onde buscar audiolibros</string>
     <string name="settings.library.use_grid.title">Usar disposición en grella</string>
     <string name="settings.playback.auto_rewind.title">Retroceso automático</string>

@@ -107,10 +107,6 @@
     <string name="settings.action.open">Налады</string>
     <string name="settings.analytics_consent.description">Дазволіць ананімны збор даных аб выкарыстанні, каб палепшыць праграму</string>
     <string name="settings.analytics_consent.title">Аналітыка</string>
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Час заканчэння</string>
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Час пачатку</string>
-    <string name="settings.auto_sleep_timer.summary">Запускаць таймер сну аўтаматычна калі прайграванне пачынаецца паміж %1$s і %2$s</string>
-    <string name="settings.auto_sleep_timer.title">Аўтаматычны таймер сну</string>
     <string name="settings.library.folders.summary">Кіраванне папкамі, адсканаванымі для пошуку аўдыякніг</string>
     <string name="settings.library.use_grid.title">Выкарыстоўваць сетку</string>
     <string name="settings.playback.auto_rewind.title">Аўтаматычна перамотваць назад</string>

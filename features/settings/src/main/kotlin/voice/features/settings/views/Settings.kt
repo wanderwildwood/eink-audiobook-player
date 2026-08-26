@@ -33,7 +33,6 @@ import voice.features.settings.SettingsListener
 import voice.features.settings.SettingsViewEffect
 import voice.features.settings.SettingsViewModel
 import voice.features.settings.SettingsViewState
-import voice.features.settings.views.sleeptimer.AutoSleepTimerCard
 import voice.navigation.Destination
 import voice.navigation.NavEntryProvider
 import voice.core.strings.R as StringsR
@@ -132,7 +131,6 @@ private fun Settings(
       }
 
       item {
-        AutoSleepTimerCard(viewState.autoSleepTimer, listener)
       }
 
       item {

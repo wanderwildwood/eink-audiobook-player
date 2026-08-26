@@ -103,10 +103,6 @@
     <string name="settings.action.open">Поставувања</string>
     <string name="settings.analytics_consent.description">Дозволете анонимно собирање податоци за користење за да се подобри апликацијата</string>
     <string name="settings.analytics_consent.title">Аналитика</string>
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Внеси време за крај</string>
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Внеси време за старт</string>
-    <string name="settings.auto_sleep_timer.summary">Стартувај го тајмерот за спиење автоматски штом аудиото почнува меѓу %1$s и %2$s</string>
-    <string name="settings.auto_sleep_timer.title">Автоматски тајмер за спиење</string>
     <string name="settings.library.folders.summary">Управувајте со папките што се скенираат за аудиокниги</string>
     <string name="settings.library.use_grid.title">Прикажи како коцки</string>
     <string name="settings.playback.auto_rewind.title">Автоматско враќање назад</string>

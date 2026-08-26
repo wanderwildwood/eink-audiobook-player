@@ -105,10 +105,6 @@
     <string name="settings.action.open">העדפות</string>
     <string name="settings.analytics_consent.description">אפשר איסוף נתוני שימוש אנונימיים כדי לעזור לשפר את האפליקציה</string>
     <string name="settings.analytics_consent.title">ניתוח נתונים</string>
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">בחר זמן סיום</string>
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">בחר זמן התחלה</string>
-    <string name="settings.auto_sleep_timer.summary">תפעיל את שעון השינה ­האוטומטי כשההפעלה מגיעה ל- %1$s ו- %2$s</string>
-    <string name="settings.auto_sleep_timer.title">שעון עצר אוטומטי לשינה</string>
     <string name="settings.library.folders.summary">ניהול תיקיות שנסרקות עבור ספרי שמע</string>
     <string name="settings.library.use_grid.title">תשתמש בפריסת רשת</string>
     <string name="settings.playback.auto_rewind.title">הרצה אוטומטית</string>

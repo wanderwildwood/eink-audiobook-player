@@ -103,10 +103,6 @@
     <string name="settings.action.open">Voorkeure</string>
     <string name="settings.analytics_consent.description">Laat anonieme gebruiksdata insamel om die toep te verbeter</string>
     <string name="settings.analytics_consent.title">Analise</string>
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Stel eindtyd</string>
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Stel begintyd</string>
-    <string name="settings.auto_sleep_timer.summary">Begin outomaties ’n slaaptimer wanneer afspeel tussen %1$s en %2$s begin</string>
-    <string name="settings.auto_sleep_timer.title">Outomatiese slaaptimer</string>
     <string name="settings.library.folders.summary">Bestuur vouers wat vir oudioboeke geskandeer word</string>
     <string name="settings.library.use_grid.title">Gebruik rooster uitleg</string>
     <string name="settings.playback.auto_rewind.title">Outomatiese terugdraai</string>

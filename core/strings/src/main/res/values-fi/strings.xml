@@ -103,10 +103,6 @@
     <string name="settings.action.open">Asetukset</string>
     <string name="settings.analytics_consent.description">Salli anonyymien käyttötietojen kerääminen sovelluksen parantamiseksi</string>
     <string name="settings.analytics_consent.title">Analytiikka</string>
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Päättymisaika</string>
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Aloitusaika</string>
-    <string name="settings.auto_sleep_timer.summary">Aloita uniajastin automaattisesti, kun toisto alkaa välillä %1$s ja %2$s</string>
-    <string name="settings.auto_sleep_timer.title">Automaattinen uniajastin</string>
     <string name="settings.library.folders.summary">Hallitse kansioita, joista etsitään äänikirjoja</string>
     <string name="settings.library.use_grid.title">Käytä ruudukkoasettelua</string>
     <string name="settings.playback.auto_rewind.title">Automaattinen takaisinkelaus</string>

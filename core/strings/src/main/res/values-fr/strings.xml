@@ -105,10 +105,6 @@
     <string name="settings.action.open">Préférences</string>
     <string name="settings.analytics_consent.description">Autoriser la collecte de données d\'utilisation anonymes afin d\'améliorer l\'application</string>
     <string name="settings.analytics_consent.title">Analyses</string>
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Heure de fin</string>
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Heure de début</string>
-    <string name="settings.auto_sleep_timer.summary">Démarrer automatiquement le minuteur de veille lorsque la lecture commence entre %1$s et %2$s</string>
-    <string name="settings.auto_sleep_timer.title">Minuteur de veille automatique</string>
     <string name="settings.library.folders.summary">Gérer les dossiers analysés pour les livres audio</string>
     <string name="settings.library.use_grid.title">Utiliser la mise en page en grille</string>
     <string name="settings.playback.auto_rewind.title">Rembobinage automatique</string>

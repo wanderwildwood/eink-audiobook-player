@@ -41,7 +41,10 @@ interface AndroidModule {
   @Provides
   @SingleIn(AppScope::class)
   fun json(): Json {
-    return Json.Default
+    // Unknown keys are ignored so that dropping a setting leaves the rest of its store intact.
+    // Json.Default throws on a key it does not recognise, which the store serializer can only
+    // answer by handing back the whole default - losing every other value stored beside it.
+    return Json { ignoreUnknownKeys = true }
   }
 
   @Provides

@@ -103,10 +103,6 @@
     <string name="settings.action.open">Preferentias</string>
     <string name="settings.analytics_consent.description">Permitter le collection de datos de uso anonyme pro adjutar a meliorar le app</string>
     <string name="settings.analytics_consent.title">Analytica</string>
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Definir tempore de fin</string>
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Definir tempore initial</string>
-    <string name="settings.auto_sleep_timer.summary">Initiar automaticamente un temporisator de somno quando le reproduction comencia inter %1$s e %2$s</string>
-    <string name="settings.auto_sleep_timer.title">Temporisator de somno automatic</string>
     <string name="settings.library.folders.summary">Gerer dossiers scandite pro audiolibros</string>
     <string name="settings.library.use_grid.title">Usar le disposition in grillia</string>
     <string name="settings.playback.auto_rewind.title">Auto rebobinar</string>

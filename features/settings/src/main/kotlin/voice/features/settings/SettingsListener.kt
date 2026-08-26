@@ -2,7 +2,6 @@ package voice.features.settings
 
 import voice.core.data.LibraryOrganization
 import voice.core.data.sleeptimer.ShakeSensitivity
-import java.time.LocalTime
 
 interface SettingsListener {
   fun close()
@@ -14,9 +13,6 @@ interface SettingsListener {
   fun onAutoRewindRowClick()
   fun dismissDialog()
   fun openSourceCode()
-  fun setAutoSleepTimer(checked: Boolean)
-  fun setAutoSleepTimerStart(time: LocalTime)
-  fun setAutoSleepTimerEnd(time: LocalTime)
   fun onSleepTimerDurationRowClick()
   fun setSleepTimerDurationMinutes(minutes: Int)
   fun setSleepTimerEndOfChapter()
@@ -39,9 +35,6 @@ interface SettingsListener {
       override fun onAutoRewindRowClick() {}
       override fun dismissDialog() {}
       override fun openSourceCode() {}
-      override fun setAutoSleepTimer(checked: Boolean) {}
-      override fun setAutoSleepTimerStart(time: LocalTime) {}
-      override fun setAutoSleepTimerEnd(time: LocalTime) {}
       override fun onSleepTimerDurationRowClick() {}
       override fun setSleepTimerDurationMinutes(minutes: Int) {}
       override fun setSleepTimerEndOfChapter() {}

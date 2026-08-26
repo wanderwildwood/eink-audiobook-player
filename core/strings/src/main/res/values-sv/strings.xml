@@ -103,10 +103,6 @@
     <string name="settings.action.open">Inställningar</string>
     <string name="settings.analytics_consent.description">Tillåt anonym insamling av användningsstatistik för att förbättra appen</string>
     <string name="settings.analytics_consent.title">Analys</string>
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Ange sluttid</string>
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Ange starttid</string>
-    <string name="settings.auto_sleep_timer.summary">Starta en insomningstimer automatiskt när uppspelningen börjar mellan %1$s och %2$s</string>
-    <string name="settings.auto_sleep_timer.title">Automatisk insomningstimer</string>
     <string name="settings.library.folders.summary">Hantera mappar som skannas efter ljudböcker</string>
     <string name="settings.library.use_grid.title">Använd rutnätslayout</string>
     <string name="settings.playback.auto_rewind.title">Automatisk bakåtspolning</string>

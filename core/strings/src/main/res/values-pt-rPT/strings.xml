@@ -105,10 +105,6 @@
     <string name="settings.action.open">Preferências</string>
     <string name="settings.analytics_consent.description">Permitir a recolha de dados de utilização anónimos para ajudar a melhorar a aplicação</string>
     <string name="settings.analytics_consent.title">Análises</string>
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Definir horário de término</string>
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Definir horário de início</string>
-    <string name="settings.auto_sleep_timer.summary">Iniciar um temporizador de sono automaticamente quando a reprodução começa entre %1$s e %2$s</string>
-    <string name="settings.auto_sleep_timer.title">Temporizador de sono automático</string>
     <string name="settings.library.folders.summary">Gerir pastas analisadas para audiolivros</string>
     <string name="settings.library.use_grid.title">Utilizar a disposição da grelha</string>
     <string name="settings.playback.auto_rewind.title">Rebobin automaticamente</string>

@@ -233,14 +233,6 @@
     <string name="settings.analytics_consent.description">Allow anonymous usage data collection to help improve the app</string>
     <!-- Settings row title for analytics consent. -->
     <string name="settings.analytics_consent.title">Analytics</string>
-    <!-- Label for selecting the automatic sleep timer end time. -->
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Set end time</string>
-    <!-- Label for selecting the automatic sleep timer start time. -->
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Set start time</string>
-    <!-- Settings summary for the automatic sleep timer time window. -->
-    <string name="settings.auto_sleep_timer.summary">Start a sleep timer automatically when playback begins between %1$s and %2$s</string>
-    <!-- Settings title for automatically starting a sleep timer. -->
-    <string name="settings.auto_sleep_timer.title">Automatic Sleep Timer</string>
     <!-- Summary text for the audiobook folders settings row. -->
     <string name="settings.library.folders.summary">Manage folders scanned for audiobooks</string>
     <!-- Settings row title for choosing how the library is organized (author folders, flat list, by status). -->

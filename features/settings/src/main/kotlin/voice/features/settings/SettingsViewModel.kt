@@ -30,7 +30,6 @@ import voice.core.featureflag.KioskModeFeatureFlagQualifier
 import voice.core.ui.GridCount
 import voice.navigation.Destination
 import voice.navigation.Navigator
-import java.time.LocalTime
 import kotlin.time.Duration.Companion.minutes
 
 @Inject
@@ -70,7 +69,7 @@ class SettingsViewModel(
     val libraryOrganization by remember { libraryOrganizationStore.data }.collectAsState(
       initial = LibraryOrganization.AUTHOR_FOLDERS,
     )
-    val autoSleepTimer by remember { sleepTimerPreferenceStore.data }.collectAsState(
+    val sleepTimerPreference by remember { sleepTimerPreferenceStore.data }.collectAsState(
       initial = SleepTimerPreference.Default,
     )
     val analyticsEnabled by remember { analyticsConsentStore.data }.collectAsState(initial = false)
@@ -84,14 +83,9 @@ class SettingsViewModel(
       dialog = dialog.value,
       appVersion = appInfoProvider.versionName,
       libraryOrganization = libraryOrganization,
-      autoSleepTimer = SettingsViewState.AutoSleepTimerViewState(
-        enabled = autoSleepTimer.autoSleepTimerEnabled,
-        startTime = autoSleepTimer.autoSleepStartTime,
-        endTime = autoSleepTimer.autoSleepEndTime,
-      ),
-      sleepTimerDurationMinutes = autoSleepTimer.duration.inWholeMinutes.toInt(),
-      sleepTimerEndOfChapter = autoSleepTimer.endOfChapterEnabled,
-      shakeSensitivity = autoSleepTimer.shakeSensitivity,
+      sleepTimerDurationMinutes = sleepTimerPreference.duration.inWholeMinutes.toInt(),
+      sleepTimerEndOfChapter = sleepTimerPreference.endOfChapterEnabled,
+      shakeSensitivity = sleepTimerPreference.shakeSensitivity,
       analyticsEnabled = analyticsEnabled,
       showAnalyticSetting = appInfoProvider.analyticsIncluded,
       showDeveloperMenu = showDeveloperMenu,
@@ -146,30 +140,6 @@ class SettingsViewModel(
 
   override fun openFolderPicker() {
     navigator.goTo(Destination.FolderPicker)
-  }
-
-  override fun setAutoSleepTimer(checked: Boolean) {
-    mainScope.launch {
-      sleepTimerPreferenceStore.updateData { currentPrefs ->
-        currentPrefs.copy(autoSleepTimerEnabled = checked)
-      }
-    }
-  }
-
-  override fun setAutoSleepTimerStart(time: LocalTime) {
-    mainScope.launch {
-      sleepTimerPreferenceStore.updateData { currentPrefs ->
-        currentPrefs.copy(autoSleepStartTime = time)
-      }
-    }
-  }
-
-  override fun setAutoSleepTimerEnd(time: LocalTime) {
-    mainScope.launch {
-      sleepTimerPreferenceStore.updateData { currentPrefs ->
-        currentPrefs.copy(autoSleepEndTime = time)
-      }
-    }
   }
 
   override fun onSleepTimerDurationRowClick() {

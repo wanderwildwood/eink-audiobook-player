@@ -103,10 +103,6 @@
     <string name="settings.action.open">Innstillinger</string>
     <string name="settings.analytics_consent.description">Tillat anonym innsamling av bruksdata for å bidra til å forbedre appen</string>
     <string name="settings.analytics_consent.title">Analyse</string>
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Sett sluttid</string>
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Sett starttid</string>
-    <string name="settings.auto_sleep_timer.summary">Start en søvn-timer automatisk når avspillingen begynner mellom %1$s og %2$s</string>
-    <string name="settings.auto_sleep_timer.title">Automatisk søvn-timer</string>
     <string name="settings.library.folders.summary">Håndter mapper som er skannet for lydbøker</string>
     <string name="settings.library.use_grid.title">Bruk rutenett</string>
     <string name="settings.playback.auto_rewind.title">Auto-tilbakespoling</string>

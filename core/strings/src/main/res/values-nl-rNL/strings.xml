@@ -103,10 +103,6 @@
     <string name="settings.action.open">Instellingen</string>
     <string name="settings.analytics_consent.description">Anonieme gebruiksgegevens verzamelen toestaan om de app te verbeteren</string>
     <string name="settings.analytics_consent.title">Analyse</string>
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Zet eindtijd</string>
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Zet starttijd</string>
-    <string name="settings.auto_sleep_timer.summary">Start automatisch een slaaptimer wanneer het afspelen begint tussen %1$s en %2$s</string>
-    <string name="settings.auto_sleep_timer.title">Automatische Slaaptimer</string>
     <string name="settings.library.folders.summary">Beheer mappen die op luisterboeken worden gescand</string>
     <string name="settings.library.use_grid.title">Roosterindeling gebruiken</string>
     <string name="settings.playback.auto_rewind.title">Automatisch terugspoelen</string>

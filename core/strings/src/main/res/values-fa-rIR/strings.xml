@@ -103,10 +103,6 @@
     <string name="settings.action.open">تنظیمات</string>
     <string name="settings.analytics_consent.description">اجازه بدهید برای بهبود دادن برنامه اطلاعات استفاده شما به شکل ناشناس گردآوری شود</string>
     <string name="settings.analytics_consent.title">تجزیه‌وتحلیل آماری</string>
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">زمان پایان</string>
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">زمان شروع</string>
-    <string name="settings.auto_sleep_timer.summary">آغاز خودکار زمان خواب هنگامی که زمان پخش از %1$s تا %2$s شروع شده باشد</string>
-    <string name="settings.auto_sleep_timer.title">زمان خواب خودکار</string>
     <string name="settings.library.folders.summary">مدیریت پوشه‌هایی که برای کتاب‌های صوتی اسکن می‌شوند</string>
     <string name="settings.library.use_grid.title">چینش بصورت شبکه ای</string>
     <string name="settings.playback.auto_rewind.title">عقب بردن خودکار</string>

@@ -107,10 +107,6 @@
     <string name="settings.action.open">Nastavení</string>
     <string name="settings.analytics_consent.description">Povolit shromažďování anonymních údajů o používání pro zlepšení aplikace</string>
     <string name="settings.analytics_consent.title">Analytika</string>
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Nastavit čas konce</string>
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Nastavit čas startu</string>
-    <string name="settings.auto_sleep_timer.summary">Automatické spuštění časovače spánku při zahájení přehrávání mezi %1$s a %2$s</string>
-    <string name="settings.auto_sleep_timer.title">Automatický časovač spánku</string>
     <string name="settings.library.folders.summary">Spravovat složky pro prohledávání audioknih</string>
     <string name="settings.library.use_grid.title">Použít rozložení mřížky</string>
     <string name="settings.playback.auto_rewind.title">Automaticky přetočit</string>
