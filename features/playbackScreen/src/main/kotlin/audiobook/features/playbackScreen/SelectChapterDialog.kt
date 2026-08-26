@@ -37,21 +37,29 @@ internal fun SelectChapterDialog(
         state = rememberLazyListState(initialFirstVisibleItemIndex = initialFirstVisibleItemIndex),
         content = {
           items(dialogState.items) { chapter ->
-            val isCurrentChapter = chapter.active
             val description = stringResource(StringsR.string.playback_chapter_current_content_description)
-            val backgroundColor = if (chapter.active) {
-              MaterialTheme.colorScheme.primaryContainer
+            // The chapter being played fills its row. Setting only the container leaves the three
+            // pieces of text at their default onSurface, which on a monochrome scheme is the same
+            // black as the fill - so the row people most need to find was the one they could not
+            // read. Every content colour is flipped with the container, or neither is.
+            val colors = if (chapter.active) {
+              ListItemDefaults.colors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                headlineColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                leadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                trailingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
+              )
             } else {
-              Color.Transparent
+              ListItemDefaults.colors(containerColor = Color.Transparent)
             }
             ListItem(
-              colors = ListItemDefaults.colors(containerColor = backgroundColor),
+              colors = colors,
               modifier = Modifier
                 .padding(3.dp)
                 .clip(shape = RoundedCornerShape(12.dp))
                 .semantics {
                   selected = chapter.active
-                  if (isCurrentChapter) contentDescription = description
+                  if (chapter.active) contentDescription = description
                 }
                 .clickable {
                   viewModel.onChapterClick(number = chapter.number)
