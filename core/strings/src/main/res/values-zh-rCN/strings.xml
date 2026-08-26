@@ -7,8 +7,6 @@
     <string name="book.delete.dialog.confirm_files">删除我的文件</string>
     <string name="book.delete.dialog.message">这样做将从您的设备上删除文件。</string>
     <string name="book.delete.dialog.title">删除有声书</string>
-    <string name="book.edit.cover.file">从本机寻找封面图片</string>
-    <string name="book.edit.cover.internet">从互联网寻找封面图片</string>
     <string name="book.edit.name.label">名称</string>
     <string name="book.edit.title">编辑书名</string>
     <string name="bookmark.added.snackbar">已添加书签</string>
@@ -24,11 +22,7 @@
     <string name="common.action.remove">删除</string>
     <string name="common.dialog.cancel">取消</string>
     <string name="common.dialog.confirm">设置</string>
-    <string name="common.error.generic.message">发生了错误😢</string>
-    <string name="common.error.generic.retry">重试</string>
-    <string name="cover.content_description.selectable">显示可选封面</string>
     <string name="cover.search.recent.content_description">近期查询</string>
-    <string name="cover.title">封面</string>
     <plurals name="duration.seconds">
         <item quantity="other">%d 秒</item>
     </plurals>
@@ -40,12 +34,6 @@
     <string name="folder.mode.author.title">作者-书籍模式：子文件夹为作者，子文件夹下的文件夹为书籍。</string>
     <string name="folder.mode.root.title">顶层书籍模式：子文件夹是书籍</string>
     <string name="folder.mode.single.title">单本书模式：一个文件夹等于一本书。</string>
-    <string name="folder.type.book_example.empty">Voice没有找到任何有声书。声音文件是否存在？</string>
-    <string name="folder.type.book_example.header">这样操作将找到以下有声书</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="other">%d个声音文件</item>
-    </plurals>
-    <string name="folder.type.title">您的文件是如何组织的？</string>
     <string name="library.category.completed.title">已结束播放</string>
     <string name="library.category.current.title">正在播放中</string>
     <string name="library.category.not_started.title">尚未开始播放</string>
@@ -57,11 +45,6 @@
     <string name="library.storage_permission_bug.title">需要权限</string>
     <string name="media_session.library.recent">最近</string>
     <string name="media_session.library.root">所有有声书</string>
-    <string name="onboarding.completion.subtitle">您的第一本有声书已准备好播放。与 Voice 一起享受您的旅程！</string>
-    <string name="onboarding.explanation.subtitle">使用 Voice，您可以单独添加书籍文件或将它们组织到文件夹中。您来选择！</string>
-    <string name="onboarding.explanation.title">您的图书馆，您的风格</string>
-    <string name="onboarding.welcome.subtitle">你的个人口袋有声读物播放器。现在来进行配置吧。</string>
-    <string name="onboarding.welcome.title">欢迎使用Voice！</string>
     <string name="playback.action.fast_forward">快进</string>
     <string name="playback.action.pause">暂停</string>
     <string name="playback.action.play">播放</string>
@@ -76,7 +59,6 @@
     <string name="playback.speed.title">播放速度</string>
     <string name="settings.about.app_version.title">软件版本</string>
     <string name="settings.action.open">偏好设置</string>
-    <string name="settings.library.use_grid.title">使用网格布局</string>
     <string name="settings.playback.auto_rewind.title">自动回退</string>
     <string name="settings.playback.seek_time.title">跳过时间</string>
     <string name="shortcut.play_current.short_label">播放当前有声书</string>
