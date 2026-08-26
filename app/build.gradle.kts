@@ -43,8 +43,6 @@ android {
   productFlavors {
     register("free") {
       dimension = distributionFlavor
-      buildConfigField(type = "Boolean", name = "INCLUDE_ANALYTICS", value = "false")
-      buildConfigField(type = "Boolean", name = "SUPPORT_DEVELOPMENT_INCLUDED", value = "true")
     }
   }
 
@@ -156,7 +154,6 @@ dependencies {
   implementation(projects.features.bookOverview)
   implementation(projects.core.search)
   implementation(projects.core.documentfile)
-  implementation(projects.features.onboarding)
   implementation(projects.features.bookmark)
   implementation(projects.features.widget)
 
@@ -169,8 +166,6 @@ dependencies {
   implementation(libs.serialization.json)
 
 
-  add("freeImplementation", projects.features.review.noop)
-  add("freeImplementation", projects.features.support.free)
 
   implementation(projects.core.remoteconfig.api)
   add("freeImplementation", projects.core.remoteconfig.noop)

@@ -28,7 +28,6 @@ import voice.core.common.comparator.sortedNaturally
 import voice.core.data.Book
 import voice.core.data.BookId
 import voice.core.data.GridMode
-import voice.core.data.KioskModeDemoData
 import voice.core.data.LibraryOrganization
 import voice.core.data.shelfAuthor
 import voice.core.data.repo.BookContentRepo
@@ -41,7 +40,6 @@ import voice.core.data.store.LibraryOrganizationStore
 import voice.core.featureflag.ExperimentalPlaybackPersistenceQualifier
 import voice.core.featureflag.FeatureFlag
 import voice.core.featureflag.FolderPickerInSettingsFeatureFlagQualifier
-import voice.core.featureflag.KioskModeFeatureFlagQualifier
 import voice.core.playback.LivePlaybackState
 import voice.core.playback.PlayerController
 import voice.core.playback.overlay
@@ -82,8 +80,6 @@ class BookOverviewViewModel(
   private val folderPickerInSettingsFeatureFlag: FeatureFlag<Boolean>,
   @ExperimentalPlaybackPersistenceQualifier
   private val experimentalPlaybackPersistenceFeatureFlag: FeatureFlag<Boolean>,
-  @KioskModeFeatureFlagQualifier
-  private val kioskModeFeatureFlag: FeatureFlag<Boolean>,
   dispatcherProvider: DispatcherProvider,
 ) {
 
@@ -107,9 +103,6 @@ class BookOverviewViewModel(
 
   @Composable
   internal fun state(): BookOverviewViewState {
-    val kioskMode = remember { kioskModeFeatureFlag.get() }
-    if (kioskMode) return kioskModeState()
-
     val playState = remember { playStateManager.playStateFlow }
       .collectAsState(initial = PlayStateManager.PlayState.Paused).value
     val hasStoragePermissionBug = remember { deviceHasStoragePermissionBug.hasBug }
@@ -261,40 +254,6 @@ class BookOverviewViewModel(
       )
     }
   }
-
-  private fun kioskModeState(): BookOverviewViewState {
-    val demoItems = KioskModeDemoData.demoAudiobooks.map { book ->
-      BookOverviewItemViewState(
-        name = book.title,
-        author = book.author,
-        progress = book.progress / 100F,
-        id = book.id,
-        remainingTime = book.remaining,
-      )
-    }
-    return BookOverviewViewState(
-      sections = listOf(LibrarySection.Books(headerRes = null, books = demoItems)),
-      books = mapOf(
-        BookOverviewCategory.CURRENT to demoItems.associate { item ->
-          item.id to mutableStateOf(item)
-        },
-      ),
-      playButtonState = BookOverviewViewState.PlayButtonState.Paused,
-      showAddBookHint = false,
-      showSearchIcon = true,
-      isLoading = false,
-      searchActive = false,
-      searchViewState = BookSearchViewState.EmptySearch(
-        recentQueries = emptyList(),
-        suggestedAuthors = KioskModeDemoData.demoAudiobooks.map { it.author },
-        query = "",
-      ),
-      showStoragePermissionBugCard = false,
-      showFolderPickerIcon = false,
-      dialog = null,
-    )
-  }
-
   fun onSettingsClick() {
     navigator.goTo(Destination.Settings)
   }

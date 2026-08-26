@@ -19,7 +19,6 @@ interface SettingsListener {
   fun setSleepTimerEndOfChapter()
   fun onShakeSensitivityRowClick()
   fun setShakeSensitivity(sensitivity: ShakeSensitivity)
-  fun toggleAnalytics()
   fun openFolderPicker()
   fun onAppVersionClick()
 
@@ -42,7 +41,6 @@ interface SettingsListener {
       override fun setSleepTimerEndOfChapter() {}
       override fun onShakeSensitivityRowClick() {}
       override fun setShakeSensitivity(sensitivity: ShakeSensitivity) {}
-      override fun toggleAnalytics() {}
       override fun openFolderPicker() {}
       override fun onAppVersionClick() {}
       override fun openDeveloperMenu() {}

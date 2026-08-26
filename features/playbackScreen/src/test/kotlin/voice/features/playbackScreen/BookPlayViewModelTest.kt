@@ -23,7 +23,6 @@ import voice.core.data.BookId
 import voice.core.data.Bookmark
 import voice.core.data.Chapter
 import voice.core.data.ChapterId
-import voice.core.data.KioskModeDemoData
 import voice.core.data.MarkData
 import voice.core.data.sleeptimer.SleepTimerPreference
 import voice.core.featureflag.MemoryFeatureFlag
@@ -108,7 +107,6 @@ class BookPlayViewModelTest {
     bookId = book.id,
     dispatcherProvider = DispatcherProvider(scope.coroutineContext, scope.coroutineContext, scope.coroutineContext),
     experimentalPlaybackPersistenceFeatureFlag = MemoryFeatureFlag(false),
-    kioskModeFeatureFlag = MemoryFeatureFlag(false),
   )
 
   @Test
@@ -286,23 +284,9 @@ class BookPlayViewModelTest {
     }
   }
 
-  @Test
-  fun `viewState uses currently playing demo book in kiosk mode`() = scope.runTest {
-    val viewModel = viewModel(kioskMode = true)
-
-    backgroundScope.launchMolecule(RecompositionMode.Immediate) {
-      viewModel.viewState()
-    }.test {
-      val state = awaitItem()!!
-      assertEquals(expected = KioskModeDemoData.currentlyPlaying.title, actual = state.title)
-      assertEquals(expected = KioskModeDemoData.currentlyPlaying.chapter, actual = state.chapterName)
-    }
-  }
-
   private fun viewModel(
     book: Book = this.book,
     experimentalPlaybackPersistence: Boolean = false,
-    kioskMode: Boolean = false,
     livePlaybackFlow: MutableStateFlow<LivePlaybackState?> = MutableStateFlow(null),
     playStateFlow: MutableStateFlow<PlayStateManager.PlayState> = MutableStateFlow(PlayStateManager.PlayState.Paused),
   ): BookPlayViewModel {
@@ -331,7 +315,6 @@ class BookPlayViewModelTest {
       bookId = book.id,
       dispatcherProvider = DispatcherProvider(scope.coroutineContext, scope.coroutineContext, scope.coroutineContext),
       experimentalPlaybackPersistenceFeatureFlag = MemoryFeatureFlag(experimentalPlaybackPersistence),
-      kioskModeFeatureFlag = MemoryFeatureFlag(kioskMode),
     )
   }
 }

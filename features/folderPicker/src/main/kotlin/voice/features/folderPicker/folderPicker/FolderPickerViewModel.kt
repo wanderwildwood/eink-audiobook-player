@@ -14,7 +14,6 @@ import voice.core.data.folders.AudiobookFolders
 import voice.core.data.folders.FolderType
 import voice.core.documentfile.nameWithoutExtension
 import voice.core.featureflag.FeatureFlag
-import voice.core.featureflag.KioskModeFeatureFlagQualifier
 import voice.core.scanner.MediaScanTrigger
 import voice.navigation.Destination
 import voice.navigation.Navigator
@@ -24,8 +23,6 @@ import voice.navigation.Origin
 class FolderPickerViewModel(
   private val audiobookFolders: AudiobookFolders,
   private val navigator: Navigator,
-  @KioskModeFeatureFlagQualifier
-  private val kioskModeFeatureFlag: FeatureFlag<Boolean>,
   private val mediaScanTrigger: MediaScanTrigger,
 ) {
 
@@ -39,14 +36,6 @@ class FolderPickerViewModel(
 
   @Composable
   fun viewState(): FolderPickerViewState {
-    val kioskMode = remember { kioskModeFeatureFlag.get() }
-    if (kioskMode) {
-      return FolderPickerViewState(
-        items = kioskModeItems,
-        showActions = false,
-      )
-    }
-
     val folders: List<FolderPickerViewState.Item> by remember {
       items()
     }.collectAsState(initial = emptyList())
@@ -85,23 +74,19 @@ class FolderPickerViewModel(
     audiobookFolders.remove(item.id, item.folderType)
   }
 
-  private companion object {
-    val kioskModeItems = listOf(
-      FolderPickerViewState.Item(
-        name = "Audiobooks",
-        id = Uri.EMPTY,
-        folderType = FolderType.Root,
-      ),
-      FolderPickerViewState.Item(
-        name = "Sci-Fi",
-        id = Uri.EMPTY,
-        folderType = FolderType.SingleFolder,
-      ),
-      FolderPickerViewState.Item(
-        name = "Non-Fiction",
-        id = Uri.EMPTY,
-        folderType = FolderType.SingleFolder,
-      ),
-    )
+  /**
+   * Correct how a folder is read when the detection guessed wrong. The folder is registered
+   * under its type, so changing it means dropping the old registration and adding the same uri
+   * back under the new one. A rescan follows because every book in that folder is now a
+   * different shape.
+   */
+  fun changeFolderType(
+    item: FolderPickerViewState.Item,
+    folderType: FolderType,
+  ) {
+    if (folderType == item.folderType) return
+    audiobookFolders.remove(item.id, item.folderType)
+    audiobookFolders.add(item.id, folderType)
+    mediaScanTrigger.scan(restartIfScanning = true)
   }
 }

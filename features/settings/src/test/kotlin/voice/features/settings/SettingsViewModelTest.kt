@@ -19,7 +19,6 @@ import voice.core.common.DispatcherProvider
 import voice.core.data.GridMode
 import voice.core.data.LibraryOrganization
 import voice.core.data.sleeptimer.SleepTimerPreference
-import voice.core.featureflag.MemoryFeatureFlag
 import voice.core.ui.GridCount
 import voice.navigation.Destination
 import voice.navigation.Navigator
@@ -36,20 +35,17 @@ class SettingsViewModelTest {
   private val gridModeStore = MemoryDataStore(GridMode.GRID)
   private val libraryOrganizationStore = MemoryDataStore(LibraryOrganization.AUTHOR_FOLDERS)
   private val sleepTimerPreferenceStore = MemoryDataStore(SleepTimerPreference.Default)
-  private val analyticsConsentStore = MemoryDataStore(false)
   private val developerMenuUnlockedStore = MemoryDataStore(false)
   private val navigator = mockk<Navigator> {
     every { goTo(any()) } just Runs
   }
   private val appInfoProvider = mockk<AppInfoProvider> {
     every { versionName } returns "1.2.3"
-    every { analyticsIncluded } returns true
     every { installTime } returns Instant.parse("2026-06-01T00:00:00Z")
   }
   private val gridCount = mockk<GridCount> {
     every { useGridAsDefault() } returns true
   }
-  private val kioskModeFeatureFlag = MemoryFeatureFlag(false)
 
   private val viewModel = SettingsViewModel(
     autoRewindAmountStore = autoRewindAmountStore,
@@ -59,9 +55,7 @@ class SettingsViewModelTest {
     gridModeStore = gridModeStore,
     libraryOrganizationStore = libraryOrganizationStore,
     sleepTimerPreferenceStore = sleepTimerPreferenceStore,
-    analyticsConsentStore = analyticsConsentStore,
     gridCount = gridCount,
-    kioskModeFeatureFlag = kioskModeFeatureFlag,
     developerMenuUnlockedStore = developerMenuUnlockedStore,
     dispatcherProvider = DispatcherProvider(scope.coroutineContext, scope.coroutineContext, scope.coroutineContext),
   )
@@ -110,18 +104,6 @@ class SettingsViewModelTest {
     }
   }
 
-  @Test
-  fun `view state exposes kiosk mode`() = scope.runTest {
-    kioskModeFeatureFlag.value = true
-
-    backgroundScope.launchMolecule(RecompositionMode.Immediate) {
-      viewModel.viewState()
-    }.test {
-      awaitItem().let {
-        assertEquals(expected = true, actual = it.kioskMode)
-      }
-    }
-  }
 }
 
 private class MemoryDataStore<T>(initial: T) : DataStore<T> {

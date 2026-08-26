@@ -14,10 +14,6 @@
     <string name="book.delete.dialog.message">This will delete the files on your device.</string>
     <!-- Title for the delete-book confirmation dialog. -->
     <string name="book.delete.dialog.title">Delete Book</string>
-    <!-- Bottom-sheet item for choosing a cover from local files. -->
-    <string name="book.edit.cover.file">Cover from the file system</string>
-    <!-- Bottom-sheet item for choosing a cover from an internet search. -->
-    <string name="book.edit.cover.internet">Cover from the Internet</string>
     <!-- Label for the editable book-name field and bottom-sheet item. -->
     <string name="book.edit.name.label">Name</string>
     <!-- Title for the dialog that edits a book title. -->
@@ -50,20 +46,8 @@
     <string name="common.dialog.confirm">Set</string>
     <!-- Generic action for acknowledging a dialog message. -->
     <string name="common.dialog.ok">OK</string>
-    <!-- Generic error message shown when cover search or loading fails. -->
-    <string name="common.error.generic.message">Something went wrong 😢</string>
-    <!-- Retry action shown after a generic error. -->
-    <string name="common.error.generic.retry">Retry</string>
-    <!-- Content description for a cover preview that can be selected. -->
-    <string name="cover.content_description.selectable">Shows cover to choose</string>
-    <!-- Search query template for cover lookup when title and author are known. -->
-    <string name="cover.search.query.with_author">%1$s by %2$s audiobook cover</string>
-    <!-- Search query template for cover lookup when only the book title is known. -->
-    <string name="cover.search.query.without_author">%s audiobook cover</string>
     <!-- Content description for an icon indicating a recent cover-search query. -->
     <string name="cover.search.recent.content_description">Recent query</string>
-    <!-- Generic title for artwork shown for a book or cover editor. -->
-    <string name="cover.title">Cover</string>
     <!-- Pluralized duration text for the sleep timer duration setting. -->
     <plurals name="duration.minutes">
         <item quantity="one">%d minute</item>
@@ -75,32 +59,23 @@
         <item quantity="other">%d seconds</item>
     </plurals>
     <!-- Title for the folder picker during normal app use. -->
-    <string name="folder.add.title.default">Add your Audiobook(s)</string>
-    <!-- Title for the folder picker when adding the first audiobook during onboarding. -->
-    <string name="folder.add.title.onboarding">Add Your First Audiobook</string>
+    <string name="folder.add.title.default">Add books</string>
+    <!-- Title for the folder picker on first launch, which is the whole of onboarding. -->
+    <string name="folder.add.title.onboarding">Add your books</string>
     <!-- Button label for adding a single audio file as a book. -->
     <string name="folder.add.type.file">File</string>
     <!-- Button label for adding a folder of audiobooks. -->
     <string name="folder.add.type.folder">Folder</string>
     <!-- Subtitle asking whether the user wants to add a file or folder. -->
-    <string name="folder.add.type.subtitle">Would you like to add a single file as a book or a folder?</string>
+    <string name="folder.add.type.subtitle">A single file is one book. A folder can hold many.</string>
+    <!-- Title of the dialog for correcting how a folder is read, from the folder list. -->
+    <string name="folder.type.change.title">How this folder is read</string>
     <!-- Title for folder mode where subfolders are authors and nested folders are books. -->
-    <string name="folder.mode.author.title">Author-Book Mode: Subfolders are authors, sub-subfolders are books.</string>
+    <string name="folder.mode.author.title">Author-book mode: folders are authors, the folders inside them are books</string>
     <!-- Title for folder mode where top-level subfolders are books. -->
-    <string name="folder.mode.root.title">Top-Level Book Mode: Subfolders are books</string>
+    <string name="folder.mode.root.title">Top-level book mode: each folder is a book</string>
     <!-- Title for folder mode where the selected folder is one book. -->
-    <string name="folder.mode.single.title">Single Book Mode: One folder equals one book.</string>
-    <!-- Empty-state message when no books are detected from selected files. -->
-    <string name="folder.type.book_example.empty">eInk Audiobook Player could not detect any books. Are there any audio files?</string>
-    <!-- Header above the preview of books detected from a folder structure. -->
-    <string name="folder.type.book_example.header">This would lead to the following books being detected</string>
-    <!-- Pluralized file count shown in folder structure previews. -->
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d audio file</item>
-        <item quantity="other">%d audio files</item>
-    </plurals>
-    <!-- Title for choosing how audiobook files are structured. -->
-    <string name="folder.type.title">How are your files structured?</string>
+    <string name="folder.mode.single.title">Single book mode: this folder is one book</string>
     <!-- Header above the list of author folders on the library screen. -->
     <string name="library.browse.title">Library</string>
     <!-- Author-folder label for books that weren't scanned from an author-folder structure. -->
@@ -141,35 +116,7 @@
     <string name="media_session.library.recent">Recent</string>
     <!-- Media browser root title for all audiobooks. -->
     <string name="media_session.library.root">All audiobooks</string>
-    <!-- Button label for advancing to the next onboarding step. -->
-    <string name="onboarding.action.next">Next</string>
-    <!-- Button label for continuing with analytics disabled. -->
-    <string name="onboarding.analytics_consent.action.disable">Continue without analytics</string>
-    <!-- Button label for continuing with analytics enabled. -->
-    <string name="onboarding.analytics_consent.action.enable">Continue with analytics</string>
-    <!-- Link label for opening the privacy policy from analytics consent. -->
-    <string name="onboarding.analytics_consent.action.privacy_policy">Privacy Policy</string>
-    <!-- Description for analytics consent during onboarding. -->
-    <string name="onboarding.analytics_consent.description">Allow us to collect anonymous usage data to help improve the app. You can change this later in settings.</string>
-    <!-- Title for analytics consent during onboarding. -->
-    <string name="onboarding.analytics_consent.title">Help improve eInk Audiobook Player</string>
-    <!-- Button label for leaving onboarding and starting playback. -->
-    <string name="onboarding.completion.action.start_listening">Start Listening</string>
-    <!-- Subtitle on the onboarding completion screen. -->
-    <string name="onboarding.completion.subtitle">Your first audiobook is ready to play. Enjoy your journey with eInk Audiobook Player!</string>
-    <!-- Title on the onboarding completion screen. -->
-    <string name="onboarding.completion.title">You\'re All Set!</string>
-    <!-- Subtitle explaining file and folder choices in onboarding. -->
-    <string name="onboarding.explanation.subtitle">With eInk Audiobook Player, you can add books as individual files or organize them in folders. You choose!</string>
-    <!-- Title on the onboarding explanation screen. -->
-    <string name="onboarding.explanation.title">Your Library, Your Way</string>
-    <!-- Subtitle on the onboarding welcome screen. -->
-    <string name="onboarding.welcome.subtitle">Your personal pocket audiobook player. Let\'s get you set up.</string>
-    <!-- Title on the onboarding welcome screen. -->
-    <string name="onboarding.welcome.title">Welcome to eInk Audiobook Player!</string>
     <!-- Label for the playback action that skips forward. -->
-    <!-- Label under the chapter skip buttons on the playback screen. Keep it short. -->
-    <string name="playback.action.chapter">Chapter</string>
     <!-- Locks the playback controls so a stray touch cannot change anything. -->
     <string name="playback.action.lock">Lock controls</string>
     <string name="playback.action.unlock">Unlock controls</string>
@@ -207,38 +154,16 @@
     <string name="common.dialog.longer">Longer</string>
     <!-- Content description for the button that raises the playback speed. -->
     <string name="playback.speed.faster">Faster</string>
-    <!-- Negative button for cancelling feedback. -->
-    <string name="review.feedback.action.cancel" tools:ignore="UnusedResources">Cancel</string>
-    <!-- Positive button for sending feedback. -->
-    <string name="review.feedback.action.send" tools:ignore="UnusedResources">Send Feedback</string>
-    <!-- Message for the dialog asking unhappy users for feedback. -->
-    <string name="review.feedback.message" tools:ignore="UnusedResources">Could you tell us what went wrong? We appreciate your feedback and it helps us to improve your experience.</string>
-    <!-- Title for the dialog asking unhappy users for feedback. -->
-    <string name="review.feedback.title" tools:ignore="UnusedResources">We\'re sorry to hear that!</string>
-    <!-- Negative button for dismissing the rating request. -->
-    <string name="review.request.action.dismiss" tools:ignore="UnusedResources">No, Thanks</string>
-    <!-- Positive button for opening the rating flow. -->
-    <string name="review.request.action.rate" tools:ignore="UnusedResources">Rate Now</string>
-    <!-- Message for the dialog asking happy users to rate the app. -->
-    <string name="review.request.message" tools:ignore="UnusedResources">Your feedback matters to us! If you have a moment, rate us and share your experience. It helps us to make improvements and offer a better listening experience.</string>
-    <!-- Title for the dialog asking happy users to rate the app. -->
-    <string name="review.request.title" tools:ignore="UnusedResources">Enjoying Voice?</string>
     <!-- Settings about row showing the app version. -->
     <!-- Title of the row that opens the About dialog, and of the dialog itself. -->
     <string name="settings.about.title">About</string>
     <string name="settings.about.app_version.title">App version</string>
     <!-- Title and content description for opening settings. -->
     <string name="settings.action.open">Preferences</string>
-    <!-- Settings row description for analytics consent. -->
-    <string name="settings.analytics_consent.description">Allow anonymous usage data collection to help improve the app</string>
-    <!-- Settings row title for analytics consent. -->
-    <string name="settings.analytics_consent.title">Analytics</string>
     <!-- Summary text for the audiobook folders settings row. -->
     <string name="settings.library.folders.summary">Manage folders scanned for audiobooks</string>
     <!-- Settings row title for choosing how the library is organized (author folders, flat list, by status). -->
     <string name="settings.library.organization.title">Library view</string>
-    <!-- Settings row for toggling grid layout in the library. -->
-    <string name="settings.library.use_grid.title">Use grid layout</string>
     <!-- Title for the setting that rewinds automatically when playback resumes. -->
     <string name="settings.playback.auto_rewind.title">Auto rewind</string>
     <!-- Title for the setting that controls skip-forward and rewind duration. -->
@@ -262,22 +187,6 @@
     <!-- Settings support row for opening the FAQ. -->
     <!-- Settings support row linking to the source code repository. -->
     <string name="settings.support.source_code.title">Source code</string>
-    <!-- Support screen action for donating through Ko-fi. -->
-    <string name="support.action.donate_kofi">Donate on Ko-fi</string>
-    <!-- Support screen text explaining why support is useful. -->
-    <string name="support.description.maintenance">Voice is free, open source, and maintained by one developer.</string>
-    <!-- Support screen text under the main description. -->
-    <string name="support.description.maintenance_subtitle">Donations help fund ongoing maintenance and development.</string>
-    <!-- Support screen heading above the list of what donations enable. -->
-    <string name="support.helps.title">Support helps with</string>
-    <!-- Support screen list item: bug fixes and ongoing maintenance. -->
-    <string name="support.helps.maintenance">Bug fixes and maintenance</string>
-    <!-- Support screen list item: new features. -->
-    <string name="support.helps.features">New features</string>
-    <!-- Support screen list item: keeping Voice free, open source, and ad-free. -->
-    <string name="support.helps.open_source">Keeping Voice ad-free</string>
-    <!-- Title of the support screen. -->
-    <string name="support.title">Support development</string>
     <!-- Short label for the launcher shortcut that plays the current book. -->
     <string name="shortcut.play_current.short_label">Play current</string>
     <!-- Content description for opening the sleep timer. -->

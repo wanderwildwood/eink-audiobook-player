@@ -82,7 +82,7 @@ private fun Settings(
     },
   ) { contentPadding ->
     LazyColumn(contentPadding = contentPadding) {
-      if (viewState.showDeveloperMenu && !viewState.kioskMode) {
+      if (viewState.showDeveloperMenu) {
         item {
           DeveloperMenuItem(
             onClick = listener::openDeveloperMenu,
@@ -105,11 +105,6 @@ private fun Settings(
             Text(stringResource(StringsR.string.settings_library_folders_summary))
           },
         )
-      }
-      if (viewState.showAnalyticSetting && !viewState.kioskMode) {
-        item {
-          AnalyticsRow(analyticsEnabled = viewState.analyticsEnabled, toggle = listener::toggleAnalytics)
-        }
       }
       item {
         LibraryOrganizationRow(
@@ -162,52 +157,11 @@ private fun Settings(
           },
         )
       }
-      if (viewState.kioskMode) {
-        if (viewState.showAnalyticSetting) {
-          item {
-            AnalyticsRow(analyticsEnabled = viewState.analyticsEnabled, toggle = listener::toggleAnalytics)
-          }
-        }
-        if (viewState.showDeveloperMenu) {
-          item {
-            DeveloperMenuItem(
-              onClick = listener::openDeveloperMenu,
-            )
-          }
-        }
-      }
     }
     Dialog(viewState, listener)
   }
 }
 
-@Composable
-private fun AnalyticsRow(
-  analyticsEnabled: Boolean,
-  toggle: () -> Unit,
-) {
-  ListItem(
-    modifier = Modifier.clickable { toggle() },
-    leadingContent = {
-      Icon(
-        imageVector = VoiceIcons.Analytics,
-        contentDescription = null,
-      )
-    },
-    headlineContent = {
-      Text(text = stringResource(StringsR.string.settings_analytics_consent_title))
-    },
-    supportingContent = {
-      Text(text = stringResource(StringsR.string.settings_analytics_consent_description))
-    },
-    trailingContent = {
-      Switch(
-        checked = analyticsEnabled,
-        onCheckedChange = { toggle() },
-      )
-    },
-  )
-}
 
 @ContributesTo(AppScope::class)
 interface SettingsGraph {

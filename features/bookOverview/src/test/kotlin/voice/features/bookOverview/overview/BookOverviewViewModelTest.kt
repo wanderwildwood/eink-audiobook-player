@@ -23,7 +23,6 @@ import voice.core.common.DispatcherProvider
 import voice.core.data.Book
 import voice.core.data.BookId
 import voice.core.data.GridMode
-import voice.core.data.KioskModeDemoData
 import voice.core.data.LibraryOrganization
 import voice.core.data.repo.BookContentRepo
 import voice.core.data.repo.BookRepository
@@ -87,7 +86,6 @@ class BookOverviewViewModelTest {
       },
       folderPickerInSettingsFeatureFlag = MemoryFeatureFlag(false),
       experimentalPlaybackPersistenceFeatureFlag = MemoryFeatureFlag(true),
-      kioskModeFeatureFlag = MemoryFeatureFlag(false),
       dispatcherProvider = dispatcherProvider,
     )
 
@@ -117,57 +115,6 @@ class BookOverviewViewModelTest {
       assertEquals(expected = currentBook.overlay(livePlaybackState).toItemViewState(), actual = initial.currentBook(currentBook.id))
       assertEquals(expected = initialOtherItem, actual = initial.currentBook(otherBook.id))
       expectNoEvents()
-    }
-  }
-
-  @Test
-  fun `state uses demo books in kiosk mode`() = runTest {
-    val viewModel = BookOverviewViewModel(
-      repo = mockk<BookRepository> {
-        every { flow() } returns MutableStateFlow(emptyList())
-      },
-      mediaScanner = mockk<MediaScanTrigger> {
-        every { scannerActive } returns MutableStateFlow(false)
-        every { scan(any()) } just Runs
-      },
-      playStateManager = PlayStateManager(),
-      playerController = mockk(),
-      currentBookStoreDataStore = MemoryDataStore(null),
-      folderPickerMovedDialogShownStore = MemoryDataStore(false),
-      gridModeStore = MemoryDataStore(GridMode.LIST),
-      libraryOrganizationStore = MemoryDataStore(LibraryOrganization.AUTHOR_FOLDERS),
-      gridCount = mockk<GridCount> {
-        every { useGridAsDefault() } returns false
-      },
-      navigator = mockk<Navigator>(),
-      appInfoProvider = appInfoProvider(),
-      recentBookSearchDao = mockk<RecentBookSearchDao> {
-        every { recentBookSearches() } returns MutableStateFlow(emptyList())
-      },
-      search = mockk<BookSearch> {
-        coEvery { search(any()) } returns emptyList()
-      },
-      contentRepo = mockk<BookContentRepo>(),
-      deviceHasStoragePermissionBug = mockk<DeviceHasStoragePermissionBug> {
-        every { hasBug } returns MutableStateFlow(false)
-      },
-      folderPickerInSettingsFeatureFlag = MemoryFeatureFlag(false),
-      experimentalPlaybackPersistenceFeatureFlag = MemoryFeatureFlag(false),
-      kioskModeFeatureFlag = MemoryFeatureFlag(true),
-      dispatcherProvider = dispatcherProvider,
-    )
-
-    backgroundScope.launchMolecule(RecompositionMode.Immediate) {
-      viewModel.state()
-    }.test {
-      val state = awaitItem()
-      assertEquals(
-        expected = KioskModeDemoData.demoAudiobooks.map {
-          it.id
-        },
-        actual = state.books.getValue(BookOverviewCategory.CURRENT).keys.toList(),
-      )
-      assertEquals(expected = "Echoes of Tomorrow", actual = state.currentBook(KioskModeDemoData.currentlyPlaying.id).name)
     }
   }
 
@@ -464,7 +411,6 @@ class BookOverviewViewModelTest {
       },
       folderPickerInSettingsFeatureFlag = folderPickerInSettingsFeatureFlag,
       experimentalPlaybackPersistenceFeatureFlag = MemoryFeatureFlag(false),
-      kioskModeFeatureFlag = MemoryFeatureFlag(false),
       dispatcherProvider = dispatcherProvider,
     )
   }

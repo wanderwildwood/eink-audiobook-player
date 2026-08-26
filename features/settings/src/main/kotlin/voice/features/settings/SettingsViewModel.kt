@@ -18,7 +18,6 @@ import voice.core.data.GridMode
 import voice.core.data.LibraryOrganization
 import voice.core.data.sleeptimer.ShakeSensitivity
 import voice.core.data.sleeptimer.SleepTimerPreference
-import voice.core.data.store.AnalyticsConsentStore
 import voice.core.data.store.AutoRewindAmountStore
 import voice.core.data.store.DeveloperMenuUnlockedStore
 import voice.core.data.store.GridModeStore
@@ -26,7 +25,6 @@ import voice.core.data.store.LibraryOrganizationStore
 import voice.core.data.store.SeekTimeStore
 import voice.core.data.store.SleepTimerPreferenceStore
 import voice.core.featureflag.FeatureFlag
-import voice.core.featureflag.KioskModeFeatureFlagQualifier
 import voice.core.ui.GridCount
 import voice.navigation.Destination
 import voice.navigation.Navigator
@@ -46,11 +44,7 @@ class SettingsViewModel(
   private val libraryOrganizationStore: DataStore<LibraryOrganization>,
   @SleepTimerPreferenceStore
   private val sleepTimerPreferenceStore: DataStore<SleepTimerPreference>,
-  @AnalyticsConsentStore
-  private val analyticsConsentStore: DataStore<Boolean>,
   private val gridCount: GridCount,
-  @KioskModeFeatureFlagQualifier
-  private val kioskModeFeatureFlag: FeatureFlag<Boolean>,
   @DeveloperMenuUnlockedStore
   private val developerMenuUnlockedStore: DataStore<Boolean>,
   dispatcherProvider: DispatcherProvider,
@@ -72,10 +66,6 @@ class SettingsViewModel(
     val sleepTimerPreference by remember { sleepTimerPreferenceStore.data }.collectAsState(
       initial = SleepTimerPreference.Default,
     )
-    val analyticsEnabled by remember { analyticsConsentStore.data }.collectAsState(initial = false)
-    val kioskMode = remember {
-      kioskModeFeatureFlag.get()
-    }
     val showDeveloperMenu by remember { developerMenuUnlockedStore.data }.collectAsState(initial = false)
     return SettingsViewState(
       seekTimeInSeconds = seekTime,
@@ -86,10 +76,7 @@ class SettingsViewModel(
       sleepTimerDurationMinutes = sleepTimerPreference.duration.inWholeMinutes.toInt(),
       sleepTimerEndOfChapter = sleepTimerPreference.endOfChapterEnabled,
       shakeSensitivity = sleepTimerPreference.shakeSensitivity,
-      analyticsEnabled = analyticsEnabled,
-      showAnalyticSetting = appInfoProvider.analyticsIncluded,
       showDeveloperMenu = showDeveloperMenu,
-      kioskMode = kioskMode,
     )
   }
 
@@ -179,12 +166,6 @@ class SettingsViewModel(
       }
     }
     dialog.value = null
-  }
-
-  override fun toggleAnalytics() {
-    mainScope.launch {
-      analyticsConsentStore.updateData { !it }
-    }
   }
 
   override fun onAppVersionClick() {

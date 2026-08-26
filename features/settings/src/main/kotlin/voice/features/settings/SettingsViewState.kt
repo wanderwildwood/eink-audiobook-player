@@ -12,10 +12,7 @@ data class SettingsViewState(
   val sleepTimerDurationMinutes: Int,
   val sleepTimerEndOfChapter: Boolean,
   val shakeSensitivity: ShakeSensitivity,
-  val showAnalyticSetting: Boolean,
-  val analyticsEnabled: Boolean,
   val showDeveloperMenu: Boolean,
-  val kioskMode: Boolean,
 ) {
 
   enum class Dialog {
@@ -38,10 +35,7 @@ data class SettingsViewState(
         sleepTimerDurationMinutes = 10,
         sleepTimerEndOfChapter = false,
         shakeSensitivity = ShakeSensitivity.Default,
-        analyticsEnabled = false,
-        showAnalyticSetting = true,
         showDeveloperMenu = true,
-        kioskMode = false,
       )
     }
   }

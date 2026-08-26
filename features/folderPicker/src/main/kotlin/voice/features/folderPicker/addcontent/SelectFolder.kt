@@ -34,22 +34,10 @@ internal fun SelectFolder(
   Scaffold(
     modifier = modifier,
     topBar = {
-      SelectFolderAppBar(onBack)
+      SelectFolderAppBar(onBack, origin)
     },
     content = { contentPadding ->
       Column(Modifier.padding(contentPadding)) {
-        if (shouldShowImage()) {
-          Image(
-            modifier = Modifier
-              .weight(1F)
-              .heightIn(max = 400.dp)
-              .padding(top = 32.dp, bottom = 24.dp, start = 24.dp, end = 24.dp)
-              .align(Alignment.CenterHorizontally),
-            painter = painterResource(id = R.drawable.folder_type_artwork),
-            contentDescription = null,
-          )
-        }
-
         Column(Modifier.weight(2F)) {
           Spacer(modifier = Modifier.size(16.dp))
 
@@ -75,13 +63,6 @@ internal fun SelectFolder(
       }
     },
   )
-}
-
-@Composable
-private fun shouldShowImage(): Boolean {
-  val localWindowInfo = LocalWindowInfo.current
-  val thresholdPx = with(LocalDensity.current) { 600.dp.toPx() }
-  return localWindowInfo.containerSize.height > thresholdPx
 }
 
 @Composable

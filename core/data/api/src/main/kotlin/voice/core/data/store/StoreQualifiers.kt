@@ -42,9 +42,6 @@ public annotation class ReviewDialogShownStore
 public annotation class FolderPickerMovedDialogShownStore
 
 @Qualifier
-public annotation class AnalyticsConsentStore
-
-@Qualifier
 public annotation class DeveloperMenuUnlockedStore
 
 @Qualifier
