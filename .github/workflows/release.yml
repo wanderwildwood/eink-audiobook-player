@@ -20,12 +20,45 @@ jobs:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/build_setup
 
+      # Without these the build falls back to the debug keystore checked into the repo, and the
+      # release goes out signed with a key anybody has. Fail loudly instead of shipping that.
+      - name: Restore signing key
+        env:
+          KEYSTORE_BASE64: ${{ secrets.SIGNING_KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+        run: |
+          if [ -z "$KEYSTORE_BASE64" ]; then
+            echo "::error::SIGNING_KEYSTORE_BASE64 is not set - refusing to build an unsigned release."
+            exit 1
+          fi
+          mkdir -p signing
+          printf '%s' "$KEYSTORE_BASE64" | base64 -d > signing/signing.keystore
+          {
+            echo "STORE_PASSWORD=$STORE_PASSWORD"
+            echo "KEY_ALIAS=$KEY_ALIAS"
+            echo "KEY_PASSWORD=$KEY_PASSWORD"
+          } > signing/signing.properties
+
       - name: Build APK
         run: |
           version_name="${GITHUB_REF_NAME#v}"
           ./gradlew :app:assembleFreeRelease \
             -Pvoice.versionName="$version_name" \
             -Pvoice.versionCode="$GITHUB_RUN_NUMBER"
+
+      # A release signed with the wrong key cannot be taken back once people have installed it.
+      - name: Verify the APK is not debug signed
+        run: |
+          apk=app/build/outputs/apk/free/release/app-free-release.apk
+          apksigner=$(ls "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -1)
+          certs=$("$apksigner" verify --print-certs "$apk")
+          echo "$certs"
+          if echo "$certs" | grep -q "CN=Android Debug"; then
+            echo "::error::APK is signed with the debug key."
+            exit 1
+          fi
 
       - name: Rename APK and generate checksum
         run: |
