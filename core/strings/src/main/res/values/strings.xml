@@ -67,7 +67,7 @@
     <!-- Button label for adding a folder of audiobooks. -->
     <string name="folder.add.type.folder">Folder</string>
     <!-- Subtitle asking whether the user wants to add a file or folder. -->
-    <string name="folder.add.type.subtitle">A single file is one book. A folder can hold many.</string>
+    <string name="folder.add.type.subtitle">A single file is one book.\nA folder can hold many.</string>
     <!-- Title of the dialog for correcting how a folder is read, from the folder list. -->
     <string name="folder.type.change.title">How this folder is read</string>
     <!-- Title for folder mode where subfolders are authors and nested folders are books. -->

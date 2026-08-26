@@ -5,10 +5,8 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -19,10 +17,10 @@ import voice.core.ui.icons.VoiceIcons
 import voice.features.folderPicker.folderPicker.FileTypeSelection
 
 @Composable
-internal fun SelectFolderButtonRow(onAdd: (FileTypeSelection, Uri) -> Unit) {
-  Row(
-    Modifier.fillMaxWidth(),
-    horizontalArrangement = Arrangement.Center,
+internal fun SelectFolderChoices(onAdd: (FileTypeSelection, Uri) -> Unit) {
+  Column(
+    modifier = Modifier.fillMaxWidth(),
+    verticalArrangement = Arrangement.spacedBy(4.dp),
   ) {
     val openDocumentLauncher = rememberLauncherForActivityResult(
       ActivityResultContracts.OpenDocument(),
@@ -38,19 +36,7 @@ internal fun SelectFolderButtonRow(onAdd: (FileTypeSelection, Uri) -> Unit) {
         }
       }
 
-    SelectFolderButton(
-      icon = VoiceIcons.Folder,
-      text = stringResource(id = R.string.folder_add_type_folder),
-      onClick = {
-        try {
-          documentTreeLauncher.launch(null)
-        } catch (e: ActivityNotFoundException) {
-          Logger.w(e, "Could not add folder")
-        }
-      },
-    )
-    Spacer(modifier = Modifier.size(8.dp))
-    SelectFolderButton(
+    SelectFolderChoice(
       icon = VoiceIcons.AudioFile,
       text = stringResource(id = R.string.folder_add_type_file),
       onClick = {
@@ -58,6 +44,17 @@ internal fun SelectFolderButtonRow(onAdd: (FileTypeSelection, Uri) -> Unit) {
           openDocumentLauncher.launch(arrayOf("*/*"))
         } catch (e: ActivityNotFoundException) {
           Logger.w(e, "Could not add file")
+        }
+      },
+    )
+    SelectFolderChoice(
+      icon = VoiceIcons.Folder,
+      text = stringResource(id = R.string.folder_add_type_folder),
+      onClick = {
+        try {
+          documentTreeLauncher.launch(null)
+        } catch (e: ActivityNotFoundException) {
+          Logger.w(e, "Could not add folder")
         }
       },
     )
