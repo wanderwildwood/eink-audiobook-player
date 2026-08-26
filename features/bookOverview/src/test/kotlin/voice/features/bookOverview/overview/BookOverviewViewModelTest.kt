@@ -327,6 +327,9 @@ class BookOverviewViewModelTest {
       books = listOf(
         book(name = "Redwall", genre = "Fantasy", folderName = "Brian Jacques"),
         book(name = "Cosmos", genre = "Science", folderName = "Carl Sagan"),
+        // Only Author-Book Mode sets a folder name. Without the fallback to the author tag this
+        // book, and in the other two folder modes the entire library, lands on one unnamed shelf.
+        book(name = "Aurora", genre = "Science Fiction", folderName = null, author = "Kim Stanley Robinson"),
       ),
     )
 
@@ -340,6 +343,7 @@ class BookOverviewViewModelTest {
             listOf(
               AuthorFolderViewState(folderName = "Brian Jacques", bookCount = 1),
               AuthorFolderViewState(folderName = "Carl Sagan", bookCount = 1),
+              AuthorFolderViewState(folderName = "Kim Stanley Robinson", bookCount = 1),
             ),
           ),
         ),

@@ -27,7 +27,7 @@ class AuthorBooksViewModelTest {
     book(name = "Redwall", genre = "Fantasy", folderName = "Brian Jacques"),
     book(name = "Mossflower", genre = "Fantasy", folderName = "Brian Jacques"),
     book(name = "Cosmos", genre = "Science", folderName = "Carl Sagan"),
-    book(name = "Loose", genre = "Science", folderName = null),
+    book(name = "Loose", genre = "Science", folderName = null, author = "Kim Stanley Robinson"),
     book(name = "Untagged", genre = null, folderName = "Carl Sagan"),
   )
 
@@ -59,10 +59,10 @@ class AuthorBooksViewModelTest {
   }
 
   @Test
-  fun `the unsorted author folder shelf holds the books with no folder, not the ones with no genre`() = runTest {
+  fun `a book with no author folder is shelved under its author tag instead`() = runTest {
     assertShelf(
       shelf = Destination.AuthorBooks.Shelf.AUTHOR_FOLDER,
-      name = null,
+      name = "Kim Stanley Robinson",
       bookNames = listOf("Loose"),
     )
   }

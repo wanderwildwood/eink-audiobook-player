@@ -30,6 +30,7 @@ import voice.core.data.BookId
 import voice.core.data.GridMode
 import voice.core.data.KioskModeDemoData
 import voice.core.data.LibraryOrganization
+import voice.core.data.shelfAuthor
 import voice.core.data.repo.BookContentRepo
 import voice.core.data.repo.BookRepository
 import voice.core.data.repo.internals.dao.RecentBookSearchDao
@@ -157,7 +158,7 @@ class BookOverviewViewModel(
         )
       }
 
-    val folders = shelves { it.content.folderName }
+    val folders = shelves { it.content.shelfAuthor }
 
     val sections = when (libraryOrganization) {
       LibraryOrganization.AUTHOR_FOLDERS -> listOf(LibrarySection.Folders(folders))

@@ -11,6 +11,7 @@ import voice.core.data.BookComparator
 import voice.core.data.BookId
 import voice.core.data.GridMode
 import voice.core.data.repo.BookRepository
+import voice.core.data.shelfAuthor
 import voice.core.data.store.GridModeStore
 import voice.core.ui.GridCount
 import voice.features.bookOverview.overview.BookOverviewLayoutMode
@@ -41,7 +42,7 @@ class AuthorBooksViewModel(
       books = books
         .filter {
           name == when (shelf) {
-            Destination.AuthorBooks.Shelf.AUTHOR_FOLDER -> it.content.folderName
+            Destination.AuthorBooks.Shelf.AUTHOR_FOLDER -> it.content.shelfAuthor
             Destination.AuthorBooks.Shelf.GENRE -> it.content.genre
           }
         }
