@@ -85,7 +85,13 @@ class VoicePlayerTest {
     .build()
 
   private val scope = TestScope()
-  private val mediaItemProvider = MediaItemProvider(mockk(), mockk(), mockk(), mockk(), mockk(), mockk())
+  private val mediaItemProvider = MediaItemProvider(
+    bookRepository = mockk(),
+    application = mockk(),
+    chapterRepo = mockk(),
+    contentRepo = mockk(),
+    currentBookStoreId = mockk(),
+  )
   private val bookId = BookId(Uuid.random().toString())
   private lateinit var currentBook: Book
   private val player = VoicePlayer(
@@ -103,6 +109,8 @@ class VoicePlayerTest {
     mediaItemProvider = mediaItemProvider,
     volumeGain = mockk(relaxed = true),
     analytics = mockk(relaxed = true),
+    callResumeGuard = mockk(relaxed = true),
+    context = mockk(relaxed = true),
   )
 
   @Test

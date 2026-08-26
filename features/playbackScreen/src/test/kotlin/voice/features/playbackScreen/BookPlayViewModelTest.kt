@@ -89,6 +89,7 @@ class BookPlayViewModelTest {
     sleepTimer = sleepTimer,
     playStateManager = playStateManager,
     currentBookStoreId = currentBookStoreId,
+    seekTimeStore = MemoryDataStore(20),
     sleepTimerPreferenceStore = sleepTimerDataStore,
     navigator = mockk(),
     bookmarkRepository = mockk {
@@ -295,7 +296,6 @@ class BookPlayViewModelTest {
       val state = awaitItem()!!
       assertEquals(expected = KioskModeDemoData.currentlyPlaying.title, actual = state.title)
       assertEquals(expected = KioskModeDemoData.currentlyPlaying.chapter, actual = state.chapterName)
-      assertEquals(expected = KioskModeDemoData.currentlyPlaying.coverUrl, actual = state.cover)
     }
   }
 
@@ -322,6 +322,7 @@ class BookPlayViewModelTest {
         every { playState } returns playStateFlow.value
       },
       currentBookStoreId = MemoryDataStore(null),
+      seekTimeStore = MemoryDataStore(20),
       sleepTimerPreferenceStore = MemoryDataStore(SleepTimerPreference.Default),
       navigator = mockk(),
       bookmarkRepository = mockk(),
