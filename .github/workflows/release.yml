@@ -4,6 +4,10 @@ on:
   push:
     tags:
       - 'v*'
+  # The other three forks' release workflows stopped being triggered by tag pushes on 2026-08-26 -
+  # the tag lands, Actions is enabled, the workflow is active, but no run is created. This one still
+  # triggers, but there is no reason to be the only repo with no way to start a release by hand.
+  workflow_dispatch:
 
 permissions:
   contents: write

@@ -17,7 +17,7 @@ This is a personal fork of [Voice](https://github.com/PaulWoitaschek/Voice) by P
 
 ## Install
 
-Grab the latest APK from [Releases](https://github.com/wanderwildwood/eink-audiobook-player/releases), check it against the published `.sha256`, and sideload it (assets are named `eink-audiobook-player-v1.5.1.apk` and so on):
+Grab the latest APK from [Releases](https://github.com/wanderwildwood/eink-audiobook-player/releases), check it against the published `.sha256`, and sideload it (assets are named `eink-audiobook-player-v1.6.0.apk` and so on):
 
 ```sh
 sha256sum -c eink-audiobook-player-<version>.apk.sha256
@@ -26,7 +26,7 @@ adb install eink-audiobook-player-<version>.apk
 
 ### Upgrading from v1.5.1 or earlier requires an uninstall
 
-Releases up to and including **v1.5.1** were signed with the debug keystore checked into this repo — a key whose private half is public, so anyone could have built an APK that upgraded your install in place. Every release from the next one onward is signed with a private key held outside the repo.
+Releases up to and including **v1.5.1** were signed with the debug keystore checked into this repo — a key whose private half is public, so anyone could have built an APK that upgraded your install in place. Every release from **v1.6.0** onward is signed with a private key held outside the repo.
 
 Android refuses to replace an app with one signed by a different key, so installing across that boundary fails with `INSTALL_FAILED_UPDATE_INCOMPATIBLE`. Uninstall first:
 
