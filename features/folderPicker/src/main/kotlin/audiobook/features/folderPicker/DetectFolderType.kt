@@ -20,7 +20,12 @@ internal fun CachedDocumentFile.detectFolderType(): FolderType {
   val directories = children.filter { it.isDirectory }
   val holdsAudioDirectly = children.any { it.isAudioFile() }
 
-  if (directories.isEmpty()) return FolderType.SingleFolder
+  // No subfolders and no audio in it either: this is an empty folder, or one that could not be
+  // read at all. Calling it a single book is the reading that does the most damage - a whole
+  // library collapses into one entry named after its own root - while Root simply finds nothing.
+  if (directories.isEmpty()) {
+    return if (holdsAudioDirectly) FolderType.SingleFolder else FolderType.Root
+  }
 
   val sample = directories.take(SAMPLE_SIZE)
   var authorShaped = 0
