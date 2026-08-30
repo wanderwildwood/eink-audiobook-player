@@ -1,5 +1,10 @@
 # eInk Audiobook Player
 
+**This app has been retired.** It was replaced by
+[Audio Reading](https://github.com/wanderwildwood/mimidoku), written from scratch rather than
+forked, which does the same job on the same screen. The releases below stay where they are and
+still install, but nothing further is planned for them.
+
 An audiobook player for the [Mudita Kompakt](https://mudita.com/products/kompakt/).
 
 Fork of [Voice](https://github.com/PaulWoitaschek/Voice) by Paul Woitaschek, with the UI
